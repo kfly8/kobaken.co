@@ -23,26 +23,6 @@ const Profile = () => {
   )
 }
 
-const DarkModeSwitch = () => {
-
-  const onClick = () => {
-    const html = document.querySelector('html')
-    if (html.getAttribute('data-theme') === 'dark') {
-      html.setAttribute('data-theme', 'light')
-    }
-    else {
-      html.setAttribute('data-theme', 'dark')
-    }
-  }
-
-  return (
-    <>
-      <button class="dark-mode-switch" onClick={onClick}><i class="icon-moon"></i></button>
-    </>
-  )
-
-}
-
 const Activities = () => {
   const activities = [
     { url: 'https://kfly8.hatenablog.com/entry/2023/06/17/133950', title: '最近プログラミングが楽しい', date: '2023-06-17' },
@@ -78,7 +58,8 @@ app.get('/', (c) => {
       </div>
     </>,
     {
-        title: 'kobaken'
+        title: 'kobaken',
+        description: "I'm a software engineer and preparing to start my own business. Event organizer for YAPC::Tokyo 2019, YAPC::Japan::Online 2022, and YAPC::Hiroshima 2024."
     }
   )
 })

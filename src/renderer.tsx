@@ -3,12 +3,19 @@ import { jsxRenderer } from 'hono/jsx-renderer'
 
 declare module 'hono' {
   interface ContextRenderer {
-    (content: string, props?: { title?: string }): Response
+    (
+      content: string,
+      props?: {
+        title: string,
+        description: string,
+      }): Response
   }
 }
 
 export const renderer = jsxRenderer(
-  ({ children, title }) => {
+  ({ children, title, description }) => {
+    const css_version = Date.now()
+
     return (
       <html>
         <head>
@@ -17,9 +24,10 @@ export const renderer = jsxRenderer(
           <meta name="viewport" content="width=device-width, initial-scale=1.0" />
           <link rel="icon" type="image/jpg" href="/static/img/favicon.ico" />
           <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;900&display=swap" rel="stylesheet" />
-          <link href="/static/fontello-embedded.css?v=2023-11-26" rel="stylesheet" />
-          <link href="/static/reset.css?v=2023-11-26" rel="stylesheet" />
-          <link href="/static/style.css?v=2023-11-26" rel="stylesheet" />
+          <link href={`/static/fontello-embedded.css?v=${css_version}`} rel="stylesheet" />
+          <link href={`/static/reset.css?v=${css_version}`} rel="stylesheet" />
+          <link href={`/static/style.css?v=${css_version}`} rel="stylesheet" />
+          <meta name="description" content={description} />
           <title>{title}</title>
         </head>
         <body>{children}</body>
