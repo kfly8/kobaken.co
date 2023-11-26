@@ -16,6 +16,9 @@ export const renderer = jsxRenderer(
           <meta http-equiv="X-UA-Compatible" content="IE=edge" />
           <meta name="viewport" content="width=device-width, initial-scale=1.0" />
           <link rel="icon" type="image/jpg" href="/static/img/favicon.ico" />
+          <link href="https://fonts.googleapis.com/css?family=Reem+Kufi|Roboto:300" rel="stylesheet" />
+          <link href="/static/reset.css" rel="stylesheet" />
+          <link href="/static/fontello-embedded.css" rel="stylesheet" />
           <link href="/static/style.css" rel="stylesheet" />
           <title>{title}</title>
         </head>
