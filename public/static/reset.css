@@ -26,9 +26,9 @@ figure, blockquote, dl, dd, p {
 }
 
 /* Remove list styles on ul, ol elements with a list role, which suggests default styling will be removed */
-ul[role='list'],
-ol[role='list'] {
+ul,ol {
   list-style: none;
+  padding-inline-start: 0;
 }
 
 /* Set core body defaults */
@@ -60,17 +60,6 @@ img,
 picture {
   max-width: 100%;
   display: block;
-}
-
-/* Inherit fonts for inputs and buttons */
-input, button,
-textarea, select {
-  font: inherit;
-}
-
-/* Make sure textareas without a rows attribute are not tiny */
-textarea:not([rows]) {
-  min-height: 10em;
 }
 
 /* Anything that has been anchored to should have extra scroll margin */

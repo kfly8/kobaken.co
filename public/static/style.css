@@ -1,27 +1,24 @@
-/* screen reader only */
-.sr-only {
-    border: 0;
-    clip: rect(0,0,0,0);
-    height: 1px;
-    margin: -1px;
-    overflow: hidden;
-    padding: 0;
-    position: absolute;
-    width: 1px
+:root {
+  --color-text-sub: #ddd;
+}
+
+html {
+  font-family: 'Inter', sans-serif;
 }
 
 .main {
-    margin: 0 auto;
-    max-width: 800px;
-    padding: 20px;
+  margin: 0 auto;
+  max-width: 800px;
+  padding: 20px;
 }
 
-header {
+.profile {
   display: flex;
   align-items: center;
+  height: 100vh;
 }
 
-header img.icon {
+.profile img.icon {
   border-radius: 50%;
   width: 80px;
   height: 80px;
@@ -31,34 +28,63 @@ header img.icon {
   margin-right: 20px;
 }
 
-header h1.name {
-    font-size: xx-large;
-    font-family: 'Reem Kufi', sans-serif;
+.profile .name {
+  font-size: xx-large;
 }
 
-header p.title {
-    font-size: medium;
-    font-family: 'Noto Sans JP', sans-serif;
+.profile .tagline {
+  font-size: medium;
 }
 
-header ul.sns-links {
-    list-style: none;
-    margin: 0 auto;
-    padding-inline-start: 0;
+.profile .sns-links {
+  margin: 0 auto;
 }
 
-header ul.sns-links li {
-    display: inline-block;
+.profile .sns-links li {
+  display: inline-block;
+  margin-right: 5px;
 }
 
-header ul.sns-links i {
-    font-size: xx-large;
+.profile .sns-links i {
+  font-size: x-large;
 }
 
-header ul.sns-links i:before {
-    margin-left: 0;
+.profile .sns-links i:before {
+  margin-left: 0;
 }
+
 
 .activities {
-    margin-top: 20px;
+  margin-top: 20px;
 }
+
+.activities ul {
+}
+
+.activities li {
+  line-height: 2;
+}
+
+.activities .date {
+}
+
+.activities a {
+  text-decoration: underline;
+  text-decoration-style: dotted;
+  text-underline-offset: 0.2em;
+  text-decoration-color: var(--color-text-sub);
+  letter-spacing: .03em;
+}
+
+/* screen reader only */
+.sr-only {
+  border: 0;
+  clip: rect(0,0,0,0);
+  height: 1px;
+  margin: -1px;
+  overflow: hidden;
+  padding: 0;
+  position: absolute;
+  width: 1px
+}
+
