@@ -15,7 +15,7 @@ html {
 .profile {
   display: flex;
   align-items: center;
-  height: 100vh;
+  min-height: 100svh;
 }
 
 .profile img.icon {
@@ -34,6 +34,7 @@ html {
 
 .profile .tagline {
   font-size: medium;
+  font-weight: normal;
 }
 
 .profile .sns-links {
@@ -66,6 +67,7 @@ html {
 }
 
 .activities .date {
+  font-weight: normal;
 }
 
 .activities a {
