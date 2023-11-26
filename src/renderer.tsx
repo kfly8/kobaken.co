@@ -17,7 +17,7 @@ export const renderer = jsxRenderer(
           <meta name="viewport" content="width=device-width, initial-scale=1.0" />
           <link rel="icon" type="image/jpg" href="/static/img/favicon.ico" />
           <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;900&display=swap" rel="stylesheet" />
-          <link href="/static/fontello-embedded.css" rel="stylesheet" />
+          <link href="/static/fontello-embedded.css?v=2023-11-26" rel="stylesheet" />
           <link href="/static/reset.css?v=2023-11-26" rel="stylesheet" />
           <link href="/static/style.css?v=2023-11-26" rel="stylesheet" />
           <title>{title}</title>
