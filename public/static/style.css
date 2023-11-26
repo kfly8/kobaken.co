@@ -1,9 +1,32 @@
 :root {
-  --color-text-sub: #ddd;
+  --color-background: #f8fbf8;
+  --color-text-main: #2b2b2b;
+  --color-text-sub: #595857;
 }
+
+[data-theme="dark"] {
+  --color-background: #2b2b2b;
+  --color-text-main: #f8fbf8;
+  --color-text-sub: #595857;
+}
+
+/**
+@media (prefers-color-scheme: dark) {
+  :root {
+    --color-background: #2b2b2b;
+    --color-text-main: #f8fbf8;
+    --color-text-sub: #595857;
+  }
+}
+*/
 
 html {
   font-family: 'Inter', sans-serif;
+}
+
+body {
+  background-color: var(--color-background);
+  color: var(--color-text-main);
 }
 
 .main {
