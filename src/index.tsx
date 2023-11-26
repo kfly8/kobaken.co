@@ -12,7 +12,7 @@ const Profile = () => {
               <h1 class="name">kobaken</h1>
               <p class="tagline">Software Engineer | Tech Conference Organizer</p>
               <ul class="sns-links">
-                <li><a href="https://github.com/kfly8"><i class="icon-rss"></i><span class="sr-only">Blog</span></a></li>
+                <li><a href="https://kfly8.hatenablog.com/"><i class="icon-rss"></i><span class="sr-only">Blog</span></a></li>
                 <li><a href="https://github.com/kfly8"><i class="icon-github"></i><span class="sr-only">GitHub</span></a></li>
                 <li><a href="https://twitter.com/kfly8"><i class="icon-twitter"></i><span class="sr-only">Twitter</span></a></li>
               </ul>
