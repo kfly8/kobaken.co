@@ -28,6 +28,22 @@ export const renderer = jsxRenderer(
           <link href={`/static/reset.css?v=${css_version}`} rel="stylesheet" />
           <link href={`/static/style.css?v=${css_version}`} rel="stylesheet" />
           <meta name="description" content={description} />
+          <meta property="og:title" content={title} />
+          <meta property="og:site_name" content="kobaken" />
+          <meta property="og:url" content="https://kobaken.co" />
+          <meta property="og:image" content="/static/img/kobaken.jpg" />
+          <meta property="og:type" content="website" />
+          <meta name="twitter:site" content="@kfly8" />
+          <meta name="twitter:creator" content="@kfly8" />
+          <meta name="twitter:card" content="summary" />
+          <meta property="og:title" content={title} />
+          <meta property="og:site_name" content="kobaken" />
+          <meta property="og:url" content="https://kobaken.co" />
+          <meta property="og:image" content="https://kobaken.co/static/img/kobaken.jpg" />
+          <meta property="og:type" content="website" />
+          <meta name="twitter:site" content="@kfly8" />
+          <meta name="twitter:creator" content="@kfly8" />
+          <meta name="twitter:card" content="summary" />
           <title>{title}</title>
         </head>
         <body>{children}</body>
