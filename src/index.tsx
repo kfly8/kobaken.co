@@ -6,7 +6,7 @@ const app = new Hono()
 const Profile = () => {
   return (
     <>
-      <section class="profile">
+      <section id="profile">
           <img class="icon" src="/static/img/kobaken.jpg" alt="icon" />
           <div>
             <h1 class="name">kobaken</h1>
@@ -57,11 +57,14 @@ const Activities = () => {
 
   return (
     <>
-      <section class="activities">
+      <section id="activities">
         <h2>Activities</h2>
         <ul>
           { activities.reverse().map((activity) => (
-            <li><span class="date">{activity.date}</span> <a href={activity.url}>{activity.title}</a></li>
+            <li>
+              <span class="date">{activity.date}</span>
+              <span class="title"><a href={activity.url}>{activity.title}</a></span>
+            </li>
           ))}
         </ul>
       </section>
@@ -75,7 +78,7 @@ app.get('/', (c) => {
   return c.render(
     <>
       <ToggleTheme />
-      <div class="main">
+      <div id="main">
         <Profile />
         <Activities />
       </div>

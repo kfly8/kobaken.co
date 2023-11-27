@@ -34,19 +34,19 @@ body {
   transition: background-color 0.2s ease-out, color 0.2s ease-out;
 }
 
-.main {
+#main {
   margin: 0 auto;
   max-width: 800px;
   padding: 0 20px;
 }
 
-.profile {
+#profile {
   display: flex;
   align-items: center;
   min-height: 100svh;
 }
 
-.profile img.icon {
+#profile img.icon {
   border-radius: 50%;
   width: 80px;
   height: 80px;
@@ -56,29 +56,29 @@ body {
   margin-right: 20px;
 }
 
-.profile .name {
+#profile .name {
   font-size: xx-large;
 }
 
-.profile .tagline {
+#profile .tagline {
   font-size: medium;
   font-weight: normal;
 }
 
-.profile .sns-links {
+#profile .sns-links {
   margin: 0 auto;
 }
 
-.profile .sns-links li {
+#profile .sns-links li {
   display: inline-block;
   margin-right: 10px;
 }
 
-.profile .sns-links i {
+#profile .sns-links i {
   font-size: xx-large;
 }
 
-.profile .sns-links i:before {
+#profile .sns-links i:before {
   margin-left: 0;
 }
 
@@ -86,8 +86,8 @@ body {
 /** Toggle Theme */
 #toggle-theme {
   position: absolute;
-  top: 10px;
-  right: 10px;
+  top: 5px;
+  right: 8px;
   font-size: x-large;
   cursor: pointer;
 }
@@ -126,22 +126,31 @@ body {
 }
 
 
-.activities {
+#activities {
   margin-top: 20px;
 }
 
-.activities ul {
+#activities ul {
 }
 
-.activities li {
-  line-height: 2;
+#activities li {
+  display: flex;
+  align-items: baseline;
+  margin: 20px 0;
 }
 
-.activities .date {
+#activities .date {
+  white-space: nowrap;
   font-weight: normal;
+  font-family: "Roboto";
+  margin-right: 13px;
 }
 
-.activities a {
+#activities .title {
+  flex: 1;
+}
+
+#activities a {
   text-decoration: underline;
   text-decoration-style: dotted;
   text-underline-offset: 0.2em;
