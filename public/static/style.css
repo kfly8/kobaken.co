@@ -86,8 +86,8 @@ body {
 /** Toggle Theme */
 #toggle-theme {
   position: absolute;
-  top: 5px;
-  right: 8px;
+  top: 10px;
+  right: 15px;
   font-size: x-large;
   cursor: pointer;
 }
