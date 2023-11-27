@@ -60,11 +60,6 @@ body {
   font-size: xx-large;
 }
 
-#profile .tagline {
-  font-size: medium;
-  font-weight: normal;
-}
-
 #profile .sns-links {
   margin: 0 auto;
 }
@@ -83,7 +78,20 @@ body {
 }
 
 
-/** Toggle Theme */
+#tagline {
+  font-size: medium;
+  font-weight: 300;
+
+  position: absolute;
+  right: 0;
+  top: 50svh;
+  transform: translate(-30px,42em) rotate(90deg);
+  transform-origin: right;
+  letter-spacing: .1em;
+  text-wrap: nowrap;
+}
+
+
 #toggle-theme {
   position: absolute;
   top: 10px;
@@ -128,6 +136,7 @@ body {
 
 #activities {
   margin-top: 20px;
+  padding-right: 12px;
 }
 
 #activities ul {

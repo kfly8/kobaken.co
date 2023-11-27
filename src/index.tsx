@@ -10,7 +10,6 @@ const Profile = () => {
           <img class="icon" src="/static/img/kobaken.jpg" alt="icon" />
           <div>
             <h1 class="name">kobaken</h1>
-            <p class="tagline">Software Engineer | Engineering Manager | Tech Conference Organizer</p>
             <ul class="sns-links">
               <li><a href="https://kfly8.hatenablog.com/"><i class="icon-rss"></i><span class="sr-only">Blog</span></a></li>
               <li><a href="https://github.com/kfly8"><i class="icon-github"></i><span class="sr-only">GitHub</span></a></li>
@@ -19,6 +18,16 @@ const Profile = () => {
             </ul>
           </div>
       </section>
+    </>
+  )
+}
+
+const Tagline = () => {
+  return (
+    <>
+      <div id="tagline">
+        Software Engineer | Engineering Manager | Tech Conference Organizer
+      </div>
     </>
   )
 }
@@ -95,6 +104,7 @@ app.get('/', (c) => {
   return c.render(
     <>
       <ToggleTheme />
+      <Tagline />
       <div id="main">
         <Profile />
         <Activities />
