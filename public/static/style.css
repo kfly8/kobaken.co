@@ -160,6 +160,10 @@ body {
   letter-spacing: .03em;
 }
 
+#activities a:hover {
+  text-decoration-color: var(--color-text-main);
+}
+
 /* screen reader only */
 .sr-only {
   border: 0;
