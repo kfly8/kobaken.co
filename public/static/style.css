@@ -88,9 +88,8 @@ body {
   transform: translate(-30px,42em) rotate(90deg);
   transform-origin: right;
   letter-spacing: .1em;
-  text-wrap: nowrap;
+  white-space: nowrap;
 }
-
 
 #toggle-theme {
   position: absolute;
