@@ -141,8 +141,8 @@ body {
 
 #activities .date {
   white-space: nowrap;
-  font-weight: normal;
-  font-family: "Roboto";
+  font-weight: bold;
+  font-family: monospace;
   margin-right: 13px;
 }
 
