@@ -20,6 +20,7 @@ export const renderer = jsxRenderer(
       <html>
         <head>
           <meta charset="utf-8" />
+          <title>{title}</title>
           <meta http-equiv="X-UA-Compatible" content="IE=edge" />
           <meta name="viewport" content="width=device-width, initial-scale=1.0" />
           <link rel="icon" type="image/jpg" href="/static/img/favicon.ico" />
@@ -29,22 +30,14 @@ export const renderer = jsxRenderer(
           <link href={`/static/style.css?v=${css_version}`} rel="stylesheet" />
           <meta name="description" content={description} />
           <meta property="og:title" content={title} />
-          <meta property="og:site_name" content="kobaken" />
-          <meta property="og:url" content="https://kobaken.co" />
-          <meta property="og:image" content="/static/img/kobaken.jpg" />
-          <meta property="og:type" content="website" />
-          <meta name="twitter:site" content="@kfly8" />
-          <meta name="twitter:creator" content="@kfly8" />
-          <meta name="twitter:card" content="summary" />
-          <meta property="og:title" content={title} />
-          <meta property="og:site_name" content="kobaken" />
+          <meta property="og:description" content={description} />
+          <meta property="og:site_name" content="kobaken.co" />
           <meta property="og:url" content="https://kobaken.co" />
           <meta property="og:image" content="https://kobaken.co/static/img/kobaken.jpg" />
           <meta property="og:type" content="website" />
+          <meta name="twitter:card" content="summary" />
           <meta name="twitter:site" content="@kfly8" />
           <meta name="twitter:creator" content="@kfly8" />
-          <meta name="twitter:card" content="summary" />
-          <title>{title}</title>
         </head>
         <body>{children}</body>
       </html>
