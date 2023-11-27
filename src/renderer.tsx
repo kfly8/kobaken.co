@@ -14,7 +14,7 @@ declare module 'hono' {
 
 export const renderer = jsxRenderer(
   ({ children, title, description }) => {
-    const css_version = Date.now()
+    const asset_version = Date.now()
 
     return (
       <html>
@@ -25,9 +25,10 @@ export const renderer = jsxRenderer(
           <meta name="viewport" content="width=device-width, initial-scale=1.0" />
           <link rel="icon" type="image/jpg" href="/static/img/favicon.ico" />
           <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;900&display=swap" rel="stylesheet" />
-          <link href={`/static/fontello-embedded.css?v=${css_version}`} rel="stylesheet" />
-          <link href={`/static/reset.css?v=${css_version}`} rel="stylesheet" />
-          <link href={`/static/style.css?v=${css_version}`} rel="stylesheet" />
+          <link href={`/static/fontello-embedded.css?v=${asset_version}`} rel="stylesheet" />
+          <link href={`/static/reset.css?v=${asset_version}`} rel="stylesheet" />
+          <link href={`/static/style.css?v=${asset_version}`} rel="stylesheet" />
+          <script src={`/static/script.js?v=${asset_version}`} defer />
           <meta name="description" content={description} />
           <meta property="og:title" content={title} />
           <meta property="og:description" content={description} />

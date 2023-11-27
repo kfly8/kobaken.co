@@ -10,7 +10,12 @@
   --color-text-sub: #595857;
 }
 
-/**
+[data-theme="light"] {
+  --color-background: #f8fbf8;
+  --color-text-main: #2b2b2b;
+  --color-text-sub: #595857;
+}
+
 @media (prefers-color-scheme: dark) {
   :root {
     --color-background: #2b2b2b;
@@ -18,7 +23,6 @@
     --color-text-sub: #595857;
   }
 }
-*/
 
 html {
   font-family: 'Inter', sans-serif;
@@ -27,6 +31,7 @@ html {
 body {
   background-color: var(--color-background);
   color: var(--color-text-main);
+  transition: background-color 0.2s ease-out, color 0.2s ease-out;
 }
 
 .main {
@@ -75,6 +80,49 @@ body {
 
 .profile .sns-links i:before {
   margin-left: 0;
+}
+
+
+/** Toggle Theme */
+#toggle-theme {
+  position: absolute;
+  top: 10px;
+  right: 10px;
+  font-size: x-large;
+  cursor: pointer;
+}
+
+.switch-light {
+  display: none;
+}
+
+.switch-dark {
+  display: inline;
+}
+
+@media (prefers-color-scheme: dark) {
+  .switch-light {
+    display: inline;
+  }
+  .switch-dark {
+    display: none;
+  }
+}
+
+[data-theme="dark"] .switch-light {
+  display: inline;
+}
+
+[data-theme="dark"] .switch-dark {
+  display: none;
+}
+
+[data-theme="light"] .switch-light {
+  display: none;
+}
+
+[data-theme="light"] .switch-dark {
+  display: inline;
 }
 
 

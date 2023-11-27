@@ -23,6 +23,17 @@ const Profile = () => {
   )
 }
 
+const ToggleTheme = () => {
+  return (
+    <>
+      <div id="toggle-theme">
+        <i class="switch-dark icon-moon"></i>
+        <i class="switch-light icon-sun"></i>
+      </div>
+    </>
+  )
+}
+
 const Activities = () => {
   const activities = [
     { url: 'https://kfly8.hatenablog.com/entry/2023/06/17/133950', title: '最近プログラミングが楽しい', date: '2023-06-17' },
@@ -52,6 +63,7 @@ app.get('*', renderer)
 app.get('/', (c) => {
   return c.render(
     <>
+      <ToggleTheme />
       <div class="main">
         <Profile />
         <Activities />
