@@ -144,6 +144,8 @@ body {
   font-weight: bold;
   font-family: monospace;
   margin-right: 13px;
+  width: 80px;
+  text-align: right;
 }
 
 #activities .title {
