@@ -19,6 +19,8 @@ export const renderer = jsxRenderer(
     return (
       <html>
         <head>
+          <script async src="https://www.googletagmanager.com/gtag/js?id=G-N1NZRELLMR"></script>
+          <script src="/static/gtag.js"></script>
           <meta charset="utf-8" />
           <title>{title}</title>
           <meta http-equiv="X-UA-Compatible" content="IE=edge" />
