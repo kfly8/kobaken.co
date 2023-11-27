@@ -32,6 +32,7 @@ body {
   background-color: var(--color-background);
   color: var(--color-text-main);
   transition: background-color 0.2s ease-out, color 0.2s ease-out;
+  overflow-x: hidden;
 }
 
 #main {
@@ -135,7 +136,7 @@ body {
 
 #activities {
   margin-top: 20px;
-  padding-right: 12px;
+  padding-right: 2em;
 }
 
 #activities ul {
