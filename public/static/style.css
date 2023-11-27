@@ -150,7 +150,7 @@ body {
 
 #activities .date {
   white-space: nowrap;
-  font-weight: bold;
+  font-weight: 300;
   font-family: monospace;
   margin-right: 13px;
   width: 80px;
