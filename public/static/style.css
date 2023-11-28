@@ -63,6 +63,7 @@ body {
 
 #profile .sns-links {
   margin: 0 auto;
+  margin-left: -2px;
 }
 
 #profile .sns-links li {
