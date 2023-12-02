@@ -21,6 +21,8 @@ const Profile = () => {
     },
     name: {
       fontSize: 'xx-large',
+      fontFamily: 'Inter, sans-serif',
+      fontWeight: 900,
     },
     snsLinks: {
       margin: '0 auto',
@@ -159,7 +161,7 @@ const Activities = () => {
   return (
     <>
       <section style={style.container}>
-        <h2>Activities</h2>
+        <h2 style={{fontFamily: 'Inter, sans-serif', fontWeight: 900}}>Activities</h2>
         <ul>
           { displayActivities.map((activity) => (
             <li style={style.li}>
