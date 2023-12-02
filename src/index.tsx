@@ -4,17 +4,48 @@ import { renderer } from './renderer'
 const app = new Hono()
 
 const Profile = () => {
+
+  const style = {
+    container: {
+      display: 'flex',
+      alignItems: 'center',
+      minHeight: '100svh',
+    },
+    icon: {
+      borderRadius: '50%',
+      width: '80px',
+      height: '80px',
+      objectFit: 'cover',
+      display: 'inline-block',
+      marginRight: '20px',
+    },
+    name: {
+      fontSize: 'xx-large',
+    },
+    snsLinks: {
+      margin: '0 auto',
+      marginLeft: '-2px',
+    },
+    snsLinkItem: {
+      display: 'inline-block',
+      marginRight: '1rem',
+    },
+    i: {
+      fontSize: 'xx-large',
+    }
+  }
+
   return (
     <>
-      <section id="profile">
-          <img class="icon" src="/static/img/kobaken.jpg" alt="icon" />
+      <section style={style.container}>
+          <img style={style.icon} src="/static/img/kobaken.jpg" alt="icon" />
           <div>
-            <h1 class="name">kobaken</h1>
-            <ul class="sns-links">
-              <li><a href="https://kfly8.hatenablog.com/"><i class="icon-rss"></i><span class="sr-only">Blog</span></a></li>
-              <li><a href="https://github.com/kfly8"><i class="icon-github"></i><span class="sr-only">GitHub</span></a></li>
-              <li><a href="https://twitter.com/kfly8"><i class="icon-twitter"></i><span class="sr-only">Twitter</span></a></li>
-              <li><a href="mailto:kentafly88@gmail.com"><i class="icon-mail"></i><span class="sr-only">Mail</span></a></li>
+            <h1 style={style.name}>kobaken</h1>
+            <ul style={style.snsLinks}>
+              <li style={style.snsLinkItem}><a href="https://kfly8.hatenablog.com/"><i style={style.i} class="icon-rss"></i><span class="sr-only">Blog</span></a></li>
+              <li style={style.snsLinkItem}><a href="https://github.com/kfly8"><i style={style.i} class="icon-github"></i><span class="sr-only">GitHub</span></a></li>
+              <li style={style.snsLinkItem}><a href="https://twitter.com/kfly8"><i style={style.i} class="icon-twitter"></i><span class="sr-only">Twitter</span></a></li>
+              <li style={style.snsLinkItem}><a href="mailto:kentafly88@gmail.com"><i style={style.i} class="icon-mail"></i><span class="sr-only">Mail</span></a></li>
             </ul>
           </div>
       </section>
@@ -23,9 +54,22 @@ const Profile = () => {
 }
 
 const Tagline = () => {
+  const style = {
+    fontSize: 'medium',
+    fontWeight: 300,
+    fontFamily: 'monospace',
+    position: 'absolute',
+    right: 0,
+    top: '50svh',
+    transform: 'translate(-30px,44em) rotate(90deg)',
+    transformOrigin: 'right',
+    letterSpacing: '.1em',
+    whiteSpace: 'nowrap',
+  }
+
   return (
     <>
-      <div id="tagline">
+      <div style={style}>
         Software Engineer | Engineering Manager | Tech Conference Organizer
       </div>
     </>
@@ -82,15 +126,45 @@ const Activities = () => {
     return { ...activity, displayDate }
   });
 
+  const style = {
+    container: {
+      marginTop: '20px',
+      paddingRight: '2em',
+    },
+    li: {
+      display: 'flex',
+      alignItems: 'baseline',
+      margin: '20px 0',
+    },
+    date: {
+      whiteSpace: 'nowrap',
+      fontWeight: 300,
+      fontFamily: 'monospace',
+      marginRight: '13px',
+      width: '80px',
+      textAlign: 'right',
+    },
+    title: {
+      flex: 1,
+    },
+    a: {
+      textDecoration: 'underline',
+      textDecorationStyle: 'dotted',
+      textUnderlineOffset: '0.2em',
+      textDecorationColor: 'var(--color-text-sub)',
+      letterSpacing: '.03em',
+    }
+  }
+
   return (
     <>
-      <section id="activities">
+      <section style={style.container}>
         <h2>Activities</h2>
         <ul>
           { displayActivities.map((activity) => (
-            <li>
-              <span class="date">{activity.displayDate}</span>
-              <span class="title"><a href={activity.url}>{activity.title}</a></span>
+            <li style={style.li}>
+              <span style={style.date}>{activity.displayDate}</span>
+              <span style={style.title}><a style={style.a} href={activity.url}>{activity.title}</a></span>
             </li>
           ))}
         </ul>
@@ -102,11 +176,18 @@ const Activities = () => {
 app.get('*', renderer)
 
 app.get('/', (c) => {
+
+  const style = {
+    margin: '0 auto',
+    maxWidth: '800px',
+    padding: '0 20px',
+  }
+
   return c.render(
     <>
       <ToggleTheme />
       <Tagline />
-      <div id="main">
+      <div style={style}>
         <Profile />
         <Activities />
       </div>
