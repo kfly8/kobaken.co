@@ -32,6 +32,10 @@
   src: url('/static/font/Inter-ExtraBold.woff2') format('woff2');
 }
 
+html {
+  font-family: sans-serif;
+}
+
 body {
   background-color: var(--color-background);
   color: var(--color-text-main);
