@@ -111,7 +111,7 @@ const Activities = () => {
     { date: '2023-06-17', url: 'https://kfly8.hatenablog.com/entry/2023/06/17/133950', title: '最近プログラミングが楽しい' },
     { date: '2023-08-26', url: 'https://kfly8.hatenablog.com/entry/2023/08/26/214805', title: 'ドキュメントでプログラミング言語に貢献する' },
     { date: '2023-11-09', url: 'https://kfly8.hatenablog.com/entry/2023/11/09/092623', title: 'perldoc.jp のこの1年の変化まとめと、次の1年' },
-    { date: '2023-11-25', url: 'https://github.com/isucon/isucon13', title: 'ISUCON13で参考実装のPerl移植をしました' },
+    { date: '2023-11-25', url: 'https://twitter.com/kfly8/status/1731330122635255994', title: 'ISUCON13で参考実装のPerl移植をしました' },
   ]
 
   const formatMMDD = (date: Date) => {
