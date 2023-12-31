@@ -108,6 +108,7 @@ const Activities = () => {
     { date: '2022-07-22', url: 'https://tech.mobilefactory.jp/entry/2022/07/22/184000', title: 'OSSのスポンサーを始めるときに、技術広報目線で考えたこと' },
     { date: '2022-08-30', url: 'https://kfly8.hatenablog.com/entry/2022/08/30/185300', title: 'エンジニアのためのお祭りの技術カンファレンスをオンラインで実施する｜YAPC::Japan::Onlineの場合' },
     { date: '2023-03-22', url: 'https://kfly8.hatenablog.com/entry/2023/03/22/015343', title: 'YAPC::Kyoto 2023 の運営をしました' },
+    { date: '2023-04-07', url: 'https://ossan.fm/episode/235', title: 'Ossan.fm 235. コミュニティ活動への想い(ゲスト:kobakenさん)' },
     { date: '2023-06-17', url: 'https://kfly8.hatenablog.com/entry/2023/06/17/133950', title: '最近プログラミングが楽しい' },
     { date: '2023-08-26', url: 'https://kfly8.hatenablog.com/entry/2023/08/26/214805', title: 'ドキュメントでプログラミング言語に貢献する' },
     { date: '2023-11-09', url: 'https://kfly8.hatenablog.com/entry/2023/11/09/092623', title: 'perldoc.jp のこの1年の変化まとめと、次の1年' },
