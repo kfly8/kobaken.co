@@ -12,7 +12,7 @@ const Profile = () => {
     min-height: 100svh;
 
     // icon
-    img {
+    & img {
       border-radius: 50%;
       width: 80px;
       height: 80px;
@@ -22,23 +22,23 @@ const Profile = () => {
     }
 
     // name
-    h1 {
+    & h1 {
       font-size: xx-large;
       font-family: Inter, sans-serif;
       font-weight: 900;
     }
 
     // sns links
-    ul {
+    & ul {
       margin: 0 auto;
       margin-left: -2px;
 
-      li {
+      & li {
         display: inline-block;
         margin-right: 1rem;
       }
 
-      i {
+      & i {
         font-size: xx-large;
       }
     }
