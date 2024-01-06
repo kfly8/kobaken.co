@@ -1,5 +1,6 @@
 import 'hono'
 import { jsxRenderer } from 'hono/jsx-renderer'
+import { Style } from 'hono/css'
 
 declare module 'hono' {
   interface ContextRenderer {
@@ -30,6 +31,7 @@ export const renderer = jsxRenderer(
           <link href={`/static/fontello-embedded.css?v=${asset_version}`} rel="stylesheet" />
           <link href={`/static/reset.css?v=${asset_version}`} rel="stylesheet" />
           <link href={`/static/style.css?v=${asset_version}`} rel="stylesheet" />
+          <Style />
           <script src={`/static/script.js?v=${asset_version}`} defer />
           <meta name="description" content={description} />
           <meta property="og:title" content={title} />

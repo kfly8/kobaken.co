@@ -1,53 +1,60 @@
 import { Hono } from 'hono'
+import { css } from 'hono/css'
 import { renderer } from './renderer'
 
 const app = new Hono()
 
 const Profile = () => {
 
-  const style = {
-    container: {
-      display: 'flex',
-      alignItems: 'center',
-      minHeight: '100svh',
-    },
-    icon: {
-      borderRadius: '50%',
-      width: '80px',
-      height: '80px',
-      objectFit: 'cover',
-      display: 'inline-block',
-      marginRight: '20px',
-    },
-    name: {
-      fontSize: 'xx-large',
-      fontFamily: 'Inter, sans-serif',
-      fontWeight: 900,
-    },
-    snsLinks: {
-      margin: '0 auto',
-      marginLeft: '-2px',
-    },
-    snsLinkItem: {
-      display: 'inline-block',
-      marginRight: '1rem',
-    },
-    i: {
-      fontSize: 'xx-large',
+  const ProfileClass = css`
+    display: flex;
+    align-items: center;
+    min-height: 100svh;
+
+    // icon
+    img {
+      border-radius: 50%;
+      width: 80px;
+      height: 80px;
+      object-fit: cover;
+      display: inline-block;
+      margin-right: 20px;
     }
-  }
+
+    // name
+    h1 {
+      font-size: xx-large;
+      font-family: Inter, sans-serif;
+      font-weight: 900;
+    }
+
+    // sns links
+    ul {
+      margin: 0 auto;
+      margin-left: -2px;
+
+      li {
+        display: inline-block;
+        margin-right: 1rem;
+      }
+
+      i {
+        font-size: xx-large;
+      }
+    }
+  `
 
   return (
     <>
-      <section style={style.container}>
-          <img style={style.icon} src="/static/img/kobaken.jpg" alt="icon" />
+      <section class={ProfileClass}>
+          <img src="/static/img/kobaken.jpg" alt="icon" />
           <div>
-            <h1 style={style.name}>kobaken</h1>
-            <ul style={style.snsLinks}>
-              <li style={style.snsLinkItem}><a href="https://kfly8.hatenablog.com/"><i style={style.i} class="icon-rss"></i><span class="sr-only">Blog</span></a></li>
-              <li style={style.snsLinkItem}><a href="https://github.com/kfly8"><i style={style.i} class="icon-github"></i><span class="sr-only">GitHub</span></a></li>
-              <li style={style.snsLinkItem}><a href="https://twitter.com/kfly8"><i style={style.i} class="icon-twitter"></i><span class="sr-only">Twitter</span></a></li>
-              <li style={style.snsLinkItem}><a href="mailto:kentafly88@gmail.com"><i style={style.i} class="icon-mail"></i><span class="sr-only">Mail</span></a></li>
+            <h1>kobaken</h1>
+            <ul>
+              <li><a href="https://kfly8.hatenablog.com/"><i class="icon-rss"></i><span class="sr-only">Blog</span></a></li>
+              <li><a href="https://github.com/kfly8"><i class="icon-github"></i><span class="sr-only">GitHub</span></a></li>
+              <li><a href="https://twitter.com/kfly8"><i class="icon-twitter"></i><span class="sr-only">Twitter</span></a></li>
+              <li><a href="mailto:kentafly88@gmail.com"><i class="icon-mail"></i><span class="sr-only">Mail</span></a></li>
             </ul>
           </div>
       </section>
@@ -56,22 +63,23 @@ const Profile = () => {
 }
 
 const Tagline = () => {
-  const style = {
-    fontSize: 'medium',
-    fontWeight: 300,
-    fontFamily: 'monospace',
-    position: 'absolute',
-    right: 0,
-    top: '50svh',
-    transform: 'translate(-30px,44em) rotate(90deg)',
-    transformOrigin: 'right',
-    letterSpacing: '.1em',
-    whiteSpace: 'nowrap',
-  }
+
+  const TaglineClass = css`
+    font-size: medium;
+    font-weight: 300;
+    font-family: monospace;
+    position: absolute;
+    right: 0;
+    top: 50svh;
+    transform: translate(-30px,44em) rotate(90deg);
+    transform-origin: right;
+    letter-spacing: 0.1em;
+    white-space: nowrap;
+  `
 
   return (
     <>
-      <div style={style}>
+      <div class={TaglineClass}>
         Software Engineer | Engineering Manager | Tech Conference Organizer
       </div>
     </>
@@ -129,45 +137,56 @@ const Activities = () => {
     return { ...activity, displayDate }
   });
 
-  const style = {
-    container: {
-      marginTop: '20px',
-      paddingRight: '2em',
-    },
-    li: {
-      display: 'flex',
-      alignItems: 'baseline',
-      margin: '20px 0',
-    },
-    date: {
-      whiteSpace: 'nowrap',
-      fontWeight: 300,
-      fontFamily: 'monospace',
-      marginRight: '13px',
-      width: '80px',
-      textAlign: 'right',
-    },
-    title: {
-      flex: 1,
-    },
-    a: {
-      textDecoration: 'underline',
-      textDecorationStyle: 'dotted',
-      textUnderlineOffset: '0.2em',
-      textDecorationColor: 'var(--color-text-sub)',
-      letterSpacing: '.03em',
+  const ActivitiesClass = css`
+    margin-top: 20px;
+    padding-right: 2em;
+
+    h2 {
+      font-family: Inter, sans-serif;
+      font-weight: 900;
     }
-  }
+
+    li {
+      display: flex;
+      align-items: baseline;
+      margin: 20px 0;
+    }
+
+    .date {
+      white-space: nowrap;
+      font-weight: 300;
+      font-family: monospace;
+      margin-right: 13px;
+      width: 80px;
+      text-align: right;
+    }
+
+    .title {
+      flex: 1;
+
+      a {
+        text-decoration: underline;
+        text-decoration-style: dotted;
+        text-underline-offset: 0.2em;
+        text-decoration-color: var(--color-text-sub);
+        letter-spacing: 0.03em;
+      }
+
+      a:hover {
+        text-decoration-color: var(--color-text);
+      }
+    }
+  `
 
   return (
     <>
-      <section style={style.container}>
-        <h2 style={{fontFamily: 'Inter, sans-serif', fontWeight: 900}}>Activities</h2>
+      <section class={ActivitiesClass}>
+        <h2>Activities</h2>
         <ul>
           { displayActivities.map((activity) => (
-            <li style={style.li}>
-              <span style={style.date}>{activity.displayDate}</span>
-              <span style={style.title}><a style={style.a} href={activity.url}>{activity.title}</a></span>
+            <li>
+              <span class="date">{activity.displayDate}</span>
+              <span class="title"><a href={activity.url}>{activity.title}</a></span>
             </li>
           ))}
         </ul>
@@ -180,17 +199,11 @@ app.get('*', renderer)
 
 app.get('/', (c) => {
 
-  const style = {
-    margin: '0 auto',
-    maxWidth: '800px',
-    padding: '0 20px',
-  }
-
   return c.render(
     <>
       <ToggleTheme />
       <Tagline />
-      <div style={style}>
+      <div class={css` margin: 0 auto; max-width: 800px; padding: 0 20px;`}>
         <Profile />
         <Activities />
       </div>
