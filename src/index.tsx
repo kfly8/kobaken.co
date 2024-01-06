@@ -141,18 +141,18 @@ const Activities = () => {
     margin-top: 20px;
     padding-right: 2em;
 
-    h2 {
+    & h2 {
       font-family: Inter, sans-serif;
       font-weight: 900;
     }
 
-    li {
+    & li {
       display: flex;
       align-items: baseline;
       margin: 20px 0;
     }
 
-    .date {
+    & .date {
       white-space: nowrap;
       font-weight: 300;
       font-family: monospace;
@@ -161,19 +161,19 @@ const Activities = () => {
       text-align: right;
     }
 
-    .title {
+    & .title {
       flex: 1;
 
-      a {
+      & a {
         text-decoration: underline;
         text-decoration-style: dotted;
         text-underline-offset: 0.2em;
         text-decoration-color: var(--color-text-sub);
         letter-spacing: 0.03em;
-      }
 
-      a:hover {
-        text-decoration-color: var(--color-text);
+        &:hover {
+          text-decoration-color: var(--color-text);
+        }
       }
     }
   `
