@@ -121,6 +121,9 @@ const Activities = () => {
     { date: '2023-08-26', url: 'https://kfly8.hatenablog.com/entry/2023/08/26/214805', title: 'ドキュメントでプログラミング言語に貢献する' },
     { date: '2023-11-09', url: 'https://kfly8.hatenablog.com/entry/2023/11/09/092623', title: 'perldoc.jp のこの1年の変化まとめと、次の1年' },
     { date: '2023-11-25', url: 'https://twitter.com/kfly8/status/1731330122635255994', title: 'ISUCON13で参考実装のPerl移植をしました' },
+    { date: '2024-02-10', url: 'https://yapcjapan.org/2024hiroshima/', title: 'YAPC::Hiroshima 2024 の運営リーダーをしました' },
+    { date: '2024-03-29', url: 'https://findy-code.io/engineer-lab/yapc2024', title: 'インタビュー「なぜ、YAPCはこれほど愛されるカンファレンスになったのか。運営の裏側をHiroshima 2024スタッフたちに聞いた」' },
+    { date: '2024-05-30', url: 'https://findy-code.io/engineer-lab/influential-books-4', title: '寄稿「あなたのキャリアに影響を与えた本は何ですか？ 著名エンジニアの方々に聞いてみた【第四弾】」' },
   ]
 
   const formatMMDD = (date: Date) => {
