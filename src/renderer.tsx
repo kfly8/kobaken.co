@@ -1,12 +1,11 @@
 import 'hono'
-import type { HtmlEscapedString } from 'hono/utils/html'
 import { jsxRenderer } from 'hono/jsx-renderer'
 import { Style } from 'hono/css'
 
 declare module 'hono' {
   interface ContextRenderer {
     (
-      content: Promise<HtmlEscapedString>,
+      content: string | Promise<string>,
       props?: {
         title: string,
         description: string,
