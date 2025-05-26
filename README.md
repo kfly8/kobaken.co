@@ -1,8 +1,4 @@
-```txt
-npm install
-npm run dev
-```
+## What's this?
 
-```txt
-npm run deploy
-```
+kobaken's homepage
+
