@@ -1,5 +1,5 @@
 {
-  "name": "kobaken_co",
+  "name": "kobaken.co",
   "type": "module",
   "scripts": {
     "dev": "vite",
