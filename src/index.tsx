@@ -19,10 +19,5 @@ app.get('/', (c) => {
   )
 })
 
-app.get('/api/hello', (c) => {
-  return c.json({
-    message: 'Hello, World!'
-  })
-})
 
 export default app
