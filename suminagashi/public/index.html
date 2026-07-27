@@ -937,8 +937,23 @@
         dirty = true; updateButtons();
       },
     };
-    console.info('墨流し scripting API: window.suminagashi — ' +
-      'drop / stylus / comb / combAngle / rake / wind / clear');
+    console.info([
+      '墨流し scripting API — window.suminagashi',
+      '',
+      '  drop(x, y, r, color?, strength?)   墨を落とす（r=半径, strength 0–1=濃さ）',
+      '  stylus(x0, y0, x1, y1)             筆で水面を掻く',
+      '  comb(x0, y0, x1, y1)               九本歯の櫛で梳く',
+      '  combAngle(rad)                     櫛の向きを空中で変える',
+      '  rake(dx, dy, spacing?, strength?)  端から端まで通す全幅の櫛（例: rake(0,1,30,100)）',
+      '  wind(strength?)                    息を吹きかけて全体を揺らす',
+      '  clear()                            洗い流す',
+      '',
+      '  colors = 絵具皿の色見本 / water = 墨を押し広げる透明な水',
+      '',
+      '例（雨紋をひとつ）:',
+      "  for (let i = 0; i < 8; i++) suminagashi.drop(innerWidth/2, innerHeight/2, 40, i%2 ? suminagashi.water : '#2b4a73')",
+      '  suminagashi.wind(9)',
+    ].join('\n'));
   }
 })();
 </script>
