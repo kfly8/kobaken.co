@@ -2,7 +2,7 @@
 <html lang="ja">
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no, viewport-fit=cover">
 <title>墨流し — Suminagashi</title>
 <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' rx='12' fill='%23e9e3d6'/%3E%3Ccircle cx='31' cy='32' r='22' fill='none' stroke='%232f2b26' stroke-width='2.6'/%3E%3Ccircle cx='33' cy='31' r='15' fill='none' stroke='%232f2b26' stroke-width='2.2'/%3E%3Ccircle cx='32' cy='33' r='9' fill='none' stroke='%232f2b26' stroke-width='2'/%3E%3Ccircle cx='32' cy='32' r='3.5' fill='%232f2b26'/%3E%3C/svg%3E">
 <style>
@@ -150,13 +150,39 @@
   .seal:active{ transform:translateY(0); }
 
   @media (max-width:640px){
-    .title{ top:22px; right:22px; }
-    .bar{ gap:14px; padding:11px 18px; }
-    .dishes{ gap:10px; }
-    .dish .pool{ width:32px; height:32px; }
-    .tool{ width:32px; height:32px; font-size:13px; }
-    .btn{ padding:7px 10px 7px 13px; letter-spacing:.12em; }
-    .hint{ letter-spacing:.12em; }
+    .title{ top:16px; right:14px; gap:10px; }
+    .title h1{ font-size:30px; letter-spacing:.28em; }
+    .title .sub{ font-size:8px; letter-spacing:.4em; }
+    .title .rakkan{ width:18px; height:18px; font-size:10px; }
+    /* the hint moves to the left edge, written vertically */
+    .hint{
+      left:16px; right:auto; bottom:auto; top:18px;
+      transform:none;
+      writing-mode:vertical-rl;
+      white-space:normal;
+      max-height:62vh;
+      font-size:10px; letter-spacing:.16em;
+    }
+    /* the bar hugs the screen and wraps into rows instead of overflowing */
+    .bar{
+      left:8px; right:8px; transform:none;
+      bottom:calc(8px + env(safe-area-inset-bottom));
+      max-width:none;
+      flex-wrap:wrap;
+      justify-content:center;
+      gap:10px; row-gap:9px;
+      padding:10px 10px;
+      border-radius:18px;
+    }
+    .sep{ display:none; }
+    .dishes{ gap:8px; }
+    .dish{ width:36px; }
+    .dish .pool{ width:30px; height:30px; }
+    .dish span{ font-size:9px; letter-spacing:.14em; }
+    .tool{ width:34px; height:34px; font-size:13px; }
+    .actions{ gap:7px; }
+    .btn{ padding:6px 9px 6px 12px; font-size:10.5px; letter-spacing:.12em; }
+    .seal{ width:36px; height:36px; font-size:16px; }
   }
 </style>
 </head>
@@ -403,6 +429,31 @@
           }
           p[i] = x + dx / steps;
           p[i+1] = y + dy / steps;
+        }
+      }
+      resampleAll();
+    }
+    dirty = true;
+  }
+
+  // A full-width rake drawn across the whole tray in direction (ux,uy):
+  // teeth are parallel lines spaced along the perpendicular axis, so the
+  // displacement is a closed-form function of position — O(N) per pass.
+  function rakeField(ux, uy, offset, spacing, mag, lambda){
+    const len = Math.hypot(ux, uy);
+    ux /= len; uy /= len;
+    const steps = 4;
+    for (let s = 0; s < steps; s++){
+      for (const d of drops){
+        const p = d.pts;
+        for (let i = 0; i < p.length; i += 2){
+          const perp = -uy * p[i] + ux * p[i+1];
+          let dd = ((perp - offset) % spacing + spacing) % spacing;
+          dd = Math.min(dd, spacing - dd);
+          const t = lambda / (lambda + dd);
+          const f = mag * t * t / steps;
+          p[i] += ux * f;
+          p[i+1] += uy * f;
         }
       }
       resampleAll();
@@ -843,6 +894,52 @@
   })();
 
   updateButtons();
+
+  // ---- public scripting API ------------------------------------------
+  // The same handles used to compose the sample works — no tricks kept
+  // private. Open the console and paint programmatically (CSS px):
+  //   suminagashi.drop(x, y, r, color?, strength?)   ink drop (strength 0-1)
+  //   suminagashi.stylus(x0, y0, x1, y1)             drag the single stylus
+  //   suminagashi.comb(x0, y0, x1, y1)               drag the 9-tooth comb
+  //   suminagashi.combAngle(rad)                     turn the comb in the air
+  //   suminagashi.rake(dx, dy, spacing, strength)    full-width comb pass
+  //   suminagashi.wind(strength?)                    a breath over the surface
+  //   suminagashi.clear()                            rinse the tray
+  {
+    const _drop = addDrop, _tine = tine, _comb = comb, _wind = wind;
+    function seg(x0, y0, x1, y1, step, op){
+      const dLen = Math.hypot(x1 - x0, y1 - y0);
+      const n = Math.max(1, Math.ceil(dLen / step));
+      let px0 = x0, py0 = y0;
+      for (let i = 1; i <= n; i++){
+        const nx = x0 + (x1 - x0) * i / n, ny = y0 + (y1 - y0) * i / n;
+        op(px0, py0, nx, ny);
+        px0 = nx; py0 = ny;
+      }
+      resampleAll();
+    }
+    window.suminagashi = {
+      water: WATER,
+      colors: COLORS.map(c => ({ name: c.name, value: c.value })),
+      drop(x, y, r, color = '#2f2b26', strength = 1){
+        cancelIntro(); _drop(x, y, r, color, strength);
+      },
+      stylus(x0, y0, x1, y1){ cancelIntro(); seg(x0, y0, x1, y1, 8, _tine); },
+      comb(x0, y0, x1, y1){ cancelIntro(); seg(x0, y0, x1, y1, 10, _comb); },
+      combAngle(a){ combAngle = a; dirty = true; },
+      rake(dx, dy, spacing = 30, strength = 100, tooth = 12,
+           offset = Math.random() * spacing){
+        cancelIntro(); rakeField(dx, dy, offset, spacing, strength, tooth);
+      },
+      wind(strength = 9){ cancelIntro(); _wind(strength); },
+      clear(){
+        cancelIntro(); anims.length = 0; drops.length = 0;
+        dirty = true; updateButtons();
+      },
+    };
+    console.info('墨流し scripting API: window.suminagashi — ' +
+      'drop / stylus / comb / combAngle / rake / wind / clear');
+  }
 })();
 </script>
 </body>
