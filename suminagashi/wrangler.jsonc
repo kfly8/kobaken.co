@@ -1,0 +1,11 @@
+{
+  "$schema": "../node_modules/wrangler/config-schema.json",
+  "name": "suminagashi-kobaken-co",
+  "compatibility_date": "2025-05-01",
+  "assets": {
+    "directory": "./public"
+  },
+  "routes": [
+    { "pattern": "suminagashi.kobaken.co", "custom_domain": true }
+  ]
+}

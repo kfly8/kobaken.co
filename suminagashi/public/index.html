@@ -1,0 +1,848 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
+<title>墨流し — Suminagashi</title>
+<style>
+  :root{
+    --water:#e9e3d6;
+    --ink:#2b2723;
+    --faded:#8a8073;
+    --vermillion:#a63a2b;
+    --paper-white:rgba(252,250,244,.72);
+    --line:rgba(43,39,35,.16);
+  }
+  *{ margin:0; padding:0; box-sizing:border-box; }
+  html,body{ height:100%; overflow:hidden; }
+  body{
+    background:var(--water);
+    color:var(--ink);
+    font-family:"Hiragino Mincho ProN","Yu Mincho","Noto Serif JP","Source Han Serif JP",serif;
+    -webkit-user-select:none; user-select:none;
+  }
+  #water{
+    position:fixed; inset:0; width:100vw; height:100vh;
+    touch-action:none;
+    cursor:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='28' height='28' viewBox='0 0 28 28'%3E%3Ccircle cx='14' cy='14' r='6' fill='none' stroke='%232b2723' stroke-width='1.1'/%3E%3Ccircle cx='14' cy='14' r='1.3' fill='%232b2723'/%3E%3C/svg%3E") 14 14, crosshair;
+  }
+  /* washi grain + vignette, unifying everything beneath it */
+  .grain{
+    position:fixed; inset:0; z-index:50; pointer-events:none;
+    background-image:
+      radial-gradient(ellipse at 50% 38%, rgba(0,0,0,0) 55%, rgba(58,48,30,.075) 100%),
+      url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='260' height='260'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='2' stitchTiles='stitch'/%3E%3CfeColorMatrix type='saturate' values='0'/%3E%3CfeComponentTransfer%3E%3CfeFuncA type='table' tableValues='0 0.05'/%3E%3C/feComponentTransfer%3E%3C/filter%3E%3Crect width='260' height='260' filter='url(%23n)'/%3E%3C/svg%3E");
+    mix-blend-mode:multiply;
+  }
+
+  .title{
+    position:fixed; top:36px; right:40px; z-index:10;
+    display:flex; flex-direction:row; align-items:flex-start; gap:16px;
+    pointer-events:none;
+  }
+  .title h1{
+    writing-mode:vertical-rl;
+    font-size:clamp(34px, 5vw, 52px);
+    font-weight:500;
+    letter-spacing:.42em;
+    color:var(--ink);
+  }
+  .title .side{
+    display:flex; flex-direction:column; align-items:center; gap:14px;
+    padding-top:6px;
+  }
+  .title .sub{
+    writing-mode:vertical-rl;
+    font-size:10px; letter-spacing:.52em; color:var(--faded);
+  }
+  .title .rakkan{
+    width:22px; height:22px; border-radius:3px;
+    background:var(--vermillion); color:#f6f1e5;
+    font-size:12px; line-height:1;
+    display:grid; place-items:center;
+    box-shadow:0 1px 4px rgba(43,39,35,.25);
+  }
+
+  .hint{
+    position:fixed; left:50%; bottom:110px; transform:translateX(-50%);
+    z-index:10; pointer-events:none; white-space:nowrap;
+    font-size:11px; letter-spacing:.3em; color:var(--faded);
+    transition:opacity 1.4s ease;
+  }
+  .hint.faded{ opacity:0; }
+
+  .bar{
+    position:fixed; left:50%; bottom:24px; transform:translateX(-50%);
+    z-index:10;
+    display:flex; align-items:center; gap:22px;
+    padding:13px 26px;
+    background:var(--paper-white);
+    -webkit-backdrop-filter:blur(10px); backdrop-filter:blur(10px);
+    border:1px solid var(--line);
+    border-radius:999px;
+    box-shadow:0 14px 36px rgba(43,39,35,.13);
+    max-width:calc(100vw - 24px);
+  }
+  .dishes{ display:flex; gap:14px; }
+  .dish{
+    display:flex; flex-direction:column; align-items:center; gap:6px;
+    background:none; border:none; cursor:pointer; padding:0;
+    font-family:inherit;
+  }
+  .dish .pool{
+    width:36px; height:36px; border-radius:50%;
+    transition:transform .25s cubic-bezier(.2,.8,.3,1.2), box-shadow .25s ease;
+    box-shadow:inset 0 2px 5px rgba(43,39,35,.35), 0 1px 2px rgba(255,255,255,.6);
+  }
+  .dish span{
+    font-size:10px; letter-spacing:.22em; color:var(--faded);
+    transition:color .2s ease;
+  }
+  .dish:hover .pool{ transform:scale(1.1); }
+  .dish[aria-pressed="true"] .pool{
+    transform:scale(1.12);
+    box-shadow:inset 0 2px 5px rgba(43,39,35,.35),
+               0 0 0 3px var(--water), 0 0 0 4.5px var(--ink);
+  }
+  .dish[aria-pressed="true"] span{ color:var(--ink); }
+  .dish.mizu .pool{
+    background:radial-gradient(circle at 35% 30%, #f4efe4, var(--water) 70%);
+    box-shadow:inset 0 2px 6px rgba(43,39,35,.22), inset 0 0 0 1px rgba(43,39,35,.18);
+  }
+
+  .sep{ width:1px; height:30px; background:var(--line); }
+
+  .brushes{ display:flex; gap:8px; }
+  .tool{
+    width:38px; height:38px; border-radius:50%;
+    font-family:inherit; font-size:15px; color:var(--ink);
+    background:transparent; border:1px solid rgba(43,39,35,.28);
+    cursor:pointer;
+    transition:background .2s ease, color .2s ease, transform .2s ease;
+  }
+  .tool:hover{ transform:scale(1.08); }
+  .tool[aria-pressed="true"]{
+    background:var(--ink); color:#f2ecdf; border-color:var(--ink);
+  }
+
+  .actions{ display:flex; align-items:center; gap:10px; }
+  .btn{
+    font-family:inherit; font-size:11.5px; letter-spacing:.24em;
+    color:var(--ink); background:transparent;
+    border:1px solid rgba(43,39,35,.28); border-radius:999px;
+    padding:8px 15px 8px 18px; /* extra left pad balances letter-spacing */
+    cursor:pointer;
+    transition:background .2s ease, opacity .2s ease;
+    white-space:nowrap;
+  }
+  .btn:hover:not(:disabled){ background:rgba(43,39,35,.07); }
+  .btn:disabled{ opacity:.32; cursor:default; }
+  .seal{
+    width:42px; height:42px; border:none; border-radius:6px;
+    background:var(--vermillion); color:#f6f1e5;
+    font-family:inherit; font-size:19px;
+    cursor:pointer;
+    box-shadow:0 2px 8px rgba(166,58,43,.4);
+    transition:transform .2s ease, box-shadow .2s ease;
+  }
+  .seal:hover{ transform:translateY(-2px); box-shadow:0 5px 14px rgba(166,58,43,.45); }
+  .seal:active{ transform:translateY(0); }
+
+  @media (max-width:640px){
+    .title{ top:22px; right:22px; }
+    .bar{ gap:14px; padding:11px 18px; }
+    .dishes{ gap:10px; }
+    .dish .pool{ width:32px; height:32px; }
+    .tool{ width:32px; height:32px; font-size:13px; }
+    .btn{ padding:7px 10px 7px 13px; letter-spacing:.12em; }
+    .hint{ letter-spacing:.12em; }
+  }
+</style>
+</head>
+<body>
+
+<canvas id="water" aria-label="墨流しの水面。タップで墨を落とし、ドラッグで模様を描く"></canvas>
+<div class="grain"></div>
+
+<header class="title">
+  <div class="side">
+    <p class="sub">SUMINAGASHI</p>
+    <div class="rakkan">流</div>
+  </div>
+  <h1>墨流し</h1>
+</header>
+
+<p class="hint" id="hint">皿で墨を含み　·　触れて落とす　·　長押しで育つ　·　引いて掻く　·　櫛で梳く</p>
+
+<nav class="bar" aria-label="道具">
+  <div class="dishes" id="dishes"></div>
+  <div class="sep"></div>
+  <div class="brushes" id="brushes">
+    <button class="tool" data-tool="fude" aria-pressed="true" title="筆 — 一本の尖筆で掻く">筆</button>
+    <button class="tool" data-tool="kushi" aria-pressed="false" title="櫛 — 幾筋も一斉に梳く（ホイール / Rキーで回転・再タップで45°）">櫛</button>
+  </div>
+  <div class="sep"></div>
+  <div class="actions">
+    <button class="btn" id="windBtn" aria-label="風を送る" title="息を吹きかけて模様を揺らす">風</button>
+    <button class="btn" id="undoBtn" aria-label="取り消す">取り消す</button>
+    <button class="btn" id="clearBtn" aria-label="洗い流す">洗い流す</button>
+    <button class="seal" id="saveBtn" title="紙に写す（PNG保存）" aria-label="紙に写す">写</button>
+  </div>
+</nav>
+
+<script>
+(() => {
+  'use strict';
+
+  const WATER = '#e9e3d6';
+  const COLORS = [
+    { name:'墨',   value:'#2f2b26' },
+    { name:'藍',   value:'#2b4a73' },
+    { name:'蘇芳', value:'#8e3e41' },
+    { name:'山吹', value:'#bd8a33' },
+    { name:'松葉', value:'#4c6650' },
+    { name:'水',   value:WATER },
+  ];
+
+  const canvas = document.getElementById('water');
+  const ctx = canvas.getContext('2d');
+  let W = 0, H = 0, dpr = 1, dirty = true;
+
+  function resize(){
+    dpr = Math.min(window.devicePixelRatio || 1, 2);
+    W = window.innerWidth; H = window.innerHeight;
+    canvas.width = Math.round(W * dpr);
+    canvas.height = Math.round(H * dpr);
+    dirty = true;
+  }
+  window.addEventListener('resize', resize);
+  resize();
+
+  // ---- marbling model ------------------------------------------------
+  // Each drop is a closed polygon [x0,y0, x1,y1, ...] deformed by later
+  // operations. Based on the classic mathematical-marbling equations.
+  const drops = [];
+  const undoStack = [];
+  const MAX_UNDO = 30, MAX_EDGE = 4, MAX_PTS = 12000;
+  const LAMBDA = 55; // stylus falloff radius
+
+  function snapshot(){
+    undoStack.push(drops.map(d =>
+      ({ color: d.color, alpha: d.alpha, wear: d.wear, pts: d.pts.slice() })));
+    if (undoStack.length > MAX_UNDO) undoStack.shift();
+    updateButtons();
+  }
+
+  function undo(){
+    if (!undoStack.length) return;
+    anims.length = 0; // in-flight blooms reference discarded drops
+    const s = undoStack.pop();
+    drops.length = 0;
+    for (const d of s) drops.push(d);
+    dirty = true;
+    updateButtons();
+  }
+
+  // mix a hex colour toward white (f > 0) or black (f < 0)
+  function shade(hex, f){
+    const n = parseInt(hex.slice(1), 16);
+    let r = (n >> 16) & 255, g = (n >> 8) & 255, b = n & 255;
+    const t = f < 0 ? 0 : 255, a = Math.min(Math.abs(f), 1);
+    r = Math.round(r + (t - r) * a);
+    g = Math.round(g + (t - g) * a);
+    b = Math.round(b + (t - b) * a);
+    return '#' + ((r << 16) | (g << 8) | b).toString(16).padStart(6, '0');
+  }
+
+  function addDrop(cx, cy, r, color, strength = 1){
+    const rr = r * r;
+    for (const d of drops){
+      const p = d.pts;
+      for (let i = 0; i < p.length; i += 2){
+        const dx = p[i] - cx, dy = p[i+1] - cy;
+        const d2 = dx*dx + dy*dy;
+        if (d2 < 1e-9) continue;
+        const s = Math.sqrt(1 + rr / d2);
+        p[i] = cx + dx * s;
+        p[i+1] = cy + dy * s;
+      }
+      resample(d);
+    }
+    const n = 90, pts = new Array(n * 2);
+    for (let i = 0; i < n; i++){
+      const a = i / n * Math.PI * 2;
+      pts[i*2] = cx + Math.cos(a) * r;
+      pts[i*2+1] = cy + Math.sin(a) * r;
+    }
+    // real ink never lands twice at the same density; a drying brush
+    // (strength < 1) lands paler and lighter
+    const ink = color !== WATER;
+    drops.push({
+      color: ink
+        ? shade(color, (Math.random() - .45) * .16 + (1 - strength) * .22)
+        : color,
+      alpha: ink ? (.78 + Math.random() * .16) * (.4 + .6 * strength) : 1,
+      wear: 0,
+      pts,
+    });
+    dirty = true;
+    updateButtons();
+  }
+
+  // ---- ink-bloom animation -------------------------------------------
+  // Growing a circle's area by dArea displaces every point by the same
+  // marbling equation, so an eased sequence of small growths lands on the
+  // exact same pattern as a one-shot drop — but blooms visibly.
+  const anims = [];
+  let animTick = 0;
+
+  function growAll(cx, cy, dArea){
+    for (const d of drops){
+      const p = d.pts;
+      for (let i = 0; i < p.length; i += 2){
+        const dx = p[i] - cx, dy = p[i+1] - cy;
+        const d2 = dx*dx + dy*dy;
+        if (d2 < 1e-9) continue;
+        const s = Math.sqrt(1 + dArea / d2);
+        p[i] = cx + dx * s;
+        p[i+1] = cy + dy * s;
+      }
+    }
+  }
+
+  function addDropAnimated(cx, cy, r0, r1, color, dur, strength = 1){
+    addDrop(cx, cy, r0, color, strength);
+    anims.push({
+      cx, cy,
+      a0: r0 * r0, a1: r1 * r1, cur: r0 * r0,
+      start: performance.now(), dur,
+    });
+  }
+
+  function stepAnims(now){
+    for (let i = anims.length - 1; i >= 0; i--){
+      const a = anims[i];
+      const t = Math.min((now - a.start) / a.dur, 1);
+      const e = 1 - Math.pow(1 - t, 3); // ease-out cubic: fast bloom, slow settle
+      const area = a.a0 + (a.a1 - a.a0) * e;
+      const dArea = area - a.cur;
+      if (dArea > 0.25){
+        growAll(a.cx, a.cy, dArea);
+        a.cur = area;
+        dirty = true;
+      }
+      if (t >= 1){
+        anims.splice(i, 1);
+        resampleAll();
+      }
+    }
+    if (anims.length && ++animTick % 6 === 0) resampleAll();
+  }
+
+  // Drag a stylus tip: nearby points follow the motion with a smooth
+  // falloff, like ink caught in the wake.
+  function dragTip(tx, ty, ux, uy, len, lambda){
+    const cutoff = (lambda * 8) * (lambda * 8);
+    for (const d of drops){
+      const p = d.pts;
+      let work = 0;
+      for (let i = 0; i < p.length; i += 2){
+        const dx = p[i] - tx, dy = p[i+1] - ty;
+        const d2 = dx*dx + dy*dy;
+        if (d2 > cutoff) continue;
+        const t = lambda / (lambda + Math.sqrt(d2));
+        const f = len * t * t;
+        p[i] += ux * f;
+        p[i+1] += uy * f;
+        work += f;
+      }
+      // dragged ink is a stretched film: it thins with every pass and
+      // eventually sinks — record how hard this drop was worked.
+      // Clear water carries no pigment, so it never fades.
+      if (work > 0 && d.color !== WATER){
+        d.wear = (d.wear || 0) + work / (p.length / 2);
+      }
+    }
+  }
+
+  function tine(ax, ay, bx, by){
+    const dx = bx - ax, dy = by - ay;
+    const len = Math.hypot(dx, dy);
+    if (len < 0.4) return;
+    dragTip(bx, by, dx / len, dy / len, len, LAMBDA);
+    dirty = true;
+  }
+
+  // A comb: a row of teeth held perpendicular to the stroke, each tooth a
+  // narrow stylus — dragging combs the ink into parallel waves.
+  // A breath of wind: a smooth random flow field gently wavers every line
+  // on the surface — the irregularity real suminagashi gets for free.
+  function wind(strength = 9){
+    const oct = [];
+    for (let k = 0; k < 3; k++){
+      const wl = [430, 190, 85][k];
+      oct.push({
+        ax: Math.PI * 2 / wl * (.8 + Math.random() * .4),
+        by: Math.PI * 2 / wl * (.8 + Math.random() * .4),
+        p1: Math.random() * Math.PI * 2,
+        p2: Math.random() * Math.PI * 2,
+        amp: strength * [1, .45, .18][k],
+      });
+    }
+    const steps = 3;
+    for (let s = 0; s < steps; s++){
+      for (const d of drops){
+        const p = d.pts;
+        for (let i = 0; i < p.length; i += 2){
+          const x = p[i], y = p[i+1];
+          let dx = 0, dy = 0;
+          for (const o of oct){
+            dx += o.amp * Math.sin(y * o.by + o.p2) * Math.cos(x * o.ax * .5 + o.p1);
+            dy += o.amp * Math.sin(x * o.ax + o.p1) * Math.cos(y * o.by * .5 + o.p2);
+          }
+          p[i] = x + dx / steps;
+          p[i+1] = y + dy / steps;
+        }
+      }
+      resampleAll();
+    }
+    dirty = true;
+  }
+
+  // The comb's teeth sit along a bar whose direction (combAngle) is set
+  // by hand "in the air", independent of the stroke — like a real comb.
+  const COMB_TEETH = 4, COMB_SPACING = 44, COMB_LAMBDA = 22;
+  function comb(ax, ay, bx, by){
+    const dx = bx - ax, dy = by - ay;
+    const len = Math.hypot(dx, dy);
+    if (len < 0.4) return;
+    const ux = dx / len, uy = dy / len;
+    const bcx = Math.cos(combAngle), bcy = Math.sin(combAngle);
+    for (let k = -COMB_TEETH; k <= COMB_TEETH; k++){
+      dragTip(bx + bcx * k * COMB_SPACING, by + bcy * k * COMB_SPACING,
+              ux, uy, len, COMB_LAMBDA);
+    }
+    dirty = true;
+  }
+
+  function resample(d){
+    const p = d.pts, n = p.length;
+    const out = [];
+    for (let i = 0; i < n; i += 2){
+      const x0 = p[i], y0 = p[i+1];
+      const x1 = p[(i+2) % n], y1 = p[(i+3) % n];
+      out.push(x0, y0);
+      const el = Math.hypot(x1 - x0, y1 - y0);
+      if (el > MAX_EDGE && out.length < MAX_PTS * 2){
+        const k = Math.min(Math.ceil(el / MAX_EDGE), 8);
+        for (let j = 1; j < k; j++){
+          out.push(x0 + (x1 - x0) * j / k, y0 + (y1 - y0) * j / k);
+        }
+      }
+    }
+    d.pts = out;
+  }
+  function resampleAll(){ for (const d of drops) resample(d); }
+
+  // ---- pointer state (declared before the render loop reads it) ------
+  let hold = null, stroking = false, px = 0, py = 0, tineCount = 0;
+  let tool = 'fude';
+  let hoverPos = null;
+  let combAngle = 0; // the comb's bar direction, set freely "in the air"
+  const trail = []; // recent stroke points, drawn as a fading wake
+
+  // ---- brush ink load ------------------------------------------------
+  // Tapping a dish loads the brush; every drop spends ink, so successive
+  // drops land smaller and paler until the brush is dipped again.
+  let inkLoad = 1;
+  let cursorLevel = -1;
+
+  function updateCursor(){
+    const lvl = Math.max(0, Math.min(4, Math.round(inkLoad * 4)));
+    if (lvl === cursorLevel) return;
+    cursorLevel = lvl;
+    const o = (.2 + .8 * (lvl / 4)).toFixed(2);
+    const dot = (1.3 + 3 * (lvl / 4)).toFixed(1);
+    canvas.style.cursor =
+      `url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' ` +
+      `width='28' height='28' viewBox='0 0 28 28'%3E` +
+      `%3Ccircle cx='14' cy='14' r='6' fill='none' stroke='%232b2723' ` +
+      `stroke-opacity='${o}' stroke-width='1.1'/%3E` +
+      `%3Ccircle cx='14' cy='14' r='${dot}' fill='%232b2723' ` +
+      `fill-opacity='${o}'/%3E%3C/svg%3E") 14 14, crosshair`;
+  }
+
+  // radius and density of the drop a held brush would land right now
+  function effectiveDrop(h){
+    let r = previewRadius(performance.now() - h.t);
+    if (current.value === WATER) return { r, strength: 1 };
+    if (h.p > 0) r *= .55 + .9 * h.p; // pen pressure
+    r *= .45 + .55 * inkLoad;
+    let strength = .25 + .75 * inkLoad;
+    if (h.p > 0) strength = Math.min(1, strength * (.5 + .7 * h.p));
+    return { r, strength };
+  }
+
+  // ---- rendering -----------------------------------------------------
+  function drawDrops(c){
+    for (const d of drops){
+      const p = d.pts;
+      if (p.length < 6) continue;
+      c.beginPath();
+      c.moveTo(p[0], p[1]);
+      for (let i = 2; i < p.length; i += 2) c.lineTo(p[i], p[i+1]);
+      c.closePath();
+      c.globalAlpha = (d.alpha ?? 1) / (1 + (d.wear || 0) / 400);
+      c.fillStyle = d.color;
+      c.fill();
+    }
+    c.globalAlpha = 1;
+  }
+
+  function previewRadius(heldMs){
+    return Math.min(14 + heldMs * 0.045, 80);
+  }
+
+  function render(){
+    ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
+    ctx.fillStyle = WATER;
+    ctx.fillRect(0, 0, W, H);
+    drawDrops(ctx);
+    if (hold){
+      const { r, strength } = effectiveDrop(hold);
+      ctx.beginPath();
+      ctx.arc(hold.x, hold.y, r, 0, Math.PI * 2);
+      if (current.value === WATER){
+        ctx.fillStyle = WATER;
+        ctx.fill();
+        ctx.strokeStyle = 'rgba(43,39,35,.25)';
+        ctx.lineWidth = 1;
+        ctx.stroke();
+      } else {
+        ctx.globalAlpha = .88 * (.4 + .6 * strength);
+        ctx.fillStyle = current.value;
+        ctx.fill();
+        ctx.globalAlpha = 1;
+      }
+    }
+    drawToolFeedback();
+  }
+
+  const TRAIL_MS = 700;
+  function drawToolFeedback(){
+    const now = performance.now();
+    // fading wake behind the stroke
+    while (trail.length && now - trail[0].t > TRAIL_MS) trail.shift();
+    if (trail.length > 1){
+      ctx.lineCap = 'round';
+      for (let i = 1; i < trail.length; i++){
+        const a = 1 - (now - trail[i].t) / TRAIL_MS;
+        ctx.strokeStyle = `rgba(43,39,35,${(.32 * a).toFixed(3)})`;
+        ctx.lineWidth = 1.4;
+        ctx.beginPath();
+        ctx.moveTo(trail[i-1].x, trail[i-1].y);
+        ctx.lineTo(trail[i].x, trail[i].y);
+        ctx.stroke();
+      }
+    }
+    // the comb's teeth, shown from hover onward so its reach is visible
+    if (tool === 'kushi' && !hold && (stroking || hoverPos)){
+      const pos = stroking ? { x: px, y: py } : hoverPos;
+      const nx = Math.cos(combAngle), ny = Math.sin(combAngle);
+      const span = COMB_TEETH * COMB_SPACING;
+      ctx.strokeStyle = 'rgba(43,39,35,.14)';
+      ctx.lineWidth = 1;
+      ctx.beginPath();
+      ctx.moveTo(pos.x - nx * span, pos.y - ny * span);
+      ctx.lineTo(pos.x + nx * span, pos.y + ny * span);
+      ctx.stroke();
+      ctx.fillStyle = 'rgba(43,39,35,.42)';
+      for (let k = -COMB_TEETH; k <= COMB_TEETH; k++){
+        ctx.beginPath();
+        ctx.arc(pos.x + nx * k * COMB_SPACING, pos.y + ny * k * COMB_SPACING,
+                2.4, 0, Math.PI * 2);
+        ctx.fill();
+      }
+    }
+  }
+
+  (function loop(){
+    stepAnims(performance.now());
+    if (hold || trail.length) dirty = true;
+    if (dirty){ render(); dirty = false; }
+    requestAnimationFrame(loop);
+  })();
+
+  // ---- pointer interaction -------------------------------------------
+  canvas.addEventListener('pointerdown', e => {
+    cancelIntro();
+    canvas.setPointerCapture(e.pointerId);
+    snapshot();
+    hold = {
+      x: e.clientX, y: e.clientY, t: performance.now(),
+      p: e.pointerType === 'pen' ? e.pressure : 0,
+    };
+    px = e.clientX; py = e.clientY;
+    document.getElementById('hint').classList.add('faded');
+  });
+
+  canvas.addEventListener('pointermove', e => {
+    hoverPos = { x: e.clientX, y: e.clientY };
+    if (!hold && !stroking){
+      if (tool === 'kushi') dirty = true; // keep the hovering comb in view
+      return;
+    }
+    const x = e.clientX, y = e.clientY;
+    if (hold){
+      if (e.pointerType === 'pen') hold.p = Math.max(hold.p, e.pressure);
+      if (Math.hypot(x - hold.x, y - hold.y) > 6){
+        stroking = true;
+        hold = null;
+      } else {
+        return;
+      }
+    }
+    const sx = px, sy = py;
+    const dist = Math.hypot(x - sx, y - sy);
+    const steps = Math.max(1, Math.ceil(dist / 7));
+    for (let i = 1; i <= steps; i++){
+      const nx = sx + (x - sx) * i / steps;
+      const ny = sy + (y - sy) * i / steps;
+      if (tool === 'kushi') comb(px, py, nx, ny);
+      else tine(px, py, nx, ny);
+      px = nx; py = ny;
+    }
+    trail.push({ x, y, t: performance.now() });
+    if (++tineCount % (tool === 'kushi' ? 3 : 5) === 0) resampleAll();
+  });
+
+  function endPointer(){
+    if (hold){
+      const { r, strength } = effectiveDrop(hold);
+      // land at the previewed size, then bleed outward a little
+      addDropAnimated(hold.x, hold.y, r, r * 1.22, current.value, 700, strength);
+      if (current.value !== WATER){
+        inkLoad = Math.max(0, inkLoad - (r * r) / 6400 * 1.1 - .06);
+        updateCursor();
+      }
+      hold = null;
+    }
+    if (stroking){
+      resampleAll();
+      stroking = false;
+    }
+    updateButtons();
+  }
+  canvas.addEventListener('pointerup', endPointer);
+  canvas.addEventListener('pointercancel', () => { hold = null; stroking = false; });
+  canvas.addEventListener('pointerleave', () => { hoverPos = null; dirty = true; });
+
+  // rotate the comb in the air with the wheel — no need to touch the water
+  canvas.addEventListener('wheel', e => {
+    if (tool !== 'kushi') return;
+    e.preventDefault();
+    const d = Math.max(-40, Math.min(40, e.deltaY));
+    combAngle += d * .004;
+    dirty = true;
+  }, { passive: false });
+
+  // ---- palette -------------------------------------------------------
+  let current = COLORS[0];
+  const dishesEl = document.getElementById('dishes');
+
+  COLORS.forEach((c, i) => {
+    const b = document.createElement('button');
+    b.className = 'dish' + (c.value === WATER ? ' mizu' : '');
+    b.setAttribute('aria-pressed', String(i === 0));
+    b.title = c.name + (c.value === WATER
+      ? '（墨を押し広げる透明な滴）'
+      : '（タップで筆に墨を含み直す）');
+    const pool = document.createElement('div');
+    pool.className = 'pool';
+    if (c.value !== WATER){
+      pool.style.background =
+        `radial-gradient(circle at 35% 30%, ${c.value}e6, ${c.value})`;
+    }
+    const label = document.createElement('span');
+    label.textContent = c.name;
+    b.append(pool, label);
+    b.addEventListener('click', () => select(i));
+    dishesEl.append(b);
+  });
+
+  function select(i){
+    current = COLORS[i];
+    [...dishesEl.children].forEach((el, j) =>
+      el.setAttribute('aria-pressed', String(i === j)));
+    inkLoad = 1; // dipping the brush
+    updateCursor();
+  }
+
+  // ---- brush tools ---------------------------------------------------
+  const brushesEl = document.getElementById('brushes');
+  brushesEl.addEventListener('click', e => {
+    const b = e.target.closest('.tool');
+    if (!b) return;
+    // tapping the already-selected comb turns it 45° (for touch screens)
+    if (b.dataset.tool === 'kushi' && tool === 'kushi'){
+      combAngle += Math.PI / 4;
+      dirty = true;
+      return;
+    }
+    tool = b.dataset.tool;
+    [...brushesEl.children].forEach(el =>
+      el.setAttribute('aria-pressed', String(el === b)));
+  });
+  function selectTool(name){
+    const b = brushesEl.querySelector(`[data-tool="${name}"]`);
+    if (b) b.click();
+  }
+
+  // ---- actions -------------------------------------------------------
+  const undoBtn = document.getElementById('undoBtn');
+  const clearBtn = document.getElementById('clearBtn');
+  const windBtn = document.getElementById('windBtn');
+
+  function updateButtons(){
+    undoBtn.disabled = undoStack.length === 0;
+    clearBtn.disabled = drops.length === 0;
+    windBtn.disabled = drops.length === 0;
+  }
+
+  windBtn.addEventListener('click', () => {
+    if (!drops.length) return;
+    cancelIntro();
+    snapshot();
+    wind(9);
+  });
+
+  undoBtn.addEventListener('click', () => { cancelIntro(); undo(); });
+  clearBtn.addEventListener('click', () => {
+    cancelIntro();
+    if (!drops.length) return;
+    snapshot();
+    anims.length = 0;
+    drops.length = 0;
+    dirty = true;
+    updateButtons();
+  });
+
+  document.getElementById('saveBtn').addEventListener('click', () => {
+    const s = 2;
+    // sharp pattern layer
+    const pat = document.createElement('canvas');
+    pat.width = W * s; pat.height = H * s;
+    const pc = pat.getContext('2d');
+    pc.scale(s, s);
+    drawDrops(pc);
+
+    const oc = document.createElement('canvas');
+    oc.width = W * s; oc.height = H * s;
+    const o = oc.getContext('2d');
+    o.fillStyle = WATER;
+    o.fillRect(0, 0, oc.width, oc.height);
+    // ink soaking into paper: a wide faint halo under a softened body
+    if ('filter' in o){
+      o.filter = `blur(${2.6 * s}px)`;
+      o.globalAlpha = .45;
+      o.drawImage(pat, 0, 0);
+      o.filter = `blur(${.7 * s}px)`;
+      o.globalAlpha = .94;
+      o.drawImage(pat, 0, 0);
+      o.filter = 'none';
+      o.globalAlpha = 1;
+    } else {
+      o.drawImage(pat, 0, 0);
+    }
+    // paper grain
+    o.setTransform(1, 0, 0, 1, 0, 0);
+    const tile = document.createElement('canvas');
+    tile.width = tile.height = 128;
+    const tc = tile.getContext('2d');
+    const im = tc.createImageData(128, 128);
+    for (let i = 0; i < im.data.length; i += 4){
+      im.data[i] = im.data[i+1] = im.data[i+2] = 30;
+      im.data[i+3] = Math.random() < .5 ? 0 : Math.random() * 16;
+    }
+    tc.putImageData(im, 0, 0);
+    o.fillStyle = o.createPattern(tile, 'repeat');
+    o.fillRect(0, 0, oc.width, oc.height);
+    const a = document.createElement('a');
+    a.download = 'suminagashi.png';
+    a.href = oc.toDataURL('image/png');
+    a.click();
+  });
+
+  document.addEventListener('keydown', e => {
+    if ((e.metaKey || e.ctrlKey) && e.key === 'z'){
+      e.preventDefault();
+      cancelIntro();
+      undo();
+    } else if (e.key >= '1' && e.key <= String(COLORS.length)){
+      select(Number(e.key) - 1);
+    } else if (e.key === 'f'){
+      selectTool('fude');
+    } else if (e.key === 'c'){
+      selectTool('kushi');
+    } else if (e.key === 'w'){
+      windBtn.click();
+    } else if (e.key === 'r' || e.key === 'R'){
+      combAngle += (e.shiftKey ? -1 : 1) * Math.PI / 12;
+      dirty = true;
+    }
+  });
+
+  // ---- opening flourish: concentric rings, then one slow S-stroke ----
+  const introTimers = [];
+  let introRaf = 0;
+  function cancelIntro(){
+    introTimers.forEach(clearTimeout);
+    introTimers.length = 0;
+    if (introRaf) cancelAnimationFrame(introRaf);
+    introRaf = 0;
+  }
+
+  (function intro(){
+    const cx = W * .5, cy = H * .44;
+    const seq = [];
+    for (let i = 0; i < 9; i++){
+      seq.push({
+        x: cx + (Math.random() - .5) * 14,
+        y: cy + (Math.random() - .5) * 14,
+        r: 26 + Math.random() * 16,
+        color: i % 2 === 0 ? COLORS[0].value : WATER,
+      });
+    }
+    snapshot();
+    seq.forEach((d, i) => {
+      introTimers.push(setTimeout(
+        () => addDropAnimated(d.x, d.y, d.r * .3, d.r, d.color, 900),
+        350 + i * 170));
+    });
+    // slow horizontal S-curve through the rings
+    introTimers.push(setTimeout(() => {
+      const dur = 1500, x0 = cx - Math.min(W * .3, 260), x1 = cx + Math.min(W * .3, 260);
+      let start = 0, lx = x0, ly = cy;
+      function sweep(ts){
+        if (!start) start = ts;
+        const t = Math.min((ts - start) / dur, 1);
+        const x = x0 + (x1 - x0) * t;
+        const y = cy + Math.sin(t * Math.PI * 2) * 46;
+        tine(lx, ly, x, y);
+        lx = x; ly = y;
+        if (t < 1){
+          introRaf = requestAnimationFrame(sweep);
+        } else {
+          introRaf = 0;
+          resampleAll();
+        }
+      }
+      introRaf = requestAnimationFrame(sweep);
+    }, 350 + seq.length * 170 + 750));
+  })();
+
+  updateButtons();
+})();
+</script>
+</body>
+</html>
