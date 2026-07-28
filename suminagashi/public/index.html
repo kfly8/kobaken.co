@@ -68,7 +68,28 @@
     border-radius:999px;
     box-shadow:0 14px 36px rgba(43,39,35,.13);
     max-width:calc(100vw - 24px);
+    transition:opacity .35s ease;
   }
+  /* idle: fade the toolbar out of the way so the whole tray can be
+     painted; inert removes it from hit-testing and the tab order too */
+  .bar[inert]{ opacity:0; }
+
+  .bar-handle{
+    position:fixed; left:50%; transform:translateX(-50%);
+    bottom:calc(14px + env(safe-area-inset-bottom));
+    z-index:10;
+    width:52px; height:15px;
+    border:1px solid var(--line); border-radius:999px;
+    background:var(--paper-white);
+    -webkit-backdrop-filter:blur(6px); backdrop-filter:blur(6px);
+    box-shadow:0 6px 16px rgba(43,39,35,.14);
+    cursor:pointer; padding:0;
+    opacity:0; pointer-events:none;
+    transition:opacity .35s ease, transform .2s ease;
+  }
+  .bar-handle.show{ opacity:1; pointer-events:auto; }
+  .bar-handle:hover{ transform:translateX(-50%) scale(1.08); }
+
   .palette-btn{
     width:44px; height:44px; border-radius:50%;
     border:1px solid rgba(43,39,35,.28);
@@ -253,6 +274,8 @@
 <div class="palette-panel" id="palettePanel" role="menu" aria-hidden="true">
   <div class="palette-grid" id="paletteGrid"></div>
 </div>
+
+<button class="bar-handle" id="barHandle" aria-label="道具を表示" title="道具を表示"></button>
 
 <script>
 (() => {
@@ -725,6 +748,7 @@
     const open = force !== undefined
       ? force
       : !palettePanel.classList.contains('open');
+    barLastActive = performance.now();
     if (open) positionPalettePanel();
     palettePanel.classList.toggle('open', open);
     palettePanel.setAttribute('aria-hidden', String(!open));
@@ -801,6 +825,48 @@
     const b = brushesEl.querySelector(`[data-tool="${name}"]`);
     if (b) b.click();
   }
+
+  // ---- toolbar auto-hide -----------------------------------------------
+  // A toolbar that always sits on the tray would leave a patch of it
+  // permanently unreachable. So it fades out when idle — like a real brush
+  // set aside on the table — leaving only a small handle to bring it back.
+  // The handle is the ONLY revive trigger: anything proximity-based (e.g.
+  // "reveal when the mouse nears the bottom edge") can't tell "reaching for
+  // a tool" apart from "painting the exact spot the bar used to cover", and
+  // would pop the bar up right as the user tries to paint under it.
+  const bar = document.querySelector('.bar');
+  const barHandle = document.getElementById('barHandle');
+  const BAR_IDLE_MS = 2200;
+  let barCollapsed = false;
+  let barLastActive = performance.now();
+
+  function expandBar(){
+    barLastActive = performance.now();
+    if (!barCollapsed) return;
+    barCollapsed = false;
+    bar.inert = false;
+    barHandle.classList.remove('show');
+  }
+  function collapseBar(){
+    if (barCollapsed || palettePanel.classList.contains('open')) return;
+    barCollapsed = true;
+    bar.inert = true;
+    barHandle.classList.add('show');
+  }
+
+  bar.addEventListener('pointerenter', expandBar);
+  bar.addEventListener('pointerdown', expandBar, { capture: true });
+  barHandle.addEventListener('click', expandBar);
+  // a plain interval (not the rAF render loop) so idle-checking needs no
+  // per-frame precision and never races the render loop's own setup order
+  setInterval(() => {
+    // never collapse while the pointer rests on it or it holds keyboard focus
+    if (bar.matches(':hover') || bar.contains(document.activeElement)){
+      barLastActive = performance.now();
+      return;
+    }
+    if (performance.now() - barLastActive > BAR_IDLE_MS) collapseBar();
+  }, 300);
 
   // ---- actions -------------------------------------------------------
   const undoBtn = document.getElementById('undoBtn');
