@@ -112,7 +112,7 @@
     border:1px solid var(--line);
     border-radius:22px;
     box-shadow:0 14px 36px rgba(43,39,35,.18);
-    padding:18px 20px;
+    padding:8px 10px;
     max-width:calc(100vw - 24px);
     opacity:0; pointer-events:none;
     transform:translateX(-50%) translateY(6px);
@@ -126,6 +126,10 @@
     display:grid;
     grid-template-columns:repeat(5, 1fr);
     gap:16px 20px;
+    /* extra padding so the selected swatch's scale(1.12) + ring box-shadow
+       has room to render before hitting the grid's own clip edge — overflow-y
+       here forces overflow-x to clip too, per the CSS overflow-pairing rule */
+    padding:12px;
     max-height:50vh;
     overflow-y:auto;
   }
