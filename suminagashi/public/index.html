@@ -64,14 +64,6 @@
     box-shadow:0 1px 4px rgba(43,39,35,.25);
   }
 
-  .hint{
-    position:fixed; left:50%; bottom:110px; transform:translateX(-50%);
-    z-index:10; pointer-events:none; white-space:nowrap;
-    font-size:11px; letter-spacing:.3em; color:var(--faded);
-    transition:opacity 1.4s ease;
-  }
-  .hint.faded{ opacity:0; }
-
   .bar{
     position:fixed; left:50%; bottom:24px; transform:translateX(-50%);
     z-index:10;
@@ -203,15 +195,6 @@
     .title h1{ font-size:30px; letter-spacing:.28em; }
     .title .sub{ font-size:8px; letter-spacing:.4em; }
     .title .rakkan{ width:18px; height:18px; font-size:10px; }
-    /* the hint moves to the left edge, written vertically */
-    .hint{
-      left:16px; right:auto; bottom:auto; top:18px;
-      transform:none;
-      writing-mode:vertical-rl;
-      white-space:normal;
-      max-height:62vh;
-      font-size:10px; letter-spacing:.16em;
-    }
     /* the bar hugs the screen and wraps into rows instead of overflowing */
     .bar{
       left:8px; right:8px; transform:none;
@@ -229,9 +212,11 @@
       transform:translateY(6px);
     }
     .palette-panel.open{ transform:translateY(0); }
+    /* 5 columns divides the 15-colour palette evenly (3 full rows) —
+       any other column count leaves a lopsided, left-heavy last row */
     .palette-grid{
-      grid-template-columns:repeat(4, 1fr);
-      gap:12px 10px;
+      grid-template-columns:repeat(5, 1fr);
+      gap:12px 8px;
     }
     .dish{ width:36px; }
     .dish .pool{ width:30px; height:30px; }
@@ -255,8 +240,6 @@
   </div>
   <h1>墨流し</h1>
 </header>
-
-<p class="hint" id="hint">パレットで色を選び　·　触れて落とす　·　長押しで育つ　·　引いて掻く　·　櫛で梳く</p>
 
 <nav class="bar" aria-label="道具">
   <button class="palette-btn" id="paletteBtn"
@@ -671,7 +654,6 @@
       p: e.pointerType === 'pen' ? e.pressure : 0,
     };
     px = e.clientX; py = e.clientY;
-    document.getElementById('hint').classList.add('faded');
   });
 
   canvas.addEventListener('pointermove', e => {
