@@ -2,20 +2,23 @@ import 'hono'
 import { jsxRenderer } from 'hono/jsx-renderer'
 import { Style } from 'hono/css'
 import { BfScripts } from '@barefootjs/hono/scripts'
+import { Header } from '@/components/Header'
 
 declare module 'hono' {
   interface ContextRenderer {
     (
-      content: string | Promise<string>,
+      content: unknown,
       props?: {
-        title: string,
-        description: string,
+        title?: string,
+        description?: string,
+        canonical?: string,
+        isHome?: boolean,
       }): Response
   }
 }
 
 export const renderer = jsxRenderer(
-  ({ children, title, description }) => {
+  ({ children, title, description, isHome }) => {
     const asset_version = 202608210000
 
     return (
@@ -32,6 +35,7 @@ export const renderer = jsxRenderer(
           <link href={`/static/fontello-embedded.css?v=${asset_version}`} rel="stylesheet" />
           <link href={`/static/reset.css?v=${asset_version}`} rel="stylesheet" />
           <link href={`/static/style.css?v=${asset_version}`} rel="stylesheet" />
+          <link href={`/static/header.css?v=${asset_version}`} rel="stylesheet" />
           <Style />
           <script src={`/static/script.js?v=${asset_version}`} defer />
           <meta name="description" content={description} />
@@ -46,6 +50,7 @@ export const renderer = jsxRenderer(
           <meta name="twitter:creator" content="@kfly8" />
         </head>
         <body>
+          <Header showLogo={!isHome} />
           {children}
           <BfScripts />
         </body>

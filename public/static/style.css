@@ -34,6 +34,11 @@
 
 html {
   font-family: sans-serif;
+  /* Reserve the scrollbar's width even on short pages that don't need to
+     scroll, so a classic (non-overlay) scrollbar appearing/disappearing
+     between pages doesn't shift the effective viewport width — and with
+     it, anything positioned against the right edge (e.g. .site-nav). */
+  scrollbar-gutter: stable;
 }
 
 body {
@@ -41,14 +46,6 @@ body {
   color: var(--color-text-main);
   transition: background-color 0.2s ease-out, color 0.2s ease-out;
   overflow-x: hidden;
-}
-
-#toggle-theme {
-  position: absolute;
-  top: 10px;
-  right: 15px;
-  font-size: x-large;
-  cursor: pointer;
 }
 
 .switch-light {
