@@ -6,7 +6,7 @@ import { Activities } from './activities'
 export function ProfilePage() {
   const BioClass = css`
     line-height: 1.8;
-    margin-bottom: 40px;
+    padding: 20px 0 40px;
   `
 
   return (
