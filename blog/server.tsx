@@ -7,6 +7,7 @@ import { PostList } from '@/components/PostList'
 import { PostArticle } from '@/components/PostArticle'
 import { posts, getPost } from './content'
 import { Assets } from '../dist/bf-assets'
+import { themeInitScript } from '../theme-script'
 
 declare module 'hono' {
   interface ContextRenderer {
@@ -28,6 +29,7 @@ const blogRenderer = jsxRenderer(({ children, title, description, canonical }) =
   <html lang="ja">
     <head>
       <meta charset="utf-8" />
+      <script dangerouslySetInnerHTML={{ __html: themeInitScript }} />
       <meta name="viewport" content="width=device-width, initial-scale=1.0" />
       <title>{title ?? 'kobaken blog'}</title>
       <meta name="description" content={description ?? ''} />

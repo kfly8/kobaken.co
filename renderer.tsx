@@ -3,6 +3,7 @@ import { jsxRenderer } from 'hono/jsx-renderer'
 import { Style } from 'hono/css'
 import { BfScripts } from '@barefootjs/hono/scripts'
 import { Header } from '@/components/Header'
+import { themeInitScript } from './theme-script'
 
 declare module 'hono' {
   interface ContextRenderer {
@@ -24,9 +25,10 @@ export const renderer = jsxRenderer(
     return (
       <html lang="ja">
         <head>
+          <meta charset="utf-8" />
+          <script dangerouslySetInnerHTML={{ __html: themeInitScript }} />
           <script async src="https://www.googletagmanager.com/gtag/js?id=G-N1NZRELLMR"></script>
           <script src="/static/gtag.js"></script>
-          <meta charset="utf-8" />
           <title>{title}</title>
           <meta http-equiv="X-UA-Compatible" content="IE=edge" />
           <meta name="viewport" content="width=device-width, initial-scale=1.0" />
