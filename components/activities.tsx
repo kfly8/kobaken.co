@@ -27,6 +27,11 @@ export const Activities = () => {
     { date: '2024-02-10', url: 'https://yapcjapan.org/2024hiroshima/', title: 'YAPC::Hiroshima 2024 の運営リーダーをしました' },
     { date: '2024-03-29', url: 'https://findy-code.io/engineer-lab/yapc2024', title: 'インタビュー「なぜ、YAPCはこれほど愛されるカンファレンスになったのか。運営の裏側をHiroshima 2024スタッフたちに聞いた」' },
     { date: '2024-05-30', url: 'https://findy-code.io/engineer-lab/influential-books-4', title: '寄稿「あなたのキャリアに影響を与えた本は何ですか？ 著名エンジニアの方々に聞いてみた【第四弾】」' },
+    { date: '2025-03-08', url: 'https://speakerdeck.com/kfly8/perlnosheng-kinokori', title: 'きのこカンファレンス前夜祭で登壇「Perlの生きのこり」' },
+    { date: '2025-09-15', url: 'https://github.com/kfly8/Mojolicious-Plugin-Inertia', title: 'Mojolicious::Plugin::Inertia をリリース' },
+    { date: '2025-11-14', url: 'https://speakerdeck.com/kfly8/puroziekutonokong-qi-wodu-ndekai-fa-sitekureruperlnoaiturugahosii', title: 'YAPC::Fukuoka 2025 LT「プロジェクトの空気を読んで開発してくれるPerlのAIツールがほしい」' },
+    { date: '2025-11-15', url: 'https://speakerdeck.com/kfly8/perlnosheng-kinokori-yapc-fukuoka-2025', title: 'YAPC::Fukuoka 2025 登壇「Perlの生きのこり」' },
+    { date: '2025-12-20', url: 'https://github.com/piconic-ai/barefootjs', title: 'BarefootJS の開発を開始' },
   ]
 
   const formatMMDD = (date: Date) => {
