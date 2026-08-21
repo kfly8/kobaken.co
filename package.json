@@ -2,20 +2,27 @@
   "name": "kobaken.co",
   "type": "module",
   "scripts": {
-    "dev": "vite",
-    "build": "vite build && vite build --ssr",
-    "preview": "$npm_execpath run build && wrangler dev dist-server/index.js",
-    "deploy": "$npm_execpath run build && wrangler deploy dist-server/index.js",
+    "dev": "vite build && concurrently -k -n vite,wrangler -c blue,green \"vite dev\" \"wrangler dev --live-reload\"",
+    "build": "vite build",
+    "watch": "vite build --watch",
+    "deploy": "vite build && wrangler deploy",
     "cf-typegen": "wrangler types --env-interface CloudflareBindings"
   },
   "dependencies": {
+    "@barefootjs/client": "^0.31.9",
+    "@barefootjs/hono": "^0.31.9",
+    "@barefootjs/jsx": "^0.31.9",
+    "@barefootjs/shared": "^0.31.9",
     "hono": "^4.7.10"
   },
   "devDependencies": {
-    "@cloudflare/vite-plugin": "^0.1.15",
-    "@hono/vite-build": "^1.5.0",
+    "@barefootjs/cli": "^0.31.9",
+    "@barefootjs/test": "^0.31.9",
+    "@barefootjs/vite": "^0.31.9",
+    "@cloudflare/workers-types": "^5.20260821.1",
+    "@types/node": "^26.2.0",
+    "concurrently": "^10.0.5",
     "vite": "^6.1.1",
-    "vite-plugin-ssr-hot-reload": "^0.4.1",
     "wrangler": "^4.4.0"
   }
 }

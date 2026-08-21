@@ -1,9 +1,10 @@
 node_modules
 dist
-dist-server
+public/components
 
 .wrangler
 .dev.vars
+.playwright-mcp
 
 # Change them to your taste:
 wrangler.toml

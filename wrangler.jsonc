@@ -2,9 +2,12 @@
   "$schema": "node_modules/wrangler/config-schema.json",
   "name": "kobaken-co",
   "compatibility_date": "2024-04-01",
-  "main": "./src/index.tsx",
+  "main": "server.tsx",
+  // Static assets (CSS, generated client JS, manifest) are served
+  // directly by Workers Assets. The Worker script handles everything
+  // else — SSR, API routes, etc.
   "assets": {
-    "directory": "./dist"
+    "directory": "./public"
   },
   "observability": {
     "enabled": true,

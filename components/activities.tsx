@@ -86,13 +86,13 @@ export const Activities = () => {
 
   return (
     <>
-      <section class={ActivitiesClass}>
+      <section className={ActivitiesClass}>
         <h2>Activities</h2>
         <ul>
           { displayActivities.map((activity) => (
-            <li>
-              <span class="date">{activity.displayDate}</span>
-              <span class="title"><a href={activity.url}>{activity.title}</a></span>
+            <li key={activity.url}>
+              <span className="date">{activity.displayDate}</span>
+              <span className="title"><a href={activity.url}>{activity.title}</a></span>
             </li>
           ))}
         </ul>

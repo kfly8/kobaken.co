@@ -42,15 +42,15 @@ export const Profile = () => {
 
   return (
     <>
-      <section class={ProfileClass}>
+      <section className={ProfileClass}>
           <img src="/static/img/kobaken.jpg" alt="icon" />
           <div>
             <h1>kobaken</h1>
             <ul>
-              <li><a href="https://kfly8.hatenablog.com/"><i class="icon-rss"></i><span class="sr-only">Blog</span></a></li>
-              <li><a href="https://github.com/kfly8"><i class="icon-github"></i><span class="sr-only">GitHub</span></a></li>
-              <li><a href="https://twitter.com/kfly8"><i class="icon-twitter"></i><span class="sr-only">Twitter</span></a></li>
-              <li><a href="mailto:kentafly88@gmail.com"><i class="icon-mail"></i><span class="sr-only">Mail</span></a></li>
+              <li><a href="https://kfly8.hatenablog.com/"><i className="icon-rss"></i><span className="sr-only">Blog</span></a></li>
+              <li><a href="https://github.com/kfly8"><i className="icon-github"></i><span className="sr-only">GitHub</span></a></li>
+              <li><a href="https://twitter.com/kfly8"><i className="icon-twitter"></i><span className="sr-only">Twitter</span></a></li>
+              <li><a href="mailto:kentafly88@gmail.com"><i className="icon-mail"></i><span className="sr-only">Mail</span></a></li>
             </ul>
           </div>
       </section>

@@ -17,7 +17,7 @@ export const Tagline = () => {
 
   return (
     <>
-      <div class={TaglineClass}>
+      <div className={TaglineClass}>
         Software Engineer | Engineering Manager | Tech Conference Organizer
       </div>
     </>

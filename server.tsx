@@ -2,7 +2,7 @@ import { Hono } from 'hono'
 import { cors } from 'hono/cors'
 import { renderer } from './renderer'
 
-import { Root } from './components/root'
+import { Root } from '@/components/root'
 
 const app = new Hono()
 

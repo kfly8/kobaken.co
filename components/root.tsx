@@ -12,7 +12,7 @@ export const Root = () => {
     <>
       <ToggleTheme />
       <Tagline />
-      <div class={css` margin: 0 auto; max-width: 800px; padding: 0 20px;`}>
+      <div className={css` margin: 0 auto; max-width: 800px; padding: 0 20px;`}>
         <Profile />
         <Activities />
       </div>

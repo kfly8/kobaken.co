@@ -2,14 +2,26 @@
   "compilerOptions": {
     "target": "ESNext",
     "module": "ESNext",
-    "moduleResolution": "Bundler",
+    "moduleResolution": "bundler",
+    "jsx": "react-jsx",
+    "jsxImportSource": "@barefootjs/hono/jsx",
+    // `@cloudflare/workers-types` covers the deployed Worker;
+    // `node` is needed so test files (`renderToTest` reads via
+    // `fs`) type-check without an extra install step.
+    "types": ["@cloudflare/workers-types", "vite/client"],
     "strict": true,
     "skipLibCheck": true,
-    "lib": [
-      "ESNext"
-    ],
-    "types": ["vite/client"],
-    "jsx": "react-jsx",
-    "jsxImportSource": "hono/jsx"
-  }
+    "esModuleInterop": true,
+    "resolveJsonModule": true,
+    "noEmit": true,
+    "baseUrl": ".",
+    "paths": {
+      // Build output first so wrangler resolves the compiled SSR
+      // template (with hydration markers + script collection).
+      // Source is the fallback for files not yet built.
+      "@/components/*": ["./dist/components/*", "./components/*"]
+    }
+  },
+  "include": ["**/*.ts", "**/*.tsx"],
+  "exclude": ["node_modules", "dist/components"]
 }
