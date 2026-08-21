@@ -66,6 +66,15 @@
 .blog-article .body iframe {
   display: block;
   margin: 1.5em 0;
+  /* peitho's own resize math (public/slides/*/index.html, regenerated
+     by `peitho build` — not something we can fix from here) has a
+     sub-pixel rounding gap between the deck's CSS aspect-ratio height
+     and window.innerHeight, so its top letterboxing occasionally comes
+     out at 0 or negative and the slide's top edge gets clipped. A
+     visible border at least makes the iframe's real bounds legible
+     regardless of where the letterboxing lands.
+     */
+  border: 1px solid var(--color-text-sub);
 }
 
 .blog-article .back {
