@@ -44,7 +44,6 @@ export const Activities = () => {
   });
 
   const ActivitiesClass = css`
-    margin-top: 20px;
     padding-right: 2em;
 
     & li {

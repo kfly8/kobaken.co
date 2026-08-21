@@ -1,3 +1,4 @@
+import { PageLayout } from './PageLayout'
 import type { Post } from '../blog/content'
 
 interface PostListProps {
@@ -6,7 +7,7 @@ interface PostListProps {
 
 export function PostList(props: PostListProps) {
   return (
-    <main className="blog-page blog-list">
+    <PageLayout className="blog-list">
       <h1>Blog</h1>
       <ul>
         {props.posts.map((post) => (
@@ -16,6 +17,6 @@ export function PostList(props: PostListProps) {
           </li>
         ))}
       </ul>
-    </main>
+    </PageLayout>
   )
 }

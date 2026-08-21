@@ -1,11 +1,10 @@
-import { css } from 'hono/css'
-
+import { PageLayout } from './PageLayout'
 import { Activities } from './activities'
 
 export function ProfilePage() {
   return (
-    <div className={css` margin: 0 auto; max-width: 800px; padding: 0 20px;`}>
+    <PageLayout>
       <Activities />
-    </div>
+    </PageLayout>
   )
 }

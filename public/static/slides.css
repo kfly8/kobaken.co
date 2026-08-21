@@ -1,0 +1,14 @@
+.slides-list li {
+  display: flex;
+  align-items: baseline;
+  margin: 20px 0;
+}
+
+.slides-list .date {
+  white-space: nowrap;
+  font-weight: 300;
+  font-family: monospace;
+  margin-right: 13px;
+  width: 80px;
+  text-align: right;
+}
