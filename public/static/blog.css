@@ -1,0 +1,115 @@
+.blog-header {
+  max-width: 800px;
+  margin: 0 auto;
+  padding: 20px 20px 0;
+}
+
+.blog-header a {
+  font-family: Inter, sans-serif;
+  font-weight: 900;
+  text-decoration: underline;
+  text-decoration-style: dotted;
+  text-underline-offset: 0.2em;
+  text-decoration-color: var(--color-text-sub);
+}
+
+.blog-header a:hover {
+  text-decoration-color: var(--color-text-main);
+}
+
+.blog-page {
+  max-width: 800px;
+  margin: 0 auto;
+  padding: 20px;
+}
+
+.blog-page h1 {
+  font-family: Inter, sans-serif;
+  font-weight: 900;
+  font-size: xx-large;
+}
+
+.blog-list h1 {
+  margin-bottom: 20px;
+}
+
+.blog-list li {
+  display: flex;
+  align-items: baseline;
+  margin: 20px 0;
+}
+
+.blog-list .date {
+  white-space: nowrap;
+  font-weight: 300;
+  font-family: monospace;
+  margin-right: 13px;
+  width: 90px;
+  text-align: right;
+}
+
+.blog-list .title a {
+  text-decoration: underline;
+  text-decoration-style: dotted;
+  text-underline-offset: 0.2em;
+  text-decoration-color: var(--color-text-sub);
+  letter-spacing: 0.03em;
+}
+
+.blog-list .title a:hover {
+  text-decoration-color: var(--color-text-main);
+}
+
+.blog-article .date {
+  font-weight: 300;
+  font-family: monospace;
+  color: var(--color-text-sub);
+  margin: 8px 0 30px;
+}
+
+.blog-article .body {
+  line-height: 1.8;
+}
+
+.blog-article .body p {
+  margin: 1.2em 0;
+}
+
+.blog-article .body a {
+  text-decoration: underline;
+  text-decoration-style: dotted;
+  text-underline-offset: 0.2em;
+  text-decoration-color: var(--color-text-sub);
+}
+
+.blog-article .body a:hover {
+  text-decoration-color: var(--color-text-main);
+}
+
+.blog-article .body code {
+  font-family: monospace;
+  background: var(--color-text-sub);
+  color: var(--color-background);
+  padding: 0.1em 0.4em;
+  border-radius: 4px;
+}
+
+.blog-article .body iframe {
+  display: block;
+  margin: 1.5em 0;
+}
+
+.blog-article .back {
+  margin-top: 40px;
+}
+
+.blog-article .back a {
+  text-decoration: underline;
+  text-decoration-style: dotted;
+  text-underline-offset: 0.2em;
+  text-decoration-color: var(--color-text-sub);
+}
+
+.blog-article .back a:hover {
+  text-decoration-color: var(--color-text-main);
+}

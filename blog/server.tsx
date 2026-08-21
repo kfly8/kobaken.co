@@ -1,6 +1,5 @@
 import { Hono } from 'hono'
 import { jsxRenderer } from 'hono/jsx-renderer'
-import { css, Style } from 'hono/css'
 import { BfScripts } from '@barefootjs/hono/scripts'
 import { BlogLayout } from '@/components/BlogLayout'
 import { PostList } from '@/components/PostList'
@@ -19,25 +18,6 @@ declare module 'hono' {
 
 const BASE = '/blog'
 
-const HeaderClass = css`
-  max-width: 800px;
-  margin: 0 auto;
-  padding: 20px 20px 0;
-
-  & a {
-    font-family: Inter, sans-serif;
-    font-weight: 900;
-    text-decoration: underline;
-    text-decoration-style: dotted;
-    text-underline-offset: 0.2em;
-    text-decoration-color: var(--color-text-sub);
-
-    &:hover {
-      text-decoration-color: var(--color-text-main);
-    }
-  }
-`
-
 const blogRenderer = jsxRenderer(({ children, title, description, canonical }) => (
   <html lang="ja">
     <head>
@@ -49,10 +29,10 @@ const blogRenderer = jsxRenderer(({ children, title, description, canonical }) =
       <link rel="icon" type="image/jpg" href="/static/img/favicon.ico" />
       <link href="/static/reset.css" rel="stylesheet" />
       <link href="/static/style.css" rel="stylesheet" />
-      <Style />
+      <link href="/static/blog.css" rel="stylesheet" />
     </head>
     <body>
-      <header className={HeaderClass}><a href="/">← kobaken.co</a></header>
+      <header className="blog-header"><a href="/">← kobaken.co</a></header>
       <BlogLayout>{children}</BlogLayout>
       <BfScripts />
       <script type="module" src={Assets.RouterEntry} />
