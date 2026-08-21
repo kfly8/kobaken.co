@@ -47,11 +47,6 @@ export const Activities = () => {
     margin-top: 20px;
     padding-right: 2em;
 
-    & h2 {
-      font-family: Inter, sans-serif;
-      font-weight: 900;
-    }
-
     & li {
       display: flex;
       align-items: baseline;
@@ -87,7 +82,7 @@ export const Activities = () => {
   return (
     <>
       <section className={ActivitiesClass}>
-        <h2>Activities</h2>
+        <h1>Activities</h1>
         <ul>
           { displayActivities.map((activity) => (
             <li key={activity.url}>

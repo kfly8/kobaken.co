@@ -52,6 +52,26 @@ body {
   overflow-x: hidden;
 }
 
+/* Shared page container (components/PageLayout.tsx) — every content
+   page (Profile/Activities, Blog, Slides) renders inside this so
+   their headings land at the same position instead of each page
+   picking its own margin/padding. */
+.page-layout {
+  max-width: 800px;
+  margin: 0 auto;
+  padding: 20px;
+}
+
+/* Shared across every page's main heading (Profile's name, Activities,
+   Blog, Slides) so they render identically instead of each page
+   defining its own (previously: one had no font-size, one had no
+   styling at all). */
+h1 {
+  font-family: Inter, sans-serif;
+  font-weight: 900;
+  font-size: xx-large;
+}
+
 .switch-light {
   display: none;
 }

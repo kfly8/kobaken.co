@@ -17,13 +17,6 @@ export const Profile = () => {
       margin-right: 20px;
     }
 
-    // name
-    & h1 {
-      font-size: xx-large;
-      font-family: Inter, sans-serif;
-      font-weight: 900;
-    }
-
     // sns links
     & ul {
       margin: 0 auto;
