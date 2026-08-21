@@ -31,7 +31,6 @@ export const renderer = jsxRenderer(
           <meta http-equiv="X-UA-Compatible" content="IE=edge" />
           <meta name="viewport" content="width=device-width, initial-scale=1.0" />
           <link rel="icon" type="image/jpg" href="/static/img/favicon.ico" />
-          <link rel="preload" as="font" href="/static/font/Inter-ExtraBold.woff2" crossorigin="anonymous" />
           <link href={`/static/fontello-embedded.css?v=${asset_version}`} rel="stylesheet" />
           <link href={`/static/reset.css?v=${asset_version}`} rel="stylesheet" />
           <link href={`/static/style.css?v=${asset_version}`} rel="stylesheet" />
