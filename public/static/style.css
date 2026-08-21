@@ -4,6 +4,18 @@
   --color-text-sub: #595857;
 }
 
+/* OS-level default, used only until an explicit choice is made below.
+   Must come before the [data-theme] rules: same specificity, so
+   source order decides, and an explicit choice must always win over
+   the OS preference. */
+@media (prefers-color-scheme: dark) {
+  :root {
+    --color-background: #2b2b2b;
+    --color-text-main: #f8fbf8;
+    --color-text-sub: #595857;
+  }
+}
+
 [data-theme="dark"] {
   --color-background: #2b2b2b;
   --color-text-main: #f8fbf8;
@@ -14,14 +26,6 @@
   --color-background: #f8fbf8;
   --color-text-main: #2b2b2b;
   --color-text-sub: #595857;
-}
-
-@media (prefers-color-scheme: dark) {
-  :root {
-    --color-background: #2b2b2b;
-    --color-text-main: #f8fbf8;
-    --color-text-sub: #595857;
-  }
 }
 
 @font-face {
