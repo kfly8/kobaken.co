@@ -1,14 +1,11 @@
 import { css } from 'hono/css'
 
-import { Profile } from './profile'
+import { Activities } from './activities'
 
-
-export const Root = () => {
-
+export function ProfilePage() {
   return (
     <div className={css` margin: 0 auto; max-width: 800px; padding: 0 20px;`}>
-      <Profile />
+      <Activities />
     </div>
   )
 }
-

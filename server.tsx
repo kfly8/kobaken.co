@@ -4,6 +4,7 @@ import { renderer } from './renderer'
 import { blog } from './blog/server'
 
 import { Root } from '@/components/root'
+import { ProfilePage } from '@/components/ProfilePage'
 import { SlidesIndex } from '@/components/SlidesIndex'
 
 const app = new Hono()
@@ -19,6 +20,16 @@ app.get('/', (c) => {
         title: 'kobaken',
         description: "I'm a software engineer and preparing to start my own business. Event organizer for YAPC::Tokyo 2019, YAPC::Japan::Online 2022, and YAPC::Hiroshima 2024.",
         isHome: true
+    }
+  )
+})
+
+app.get('/profile', (c) => {
+  return c.render(
+    <ProfilePage />,
+    {
+        title: 'Profile | kobaken',
+        description: '経歴・登壇・寄稿など'
     }
   )
 })

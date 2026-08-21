@@ -14,6 +14,7 @@ export function Header(props: HeaderProps) {
         </a>
       )}
       <nav className="site-nav">
+        <a href="/profile">Profile</a>
         <a href="/blog">Blog</a>
         <a href="/slides">Slides</a>
         <ToggleTheme />
