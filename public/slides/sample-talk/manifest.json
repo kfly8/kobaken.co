@@ -1,0 +1,66 @@
+{
+  "version": 1,
+  "peithoVersion": "1.24.1",
+  "title": "Starter Deck",
+  "slideCount": 3,
+  "plannedDurationMs": 900000,
+  "aspectRatio": "16:9",
+  "canvasWidth": 1280,
+  "canvasHeight": 720,
+  "sections": [
+    {
+      "name": "Introduction",
+      "startIndex": 0,
+      "endIndex": 0,
+      "plannedDurationMs": 300000
+    },
+    {
+      "name": "Details",
+      "startIndex": 1,
+      "endIndex": 2,
+      "plannedDurationMs": 600000
+    }
+  ],
+  "slides": [
+    {
+      "index": 0,
+      "key": "starter-deck",
+      "src": "slides/000-starter-deck.html",
+      "hasNotes": false,
+      "skip": false,
+      "revealSteps": 0,
+      "text": {
+        "title": "Starter Deck",
+        "body": "A Peitho deck starts as Markdown. Edit deck.md, keep layouts in layouts/, and style the deck in css/base.css.",
+        "code": ""
+      }
+    },
+    {
+      "index": 1,
+      "key": "shape-the-story",
+      "src": "slides/001-shape-the-story.html",
+      "hasNotes": true,
+      "skip": false,
+      "revealSteps": 0,
+      "text": {
+        "title": "Shape the Story",
+        "body": "Put one idea on each slide.\nUse speaker notes for presenter-only prompts.\nLet layout HTML define the content slots.",
+        "code": ""
+      }
+    },
+    {
+      "index": 2,
+      "key": "code-slide",
+      "src": "slides/002-code-slide.html",
+      "hasNotes": false,
+      "skip": false,
+      "revealSteps": 0,
+      "text": {
+        "title": "Code Slide",
+        "body": "The default layout includes one code slot.",
+        "code": "fn main() {\n    println!(\"Hello from Peitho\");\n}\n"
+      }
+    }
+  ],
+  "images": []
+}
