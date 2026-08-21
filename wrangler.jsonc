@@ -9,6 +9,11 @@
   "assets": {
     "directory": "./public"
   },
+  // Blog post source files are imported as raw text (frontmatter parsed
+  // and Markdown rendered at request time in blog/content.ts).
+  "rules": [
+    { "type": "Text", "globs": ["**/*.md"], "fallthrough": true }
+  ],
   "observability": {
     "enabled": true,
     "head_sampling_rate": 1

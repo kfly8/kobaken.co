@@ -12,8 +12,10 @@
     "@barefootjs/client": "^0.31.9",
     "@barefootjs/hono": "^0.31.9",
     "@barefootjs/jsx": "^0.31.9",
+    "@barefootjs/router": "^0.31.9",
     "@barefootjs/shared": "^0.31.9",
-    "hono": "^4.7.10"
+    "hono": "^4.7.10",
+    "marked": "^18.0.10"
   },
   "devDependencies": {
     "@barefootjs/cli": "^0.31.9",

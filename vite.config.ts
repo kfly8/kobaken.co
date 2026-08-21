@@ -4,6 +4,7 @@ import { defineConfig } from 'vite'
 import { barefoot } from '@barefootjs/hono/vite'
 
 const HERE = dirname(fileURLToPath(import.meta.url))
+const routerEntry = resolve(HERE, 'client/router-entry.ts')
 
 export default defineConfig({
   base: '/components/',
@@ -27,9 +28,18 @@ export default defineConfig({
   build: {
     outDir: 'public/components',
     emptyOutDir: true,
+    rollupOptions: {
+      // `barefoot()` registers compiled `"use client"` components as entries
+      // automatically (as a named-entry object); hand-written scripts like
+      // the router bootstrap must be registered here explicitly, in the
+      // same named-entry shape so Vite's config merge combines both
+      // (see `assets` option below).
+      input: { RouterEntry: routerEntry },
+    },
   },
   plugins: barefoot({
     components: ['components'],
     templates: 'dist/components',
+    assets: { RouterEntry: routerEntry },
   }),
 })

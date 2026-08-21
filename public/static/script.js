@@ -8,7 +8,9 @@ const toggleTheme = () => {
 }
 
 const toggleThemeButton = document.getElementById('toggle-theme');
-toggleThemeButton.addEventListener('click', toggleTheme);
+if (toggleThemeButton) {
+  toggleThemeButton.addEventListener('click', toggleTheme);
+}
 
 const osDarkMode = window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)');
 if (osDarkMode && osDarkMode.matches) {

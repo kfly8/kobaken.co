@@ -16,7 +16,7 @@ declare module 'hono' {
 
 export const renderer = jsxRenderer(
   ({ children, title, description }) => {
-    const asset_version = 202312022357
+    const asset_version = 202608210000
 
     return (
       <html lang="ja">
