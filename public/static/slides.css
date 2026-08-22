@@ -12,3 +12,19 @@
   width: 80px;
   text-align: right;
 }
+
+.slides-list .title {
+  flex: 1;
+}
+
+.slides-list .title a {
+  text-decoration: underline;
+  text-decoration-style: dotted;
+  text-underline-offset: 0.2em;
+  text-decoration-color: var(--color-text-sub);
+  letter-spacing: 0.03em;
+}
+
+.slides-list .title a:hover {
+  text-decoration-color: var(--color-text-main);
+}

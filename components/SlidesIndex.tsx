@@ -12,7 +12,7 @@ export function SlidesIndex() {
         {talks.map((talk) => (
           <li key={talk.slug}>
             <span className="date">{talk.date}</span>
-            <a href={`/slides/${talk.slug}/`}>{talk.title}</a>
+            <span className="title"><a href={`/slides/${talk.slug}/`}>{talk.title}</a></span>
           </li>
         ))}
       </ul>
