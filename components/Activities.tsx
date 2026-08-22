@@ -1,5 +1,3 @@
-import { css } from 'hono/css'
-
 export const Activities = () => {
   const activities = [
     { date: '2015-08-22', url: 'https://speakerdeck.com/kfly8/kong-jian-qing-bao-tan-suo-ji-chu-lun', title: '空間情報探索基礎論 | YAPC::Asia 2015' },
@@ -48,50 +46,22 @@ export const Activities = () => {
     return { ...activity, displayDate }
   });
 
-  const ActivitiesClass = css`
-    padding-right: 2em;
-
-    & li {
-      display: flex;
-      align-items: baseline;
-      margin: 20px 0;
-    }
-
-    & .date {
-      white-space: nowrap;
-      font-weight: 300;
-      font-family: monospace;
-      margin-right: 13px;
-      width: 80px;
-      text-align: right;
-    }
-
-    & .title {
-      flex: 1;
-
-      & a {
-        text-decoration: underline;
-        text-decoration-style: dotted;
-        text-underline-offset: 0.2em;
-        text-decoration-color: var(--color-text-sub);
-        letter-spacing: 0.03em;
-
-        &:hover {
-          text-decoration-color: var(--color-text);
-        }
-      }
-    }
-  `
-
   return (
     <>
-      <section className={ActivitiesClass}>
+      <section className="pr-8">
         <h1>Activities</h1>
         <ul>
           { displayActivities.map((activity) => (
-            <li key={activity.url}>
-              <span className="date">{activity.displayDate}</span>
-              <span className="title"><a href={activity.url}>{activity.title}</a></span>
+            <li key={activity.url} className="flex items-baseline my-5">
+              <span className="whitespace-nowrap font-light font-mono mr-[13px] w-20 text-right">{activity.displayDate}</span>
+              <span className="flex-1">
+                <a
+                  href={activity.url}
+                  className="underline decoration-dotted underline-offset-[0.2em] decoration-[var(--color-text-sub)] tracking-[0.03em] hover:decoration-[var(--color-text-main)]"
+                >
+                  {activity.title}
+                </a>
+              </span>
             </li>
           ))}
         </ul>

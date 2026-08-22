@@ -66,6 +66,15 @@ body {
   padding: 20px;
 }
 
+/* The top page centers Profile in the viewport height (100svh) below the
+   header — vertical page-layout padding would push it down further than
+   before the Layout unification, so it's zeroed out here (horizontal
+   padding is kept, matching every other page). */
+.page-layout.home {
+  padding-top: 0;
+  padding-bottom: 0;
+}
+
 /* Shared across every page's main heading (Profile's name, Activities,
    Blog, Slides) so they render identically instead of each page
    defining its own (previously: one had no font-size, one had no

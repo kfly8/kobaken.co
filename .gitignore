@@ -1,6 +1,7 @@
 node_modules
 dist
 public/components
+public/static/uno.css
 
 .wrangler
 .dev.vars

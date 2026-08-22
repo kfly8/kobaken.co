@@ -1,4 +1,4 @@
-import { PageLayout } from './PageLayout'
+import { Layout } from './Layout'
 
 const talks = [
   { slug: 'sample-talk', date: '2026-08-21', title: 'サンプルトーク' },
@@ -6,7 +6,7 @@ const talks = [
 
 export function SlidesIndex() {
   return (
-    <PageLayout className="slides-list">
+    <Layout className="slides-list">
       <h1>Slides</h1>
       <ul>
         {talks.map((talk) => (
@@ -16,6 +16,6 @@ export function SlidesIndex() {
           </li>
         ))}
       </ul>
-    </PageLayout>
+    </Layout>
   )
 }

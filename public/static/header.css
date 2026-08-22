@@ -48,3 +48,19 @@
   line-height: 1;
   cursor: pointer;
 }
+
+/* Below this width, the logo text and nav links no longer both fit on
+   one line — the logo text (a single, unbreakable word) overflows its
+   flex box and visually overlaps the nav instead of wrapping. Wrapping
+   the header itself keeps every link tappable. */
+@media (max-width: 480px) {
+  .site-header {
+    flex-wrap: wrap;
+    row-gap: 10px;
+  }
+
+  .site-nav {
+    margin-left: 0;
+    width: 100%;
+  }
+}

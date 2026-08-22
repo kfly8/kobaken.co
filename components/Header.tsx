@@ -1,4 +1,4 @@
-import { ToggleTheme } from './toggle-theme'
+import { ToggleTheme } from './ToggleTheme'
 
 interface HeaderProps {
   showLogo?: boolean

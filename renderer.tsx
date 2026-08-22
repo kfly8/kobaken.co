@@ -1,26 +1,29 @@
 import 'hono'
 import { jsxRenderer } from 'hono/jsx-renderer'
-import { Style } from 'hono/css'
 import { BfScripts } from '@barefootjs/hono/scripts'
 import { Header } from '@/components/Header'
 import { themeInitScript } from './theme-script'
+import { Assets } from './dist/bf-assets'
 
 declare module 'hono' {
   interface ContextRenderer {
     (
       content: unknown,
-      props?: {
+      props: {
         title?: string,
         description?: string,
-        canonical?: string,
+        canonical: string,
         isHome?: boolean,
       }): Response
   }
 }
 
+const SITE_URL = 'https://kobaken.co'
+
 export const renderer = jsxRenderer(
-  ({ children, title, description, isHome }) => {
-    const asset_version = 202608210000
+  ({ children, title, description, canonical, isHome }) => {
+    const asset_version = 202608220000
+    const url = `${SITE_URL}${canonical}`
 
     return (
       <html lang="ja">
@@ -33,19 +36,21 @@ export const renderer = jsxRenderer(
           <meta http-equiv="X-UA-Compatible" content="IE=edge" />
           <meta name="viewport" content="width=device-width, initial-scale=1.0" />
           <link rel="icon" type="image/jpg" href="/static/img/favicon.ico" />
+          <link rel="canonical" href={url} />
           <link href={`/static/fontello-embedded.css?v=${asset_version}`} rel="stylesheet" />
           <link href={`/static/reset.css?v=${asset_version}`} rel="stylesheet" />
           <link href={`/static/style.css?v=${asset_version}`} rel="stylesheet" />
           <link href={`/static/header.css?v=${asset_version}`} rel="stylesheet" />
           <link href={`/static/slides.css?v=${asset_version}`} rel="stylesheet" />
-          <Style />
+          <link href={`/static/blog.css?v=${asset_version}`} rel="stylesheet" />
+          <link href={`/static/uno.css?v=${asset_version}`} rel="stylesheet" />
           <script src={`/static/script.js?v=${asset_version}`} defer />
           <meta name="description" content={description} />
           <meta property="og:title" content={title} />
           <meta property="og:description" content={description} />
           <meta property="og:site_name" content="kobaken.co" />
-          <meta property="og:url" content="https://kobaken.co" />
-          <meta property="og:image" content="https://kobaken.co/static/img/kobaken.jpg" />
+          <meta property="og:url" content={url} />
+          <meta property="og:image" content={`${SITE_URL}/static/img/kobaken.jpg`} />
           <meta property="og:type" content="website" />
           <meta name="twitter:card" content="summary" />
           <meta name="twitter:site" content="@kfly8" />
@@ -55,6 +60,7 @@ export const renderer = jsxRenderer(
           <Header showLogo={!isHome} />
           {children}
           <BfScripts />
+          <script type="module" src={Assets.RouterEntry} />
         </body>
       </html>
     )
