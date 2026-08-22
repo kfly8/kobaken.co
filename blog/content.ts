@@ -53,3 +53,7 @@ export const posts: Post[] = Object.entries(RAW_POSTS)
 export function getPost(slug: string): Post | undefined {
   return posts.find((p) => p.slug === slug)
 }
+
+export function getPostsByTag(tag: string): Post[] {
+  return posts.filter((p) => p.tags.includes(tag))
+}
