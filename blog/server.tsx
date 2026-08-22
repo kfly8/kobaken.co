@@ -2,6 +2,7 @@ import { Hono } from 'hono'
 import { PostList } from '@/components/PostList'
 import { PostArticle } from '@/components/PostArticle'
 import { posts, getPost, getPostsByTag } from './content'
+import { okfFrontmatter } from './okf'
 
 const BASE = '/blog'
 
@@ -25,6 +26,18 @@ blog.get('/tags/:tag', (c) => {
     title: `#${tag} — kobaken blog`,
     description: `タグ「${tag}」の記事一覧`,
     canonical: `${BASE}/tags/${encodeURIComponent(tag)}`,
+  })
+})
+
+// Must be registered before /:slug — its default [^/]+ pattern also matches
+// "hello-blog.md", and the router keeps whichever route was added first.
+blog.get('/:slug{[a-z0-9-]+\\.md}', (c) => {
+  // The param includes the extension the pattern matched.
+  const slug = c.req.param('slug').replace(/\.md$/, '')
+  const post = getPost(slug)
+  if (!post) return c.notFound()
+  return c.body(`${okfFrontmatter(post)}${post.body}\n`, 200, {
+    'Content-Type': 'text/markdown; charset=utf-8',
   })
 })
 

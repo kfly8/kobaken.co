@@ -33,19 +33,23 @@ export interface Post {
   date: string
   description?: string
   tags: string[]
+  // Raw Markdown body (frontmatter stripped) — served as-is at /blog/<slug>.md.
+  body: string
   html: string
 }
 
 export const posts: Post[] = Object.entries(RAW_POSTS)
   .map(([slug, raw]) => {
     const { data, body } = parseFrontMatter(raw)
+    const trimmedBody = body.trim()
     return {
       slug,
       title: data.title,
       date: data.date,
       description: data.description,
       tags: data.tags ?? [],
-      html: marked.parse(body) as string,
+      body: trimmedBody,
+      html: marked.parse(trimmedBody) as string,
     }
   })
   .sort((a, b) => b.date.localeCompare(a.date))
