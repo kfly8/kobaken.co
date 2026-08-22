@@ -44,7 +44,8 @@ blog.get('/:slug{[a-z0-9-]+\\.md}', (c) => {
 blog.get('/:slug', (c) => {
   const post = getPost(c.req.param('slug'))
   if (!post) return c.notFound()
-  return c.render(<PostArticle post={post} />, {
+  const related = post.related.map(getPost).filter((p): p is NonNullable<typeof p> => p !== undefined)
+  return c.render(<PostArticle post={post} related={related} />, {
     title: `${post.title} — kobaken blog`,
     description: post.description,
     canonical: `${BASE}/${post.slug}`,

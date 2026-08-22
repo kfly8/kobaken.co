@@ -11,6 +11,8 @@ interface FrontMatter {
   date: string
   description?: string
   tags?: string[]
+  // Hand-curated related-post slugs — resolved to posts at render time.
+  related?: string[]
 }
 
 function parseFrontMatter(raw: string): { data: FrontMatter; body: string } {
@@ -22,7 +24,7 @@ function parseFrontMatter(raw: string): { data: FrontMatter; body: string } {
     const i = line.indexOf(':')
     const key = line.slice(0, i).trim()
     const rawValue = line.slice(i + 1).trim()
-    data[key] = key === 'tags' ? JSON.parse(rawValue) : rawValue.replace(/^"|"$/g, '')
+    data[key] = key === 'tags' || key === 'related' ? JSON.parse(rawValue) : rawValue.replace(/^"|"$/g, '')
   }
   return { data: data as unknown as FrontMatter, body }
 }
@@ -33,6 +35,7 @@ export interface Post {
   date: string
   description?: string
   tags: string[]
+  related: string[]
   // Raw Markdown body (frontmatter stripped) — served as-is at /blog/<slug>.md.
   body: string
   html: string
@@ -48,6 +51,7 @@ export const posts: Post[] = Object.entries(RAW_POSTS)
       date: data.date,
       description: data.description,
       tags: data.tags ?? [],
+      related: data.related ?? [],
       body: trimmedBody,
       html: marked.parse(trimmedBody) as string,
     }
