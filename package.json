@@ -2,10 +2,10 @@
   "name": "kobaken.co",
   "type": "module",
   "scripts": {
-    "dev": "vite build && unocss && concurrently -k -n vite,uno,wrangler -c blue,magenta,green \"vite dev\" \"unocss --watch\" \"wrangler dev --live-reload\"",
-    "build": "vite build && unocss",
+    "dev": "vite build && unocss && node scripts/stamp-asset-version.mjs && concurrently -k -n vite,uno,wrangler -c blue,magenta,green \"vite dev\" \"unocss --watch\" \"wrangler dev --live-reload\"",
+    "build": "vite build && unocss && node scripts/stamp-asset-version.mjs",
     "watch": "vite build --watch",
-    "deploy": "vite build && unocss && wrangler deploy",
+    "deploy": "vite build && unocss && node scripts/stamp-asset-version.mjs && wrangler deploy",
     "cf-typegen": "wrangler types --env-interface CloudflareBindings"
   },
   "dependencies": {

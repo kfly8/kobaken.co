@@ -4,6 +4,7 @@ import { BfScripts } from '@barefootjs/hono/scripts'
 import { Header } from '@/components/Header'
 import { themeInitScript } from './theme-script'
 import { Assets } from './dist/bf-assets'
+import { assetVersion } from './dist/asset-version'
 
 declare module 'hono' {
   interface ContextRenderer {
@@ -22,7 +23,6 @@ const SITE_URL = 'https://kobaken.co'
 
 export const renderer = jsxRenderer(
   ({ children, title, description, canonical, isHome }) => {
-    const asset_version = 202608220000
     const url = `${SITE_URL}${canonical}`
 
     return (
@@ -37,14 +37,14 @@ export const renderer = jsxRenderer(
           <meta name="viewport" content="width=device-width, initial-scale=1.0" />
           <link rel="icon" type="image/jpg" href="/static/img/favicon.ico" />
           <link rel="canonical" href={url} />
-          <link href={`/static/fontello-embedded.css?v=${asset_version}`} rel="stylesheet" />
-          <link href={`/static/reset.css?v=${asset_version}`} rel="stylesheet" />
-          <link href={`/static/style.css?v=${asset_version}`} rel="stylesheet" />
-          <link href={`/static/header.css?v=${asset_version}`} rel="stylesheet" />
-          <link href={`/static/slides.css?v=${asset_version}`} rel="stylesheet" />
-          <link href={`/static/blog.css?v=${asset_version}`} rel="stylesheet" />
-          <link href={`/static/uno.css?v=${asset_version}`} rel="stylesheet" />
-          <script src={`/static/script.js?v=${asset_version}`} defer />
+          <link href={`/static/fontello-embedded.css?v=${assetVersion}`} rel="stylesheet" />
+          <link href={`/static/reset.css?v=${assetVersion}`} rel="stylesheet" />
+          <link href={`/static/style.css?v=${assetVersion}`} rel="stylesheet" />
+          <link href={`/static/header.css?v=${assetVersion}`} rel="stylesheet" />
+          <link href={`/static/slides.css?v=${assetVersion}`} rel="stylesheet" />
+          <link href={`/static/blog.css?v=${assetVersion}`} rel="stylesheet" />
+          <link href={`/static/uno.css?v=${assetVersion}`} rel="stylesheet" />
+          <script src={`/static/script.js?v=${assetVersion}`} defer />
           <meta name="description" content={description} />
           <meta property="og:title" content={title} />
           <meta property="og:description" content={description} />
