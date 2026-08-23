@@ -19,8 +19,7 @@ app.get('/', (c) => {
     {
         title: 'kobaken',
         description: "I'm a software engineer and preparing to start my own business. Event organizer for YAPC::Tokyo 2019, YAPC::Japan::Online 2022, and YAPC::Hiroshima 2024.",
-        canonical: '/',
-        isHome: true
+        canonical: '/'
     }
   )
 })

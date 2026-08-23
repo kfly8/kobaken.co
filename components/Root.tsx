@@ -3,7 +3,7 @@ import { Profile } from './Profile'
 
 export const Root = () => {
   return (
-    <Layout className="home">
+    <Layout className="home" showLogo={false}>
       <Profile />
     </Layout>
   )

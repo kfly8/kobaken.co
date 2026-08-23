@@ -1,7 +1,6 @@
 import 'hono'
 import { jsxRenderer } from 'hono/jsx-renderer'
 import { BfScripts } from '@barefootjs/hono/scripts'
-import { Header } from '@/components/Header'
 import { themeInitScript } from './theme-script'
 import { Assets } from './dist/bf-assets'
 import { assetVersion } from './dist/asset-version'
@@ -14,7 +13,6 @@ declare module 'hono' {
         title?: string,
         description?: string,
         canonical: string,
-        isHome?: boolean,
       }): Response
   }
 }
@@ -22,7 +20,7 @@ declare module 'hono' {
 const SITE_URL = 'https://kobaken.co'
 
 export const renderer = jsxRenderer(
-  ({ children, title, description, canonical, isHome }) => {
+  ({ children, title, description, canonical }) => {
     const url = `${SITE_URL}${canonical}`
 
     return (
@@ -57,7 +55,6 @@ export const renderer = jsxRenderer(
           <meta name="twitter:creator" content="@kfly8" />
         </head>
         <body>
-          <Header showLogo={!isHome} />
           {children}
           <BfScripts />
           <script type="module" src={Assets.RouterEntry} />

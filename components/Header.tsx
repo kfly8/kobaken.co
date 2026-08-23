@@ -1,3 +1,5 @@
+'use client'
+
 import { ToggleTheme } from './ToggleTheme'
 
 interface HeaderProps {
