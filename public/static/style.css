@@ -59,6 +59,15 @@ body {
   overflow-x: hidden;
 }
 
+/* @barefootjs/router moves focus to the new region's heading after every
+   navigation (tabindex="-1" + focus({preventScroll: true})) so screen
+   readers announce the page change — see a11y.ts. That's a programmatic
+   focus, not a keyboard one, so :focus-visible correctly excludes it while
+   still ringing real keyboard focus (Tab) everywhere else. */
+:focus:not(:focus-visible) {
+  outline: none;
+}
+
 /* Shared page container (components/PageLayout.tsx) — every content
    page (Profile/Activities, Blog, Slides) renders inside this so
    their headings land at the same position instead of each page
