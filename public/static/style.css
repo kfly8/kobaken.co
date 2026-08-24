@@ -68,6 +68,17 @@ body {
   outline: none;
 }
 
+/* Safari doesn't reliably apply the above: after a click moves focus to a
+   different element via script, WebKit still matches :focus-visible on the
+   new target (https://bugs.webkit.org/show_bug.cgi?id=236782) — exactly
+   this tap-then-router-refocuses-the-heading sequence. tabindex="-1"
+   elements are unreachable via Tab by definition, so any focus landing on
+   one is necessarily programmatic; suppressing the ring there needs no
+   :focus-visible guess and holds on every browser. */
+[tabindex="-1"]:focus {
+  outline: none;
+}
+
 /* Shared page container (components/PageLayout.tsx) — every content
    page (Profile/Activities, Blog, Slides) renders inside this so
    their headings land at the same position instead of each page
