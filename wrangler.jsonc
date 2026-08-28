@@ -1,7 +1,12 @@
 {
   "$schema": "node_modules/wrangler/config-schema.json",
   "name": "kobaken-co",
-  "compatibility_date": "2024-04-01",
+  // Bumped from 2024-04-01 to pick up Workers Cache (see "cache" below),
+  // which requires a recent compatibility_date. Checked the Workers
+  // changelog for breaking changes in between — nothing applies to this
+  // app (no Node.js compat, no cross-origin fetch with auth headers) —
+  // and re-verified every route with `wrangler dev` after bumping.
+  "compatibility_date": "2026-08-28",
   "main": "server.tsx",
   // Static assets (CSS, generated client JS, manifest) are served
   // directly by Workers Assets. The Worker script handles everything
@@ -14,6 +19,12 @@
   "rules": [
     { "type": "Text", "globs": ["**/*.md"], "fallthrough": true }
   ],
+  // Lets the platform cache Worker-generated responses (namely the OGP
+  // images at /blog|diary/:slug/og.png) based on their own Cache-Control
+  // header — no caches.default match()/put() boilerplate needed.
+  "cache": {
+    "enabled": true
+  },
   "observability": {
     "enabled": true,
     "head_sampling_rate": 1
