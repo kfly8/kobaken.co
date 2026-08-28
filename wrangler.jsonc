@@ -1,6 +1,9 @@
 {
   "$schema": "node_modules/wrangler/config-schema.json",
   "name": "kobaken-co",
+  // Not a secret — account IDs are visible in the dashboard URL. Pinning
+  // it here means CI only needs CLOUDFLARE_API_TOKEN, not a second secret.
+  "account_id": "e680616185a3b617a32987a6571991b7",
   // Bumped from 2024-04-01 to pick up Workers Cache (see "cache" below),
   // which requires a recent compatibility_date. Checked the Workers
   // changelog for breaking changes in between — nothing applies to this
