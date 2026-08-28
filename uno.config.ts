@@ -3,7 +3,7 @@ import { defineConfig, presetWind4 } from 'unocss'
 // `unocss`/`unocss --watch` (the CLI, run as a separate process by `npm
 // run dev`/`build`/`deploy`) reads `cli.entry.patterns`, not
 // `content.filesystem` — both must list the same globs.
-const scanGlobs = ['components/**/*.tsx', 'dist/components/**/*.tsx', 'server.tsx', 'renderer.tsx', 'blog/**/*.tsx']
+const scanGlobs = ['components/**/*.tsx', 'dist/components/**/*.tsx', 'server.tsx', 'renderer.tsx', 'blog/**/*.tsx', 'diary/**/*.tsx']
 
 export default defineConfig({
   presets: [presetWind4()],

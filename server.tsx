@@ -2,6 +2,7 @@ import { Hono } from 'hono'
 import { cors } from 'hono/cors'
 import { renderer } from './renderer'
 import { blog } from './blog/server'
+import { diary } from './diary/server'
 
 import { Root } from '@/components/Root'
 import { ProfilePage } from '@/components/ProfilePage'
@@ -12,6 +13,7 @@ const app = new Hono()
 app.use('/api/*', cors())
 app.use('*', renderer)
 app.route('/blog', blog)
+app.route('/diary', diary)
 
 app.get('/', (c) => {
   return c.render(

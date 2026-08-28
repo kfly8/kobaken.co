@@ -22,6 +22,7 @@ export function Header(props: HeaderProps) {
       <nav className="site-nav">
         <a href="/profile">Profile</a>
         <a href="/blog">Blog</a>
+        <a href="/diary">Diary</a>
         <a href="/slides">Slides</a>
         <ToggleTheme />
       </nav>
