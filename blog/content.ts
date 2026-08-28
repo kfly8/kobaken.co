@@ -1,67 +1,11 @@
-import { marked } from 'marked'
 import helloBlog from '../content/blog/hello-blog.md'
+import { createPostCollection } from '../content/posts'
+
+export type { Post } from '../content/posts'
 
 // New posts are added here by hand — one `import`, one entry.
 const RAW_POSTS: Record<string, string> = {
   'hello-blog': helloBlog,
 }
 
-interface FrontMatter {
-  title: string
-  date: string
-  description?: string
-  tags?: string[]
-  // Hand-curated related-post slugs — resolved to posts at render time.
-  related?: string[]
-}
-
-function parseFrontMatter(raw: string): { data: FrontMatter; body: string } {
-  const match = raw.match(/^---\n([\s\S]*?)\n---\n?([\s\S]*)$/)
-  if (!match) throw new Error('frontmatter missing')
-  const [, frontmatter, body] = match
-  const data: Record<string, unknown> = {}
-  for (const line of frontmatter.split('\n').filter(Boolean)) {
-    const i = line.indexOf(':')
-    const key = line.slice(0, i).trim()
-    const rawValue = line.slice(i + 1).trim()
-    data[key] = key === 'tags' || key === 'related' ? JSON.parse(rawValue) : rawValue.replace(/^"|"$/g, '')
-  }
-  return { data: data as unknown as FrontMatter, body }
-}
-
-export interface Post {
-  slug: string
-  title: string
-  date: string
-  description?: string
-  tags: string[]
-  related: string[]
-  // Raw Markdown body (frontmatter stripped) — served as-is at /blog/<slug>.md.
-  body: string
-  html: string
-}
-
-export const posts: Post[] = Object.entries(RAW_POSTS)
-  .map(([slug, raw]) => {
-    const { data, body } = parseFrontMatter(raw)
-    const trimmedBody = body.trim()
-    return {
-      slug,
-      title: data.title,
-      date: data.date,
-      description: data.description,
-      tags: data.tags ?? [],
-      related: data.related ?? [],
-      body: trimmedBody,
-      html: marked.parse(trimmedBody) as string,
-    }
-  })
-  .sort((a, b) => b.date.localeCompare(a.date))
-
-export function getPost(slug: string): Post | undefined {
-  return posts.find((p) => p.slug === slug)
-}
-
-export function getPostsByTag(tag: string): Post[] {
-  return posts.filter((p) => p.tags.includes(tag))
-}
+export const { posts, getPost, getPostsByTag } = createPostCollection(RAW_POSTS)

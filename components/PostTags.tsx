@@ -1,5 +1,6 @@
 interface PostTagsProps {
   tags: string[]
+  basePath: string
 }
 
 export function PostTags(props: PostTagsProps) {
@@ -9,7 +10,7 @@ export function PostTags(props: PostTagsProps) {
       {props.tags.map((tag) => (
         <a
           key={tag}
-          href={`/blog/tags/${encodeURIComponent(tag)}`}
+          href={`${props.basePath}/tags/${encodeURIComponent(tag)}`}
           className="text-[0.85em] text-color-[var(--color-text-sub)] underline decoration-dotted underline-offset-[0.2em] decoration-[var(--color-text-sub)] hover:text-color-[var(--color-text-main)] hover:decoration-[var(--color-text-main)]"
         >#{tag}</a>
       ))}

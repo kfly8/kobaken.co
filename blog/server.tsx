@@ -2,14 +2,14 @@ import { Hono } from 'hono'
 import { PostList } from '@/components/PostList'
 import { PostArticle } from '@/components/PostArticle'
 import { posts, getPost, getPostsByTag } from './content'
-import { okfFrontmatter } from './okf'
+import { okfFrontmatter } from '../content/okf'
 
 const BASE = '/blog'
 
 export const blog = new Hono()
 
 blog.get('/', (c) =>
-  c.render(<PostList posts={posts} />, {
+  c.render(<PostList posts={posts} basePath={BASE} heading="Blog" />, {
     title: 'kobaken blog',
     description: '技術ブログ記事一覧',
     canonical: BASE,
@@ -22,7 +22,7 @@ blog.get('/tags/:tag', (c) => {
   // Unknown tags 404 like unknown slugs do — tags only exist through posts,
   // so an empty list can't be a legitimate page.
   if (tagged.length === 0) return c.notFound()
-  return c.render(<PostList posts={tagged} heading={`#${tag}`} />, {
+  return c.render(<PostList posts={tagged} basePath={BASE} heading={`#${tag}`} />, {
     title: `#${tag} — kobaken blog`,
     description: `タグ「${tag}」の記事一覧`,
     canonical: `${BASE}/tags/${encodeURIComponent(tag)}`,
@@ -45,7 +45,7 @@ blog.get('/:slug', (c) => {
   const post = getPost(c.req.param('slug'))
   if (!post) return c.notFound()
   const related = post.related.map(getPost).filter((p): p is NonNullable<typeof p> => p !== undefined)
-  return c.render(<PostArticle post={post} related={related} />, {
+  return c.render(<PostArticle post={post} related={related} basePath={BASE} backLabel="Blog" />, {
     title: `${post.title} — kobaken blog`,
     description: post.description,
     canonical: `${BASE}/${post.slug}`,

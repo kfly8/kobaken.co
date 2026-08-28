@@ -1,12 +1,13 @@
 // Builds the Open Knowledge Format (OKF) v0.2 frontmatter served at
-// /blog/<slug>.md — the same shape notes.kobaken.co uses for /<slug>.md.
+// /blog/<slug>.md and /diary/<slug>.md — the same shape notes.kobaken.co
+// uses for /<slug>.md.
 // Spec: https://github.com/GoogleCloudPlatform/knowledge-catalog/blob/main/okf/SPEC.md
 //
 // Only the fields a consumer needs to grasp the article at a glance: the
 // required `type`, plus `title` / `description` / `tags`. Tracking fields
 // like dates are deliberately left out, matching the notes site.
 
-import type { Post } from './content'
+import type { Post } from './posts'
 
 const UNSAFE_START = /^[-?:,[\]{}#&*!|>'"%@`\s]/
 
