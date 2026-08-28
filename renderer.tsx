@@ -13,6 +13,9 @@ declare module 'hono' {
         title?: string,
         description?: string,
         canonical: string,
+        // Path (not absolute URL) to a page-specific OGP image, e.g.
+        // "/blog/hello-blog/og.png". Falls back to the profile photo.
+        image?: string,
       }): Response
   }
 }
@@ -20,8 +23,9 @@ declare module 'hono' {
 const SITE_URL = 'https://kobaken.co'
 
 export const renderer = jsxRenderer(
-  ({ children, title, description, canonical }) => {
+  ({ children, title, description, canonical, image }) => {
     const url = `${SITE_URL}${canonical}`
+    const imageUrl = `${SITE_URL}${image ?? '/static/img/kobaken.jpg'}`
 
     return (
       <html lang="ja">
@@ -48,9 +52,12 @@ export const renderer = jsxRenderer(
           <meta property="og:description" content={description} />
           <meta property="og:site_name" content="kobaken.co" />
           <meta property="og:url" content={url} />
-          <meta property="og:image" content={`${SITE_URL}/static/img/kobaken.jpg`} />
+          <meta property="og:image" content={imageUrl} />
+          {image && <meta property="og:image:width" content="1200" />}
+          {image && <meta property="og:image:height" content="630" />}
           <meta property="og:type" content="website" />
-          <meta name="twitter:card" content="summary" />
+          <meta name="twitter:card" content={image ? 'summary_large_image' : 'summary'} />
+          <meta name="twitter:image" content={imageUrl} />
           <meta name="twitter:site" content="@kfly8" />
           <meta name="twitter:creator" content="@kfly8" />
         </head>
