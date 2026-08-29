@@ -10,6 +10,7 @@ public/diary
 .wrangler
 .dev.vars
 .playwright-mcp
+.DS_Store
 
 # Change them to your taste:
 wrangler.toml
