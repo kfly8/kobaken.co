@@ -44,10 +44,15 @@
 }
 
 /* Current page: solid underline instead of the dotted affordance used
-   for links you'd click — same color vocabulary, different meaning. */
+   for links you'd click — same color vocabulary, different meaning.
+   A solid line reads as touching a descender (the "y" in "Diary") at
+   the same 0.2em offset the dotted style uses, so this needs more
+   clearance and a hairline weight to stay quiet. */
 .site-nav a[aria-current="page"] {
   text-decoration-style: solid;
   text-decoration-color: var(--color-text-main);
+  text-underline-offset: 0.3em;
+  text-decoration-thickness: 1px;
 }
 
 .site-nav #toggle-theme {
