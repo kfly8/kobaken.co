@@ -27,6 +27,20 @@ function titleFontSize(title: string): number {
   return 52
 }
 
+// FNV-1a over the title, used as a cache-busting query param on the OGP
+// image URL (?v=<hash>) — the same content-addressed pattern this project
+// already uses for static assets (dist/asset-version.ts's ?v=<hash>).
+// A title edit produces a new URL, so the (immutable, cached-for-a-year)
+// response below never needs to be purged or revalidated.
+export function ogVersion(title: string): string {
+  let hash = 0x811c9dc5
+  for (let i = 0; i < title.length; i++) {
+    hash ^= title.charCodeAt(i)
+    hash = Math.imul(hash, 0x01000193)
+  }
+  return (hash >>> 0).toString(16).padStart(8, '0')
+}
+
 export async function renderOgpImage(post: Post, section: 'Blog' | 'Diary', ctx: ExecutionContext): Promise<Response> {
   cache.setExecutionContext(ctx)
 
@@ -69,10 +83,10 @@ export async function renderOgpImage(post: Post, section: 'Blog' | 'Diary', ctx:
       new GoogleFont('Noto Sans JP', { weight: 900, subset: 'japanese' }),
     ],
     headers: {
-      // A day fresh, up to a week stale-while-revalidate — short enough
-      // that a title fix shows up without needing a manual cache purge,
-      // long enough that repeat crawler fetches rarely hit a cache miss.
-      'Cache-Control': 'public, max-age=86400, stale-while-revalidate=604800',
+      // Safe to cache forever: the URL (?v=ogVersion(title)) changes
+      // whenever the title does, so a stale cache entry is never served
+      // under the URL a fresh page actually links to.
+      'Cache-Control': 'public, max-age=31536000, immutable',
     },
   })
 }

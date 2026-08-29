@@ -3,7 +3,7 @@ import { PostList } from '@/components/PostList'
 import { PostArticle } from '@/components/PostArticle'
 import { posts, getPost, getPostsByTag } from './content'
 import { okfFrontmatter } from '../content/okf'
-import { renderOgpImage } from '../content/ogp'
+import { renderOgpImage, ogVersion } from '../content/ogp'
 
 const BASE = '/diary'
 
@@ -56,6 +56,6 @@ diary.get('/:slug', (c) => {
     title: `${post.title} — kobaken diary`,
     description: post.description,
     canonical: `${BASE}/${post.slug}`,
-    image: `${BASE}/${post.slug}/og.png`,
+    image: `${BASE}/${post.slug}/og.png?v=${ogVersion(post.title)}`,
   })
 })
