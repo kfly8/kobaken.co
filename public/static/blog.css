@@ -44,6 +44,20 @@
   margin: 1.2em 0;
 }
 
+.blog-article .body h2 {
+  font-family: Inter, sans-serif;
+  font-weight: 900;
+  font-size: 1.5em;
+  letter-spacing: -0.01em;
+  margin: 1.8em 0 0.6em;
+}
+
+.blog-article .body h3 {
+  font-weight: 700;
+  font-size: 1.15em;
+  margin: 1.6em 0 0.5em;
+}
+
 .blog-article .body a {
   text-decoration: underline;
   text-decoration-style: dotted;
