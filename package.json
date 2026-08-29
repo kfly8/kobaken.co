@@ -2,7 +2,7 @@
   "name": "kobaken.co",
   "type": "module",
   "scripts": {
-    "dev": "node scripts/generate-posts.mjs && vite build && unocss && node scripts/stamp-asset-version.mjs && concurrently -k -n vite,uno,wrangler -c blue,magenta,green \"vite dev\" \"unocss --watch\" \"wrangler dev --live-reload\"",
+    "dev": "node scripts/generate-posts.mjs --dev && vite build && unocss && node scripts/stamp-asset-version.mjs && concurrently -k -n vite,uno,wrangler -c blue,magenta,green \"vite dev\" \"unocss --watch\" \"wrangler dev --live-reload\"",
     "build": "node scripts/generate-posts.mjs && vite build && unocss && node scripts/stamp-asset-version.mjs",
     "watch": "vite build --watch",
     "deploy": "node scripts/generate-posts.mjs && vite build && unocss && node scripts/stamp-asset-version.mjs && wrangler deploy",
