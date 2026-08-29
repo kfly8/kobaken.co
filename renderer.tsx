@@ -2,6 +2,7 @@ import 'hono'
 import { jsxRenderer } from 'hono/jsx-renderer'
 import { BfScripts } from '@barefootjs/hono/scripts'
 import { themeInitScript } from './theme-script'
+import { twitterEmbedsScript } from './twitter-embeds-script'
 import { Assets } from './dist/bf-assets'
 import { assetVersion } from './dist/asset-version'
 
@@ -36,11 +37,11 @@ export const renderer = jsxRenderer(
           <script src="/static/gtag.js"></script>
           {/* Loaded once here (not per-post): a <script> tag inside
               dangerouslySetInnerHTML markdown HTML never executes, so
-              this can't come from the post body itself. TwitterEmbeds
-              (components/TwitterEmbeds.tsx) re-triggers widgets.js's
-              DOM scan after client-side navigation, once this has
-              already loaded. */}
+              this can't come from the post body itself. twitterEmbedsScript
+              re-triggers widgets.js's DOM scan after client-side
+              navigation, once this has already loaded. */}
           <script async src="https://platform.x.com/widgets.js"></script>
+          <script dangerouslySetInnerHTML={{ __html: twitterEmbedsScript }} />
           <title>{title}</title>
           <meta http-equiv="X-UA-Compatible" content="IE=edge" />
           <meta name="viewport" content="width=device-width, initial-scale=1.0" />
