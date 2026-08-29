@@ -1,9 +1,7 @@
-import helloDiary from '../content/diary/hello-diary.md'
+import { RAW_POSTS } from '../dist/diary-posts'
 import { createPostCollection } from '../content/posts'
 
-// New posts are added here by hand — one `import`, one entry.
-const RAW_POSTS: Record<string, string> = {
-  'hello-diary': helloDiary,
-}
-
+// RAW_POSTS is generated from content/diary/*.md by
+// scripts/generate-posts.mjs — add a post by dropping a file there with
+// `published: true` in its frontmatter, not by editing this file.
 export const { posts, getPost, getPostsByTag } = createPostCollection(RAW_POSTS)

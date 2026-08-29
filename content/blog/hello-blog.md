@@ -3,6 +3,7 @@ title: "はじめてのBarefootJSブログ記事"
 date: "2026-08-21"
 description: "BarefootJS導入の動作確認を兼ねた最初の記事です。"
 tags: ["barefootjs", "meta"]
+published: true
 ---
 
 これはBarefootJS Router導入後、最初の動作確認記事です。
