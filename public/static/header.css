@@ -43,6 +43,13 @@
   text-decoration-color: var(--color-text-main);
 }
 
+/* Current page: solid underline instead of the dotted affordance used
+   for links you'd click — same color vocabulary, different meaning. */
+.site-nav a[aria-current="page"] {
+  text-decoration-style: solid;
+  text-decoration-color: var(--color-text-main);
+}
+
 .site-nav #toggle-theme {
   font-size: x-large;
   line-height: 1;

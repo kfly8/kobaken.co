@@ -4,6 +4,7 @@ import { ToggleTheme } from './ToggleTheme'
 
 interface HeaderProps {
   showLogo?: boolean
+  active?: 'profile' | 'blog' | 'diary' | 'slides'
 }
 
 export function Header(props: HeaderProps) {
@@ -20,10 +21,10 @@ export function Header(props: HeaderProps) {
         </a>
       )}
       <nav className="site-nav">
-        <a href="/profile">Profile</a>
-        <a href="/blog">Blog</a>
-        <a href="/diary">Diary</a>
-        <a href="/slides">Slides</a>
+        <a href="/profile" aria-current={props.active === 'profile' ? 'page' : undefined}>Profile</a>
+        <a href="/blog" aria-current={props.active === 'blog' ? 'page' : undefined}>Blog</a>
+        <a href="/diary" aria-current={props.active === 'diary' ? 'page' : undefined}>Diary</a>
+        <a href="/slides" aria-current={props.active === 'slides' ? 'page' : undefined}>Slides</a>
         <ToggleTheme />
       </nav>
     </header>

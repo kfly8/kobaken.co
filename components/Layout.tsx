@@ -7,6 +7,7 @@ interface LayoutProps {
   children?: unknown
   className?: string
   showLogo?: boolean
+  active?: 'profile' | 'blog' | 'diary' | 'slides'
 }
 
 export function Layout(props: LayoutProps) {
@@ -16,7 +17,7 @@ export function Layout(props: LayoutProps) {
           that a per-page prop like showLogo gets re-evaluated on every
           Router navigation — anything outside the region is left alone
           by partial navigation and would keep stale props. */}
-      <Header showLogo={props.showLogo} />
+      <Header showLogo={props.showLogo} active={props.active} />
       <main className={props.className ? `page-layout ${props.className}` : 'page-layout'}>
         {props.children}
       </main>

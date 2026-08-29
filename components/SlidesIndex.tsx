@@ -6,7 +6,7 @@ const talks = [
 
 export function SlidesIndex() {
   return (
-    <Layout className="slides-list">
+    <Layout className="slides-list" active="slides">
       <h1>Slides</h1>
       <ul>
         {talks.map((talk) => (

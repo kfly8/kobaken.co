@@ -10,7 +10,7 @@ interface PostListProps {
 
 export function PostList(props: PostListProps) {
   return (
-    <Layout className="blog-list">
+    <Layout className="blog-list" active={props.basePath === '/diary' ? 'diary' : 'blog'}>
       <h1>{props.heading}</h1>
       <ul>
         {props.posts.map((post) => (

@@ -12,7 +12,7 @@ interface PostArticleProps {
 export function PostArticle(props: PostArticleProps) {
   const related = props.related ?? []
   return (
-    <Layout className="blog-article">
+    <Layout className="blog-article" active={props.basePath === '/diary' ? 'diary' : 'blog'}>
       <article>
         <h1>{props.post.title}</h1>
         <p className="date">
