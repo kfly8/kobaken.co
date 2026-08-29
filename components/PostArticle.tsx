@@ -1,5 +1,6 @@
 import { Layout } from './Layout'
 import { PostTags } from './PostTags'
+import { TwitterEmbeds } from './TwitterEmbeds'
 import type { Post } from '../content/posts'
 
 interface PostArticleProps {
@@ -28,6 +29,7 @@ export function PostArticle(props: PostArticleProps) {
           >Markdown</a>
         </p>
         <div className="body" dangerouslySetInnerHTML={{ __html: props.post.html }} />
+        <TwitterEmbeds />
         {props.post.tags.length > 0 && (
           <p className="mt-10"><PostTags tags={props.post.tags} basePath={props.basePath} /></p>
         )}

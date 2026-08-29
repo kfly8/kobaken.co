@@ -34,6 +34,13 @@ export const renderer = jsxRenderer(
           <script dangerouslySetInnerHTML={{ __html: themeInitScript }} />
           <script async src="https://www.googletagmanager.com/gtag/js?id=G-N1NZRELLMR"></script>
           <script src="/static/gtag.js"></script>
+          {/* Loaded once here (not per-post): a <script> tag inside
+              dangerouslySetInnerHTML markdown HTML never executes, so
+              this can't come from the post body itself. TwitterEmbeds
+              (components/TwitterEmbeds.tsx) re-triggers widgets.js's
+              DOM scan after client-side navigation, once this has
+              already loaded. */}
+          <script async src="https://platform.x.com/widgets.js"></script>
           <title>{title}</title>
           <meta http-equiv="X-UA-Compatible" content="IE=edge" />
           <meta name="viewport" content="width=device-width, initial-scale=1.0" />
