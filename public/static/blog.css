@@ -82,6 +82,16 @@
   margin: 1.5em 0;
 }
 
+/* A bare browser-default <hr> (beveled, full-strength) reads as loud
+   against the rest of the page's restraint. A thin, low-opacity line
+   with room around it reads as a quiet break instead of a shout. */
+.blog-article .body hr {
+  border: none;
+  border-top: 1px solid var(--color-text-sub);
+  opacity: 0.25;
+  margin: 2.5em 0;
+}
+
 .blog-article .back {
   margin-top: 40px;
 }
