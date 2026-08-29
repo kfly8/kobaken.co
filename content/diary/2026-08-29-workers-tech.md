@@ -3,6 +3,7 @@ title: "Cloudflare Workers Tech Talks in Tokyo #8 に参加した"
 date: "2026-08-29"
 description: "TODO"
 tags: ["diary", "meta"]
+published: true
 ---
 
 [Cloudflare Workers Tech Talks in Tokyo #8](https://workers-tech.connpass.com/event/400818/) に参加した。最高だった。勉強会の運営を10年以上してきたけれど、滅多に巡り会える場ではないと思った。yusukebeさんを始めとした多くの人の支えによるもので、場を作っていただいた皆さんに大変感謝をしたい。
