@@ -3,7 +3,7 @@ import { PostList } from '@/components/PostList'
 import { PostArticle } from '@/components/PostArticle'
 import { posts, getPost, getPostsByTag } from './content'
 import { okfFrontmatter } from '../content/okf'
-import { renderOgpImage, ogVersion } from '../content/ogp'
+import { renderOgpImage } from '../content/ogp'
 
 const BASE = '/diary'
 
@@ -33,7 +33,7 @@ diary.get('/tags/:tag', (c) => {
 diary.get('/:slug/og.png', (c) => {
   const post = getPost(c.req.param('slug'))
   if (!post) return c.notFound()
-  return renderOgpImage(post, 'Diary', c.executionCtx)
+  return renderOgpImage(post, 'Diary', c.req.header('If-None-Match'), c.executionCtx)
 })
 
 // Must be registered before /:slug — its default [^/]+ pattern also matches
@@ -56,6 +56,6 @@ diary.get('/:slug', (c) => {
     title: `${post.title} — kobaken diary`,
     description: post.description,
     canonical: `${BASE}/${post.slug}`,
-    image: `${BASE}/${post.slug}/og.png?v=${ogVersion(post.title)}`,
+    image: `${BASE}/${post.slug}/og.png`,
   })
 })

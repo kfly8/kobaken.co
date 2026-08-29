@@ -27,21 +27,23 @@ function titleFontSize(title: string): number {
   return 52
 }
 
-// FNV-1a over the title, used as a cache-busting query param on the OGP
-// image URL (?v=<hash>) — the same content-addressed pattern this project
-// already uses for static assets (dist/asset-version.ts's ?v=<hash>).
-// A title edit produces a new URL, so the (immutable, cached-for-a-year)
-// response below never needs to be purged or revalidated.
-export function ogVersion(title: string): string {
-  let hash = 0x811c9dc5
-  for (let i = 0; i < title.length; i++) {
-    hash ^= title.charCodeAt(i)
-    hash = Math.imul(hash, 0x01000193)
+export async function renderOgpImage(
+  post: Post,
+  section: 'Blog' | 'Diary',
+  ifNoneMatch: string | undefined,
+  ctx: ExecutionContext,
+): Promise<Response> {
+  const etag = `"${post.contentHash}"`
+  // Cheap check (a string compare against an already-computed hash) before
+  // the expensive part (satori layout + resvg rasterization). Whether the
+  // platform's stale-while-revalidate actually forwards If-None-Match to
+  // reach this branch is unconfirmed (undocumented, and local wrangler dev
+  // doesn't implement Workers Cache purge/revalidation yet either) — this
+  // is correct either way, just not proven to be the common case yet.
+  if (ifNoneMatch === etag) {
+    return new Response(null, { status: 304, headers: { ETag: etag } })
   }
-  return (hash >>> 0).toString(16).padStart(8, '0')
-}
 
-export async function renderOgpImage(post: Post, section: 'Blog' | 'Diary', ctx: ExecutionContext): Promise<Response> {
   cache.setExecutionContext(ctx)
 
   const tree = node('div', {
@@ -83,10 +85,14 @@ export async function renderOgpImage(post: Post, section: 'Blog' | 'Diary', ctx:
       new GoogleFont('Noto Sans JP', { weight: 900, subset: 'japanese' }),
     ],
     headers: {
-      // Safe to cache forever: the URL (?v=ogVersion(title)) changes
-      // whenever the title does, so a stale cache entry is never served
-      // under the URL a fresh page actually links to.
-      'Cache-Control': 'public, max-age=31536000, immutable',
+      // A week fresh, up to 30 days serving stale while revalidating in
+      // the background — long enough that repeat crawler fetches rarely
+      // cost a full render, bounded enough that an edit shows up on its
+      // own. ETag (post.contentHash, the whole raw post — not just the
+      // title) is what actually decides whether a revalidation needs to
+      // re-render or can shortcut to 304 above.
+      'Cache-Control': 'public, max-age=604800, stale-while-revalidate=2592000',
+      ETag: etag,
     },
   })
 }
