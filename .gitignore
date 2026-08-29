@@ -2,6 +2,10 @@ node_modules
 dist
 public/components
 public/static/uno.css
+# Copied from content/<section>/<slug>/ by scripts/generate-posts.mjs —
+# the source images live in content/, these are a build artifact.
+public/blog
+public/diary
 
 .wrangler
 .dev.vars

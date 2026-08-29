@@ -7,9 +7,15 @@
 // this runs with --dev (the `dev` npm script), in which case every file
 // is included so drafts are visible locally before they're published.
 //
+// Also copies each included post's colocated asset folder —
+// content/<section>/<slug>/ — to public/<section>/<slug>/, so Workers
+// Assets serves it at the same path a relative markdown image resolves
+// to (content/posts.ts's resolveRelativeImages rewrites `![](lego.jpeg)`
+// to `/<section>/<slug>/lego.jpeg`).
+//
 // Runs before `vite build` in the dev/build/deploy scripts.
 
-import { mkdirSync, readdirSync, readFileSync, writeFileSync } from 'node:fs'
+import { cpSync, existsSync, mkdirSync, readdirSync, readFileSync, writeFileSync } from 'node:fs'
 import { basename, join } from 'node:path'
 
 const PUBLISHED = /^published:\s*true\s*$/m
@@ -28,6 +34,15 @@ function generate(section) {
   const entries = published
     .map((f, i) => `  '${basename(f, '.md')}': post${i},`)
     .join('\n')
+
+  for (const f of published) {
+    const slug = basename(f, '.md')
+    const assetDir = join(dir, slug)
+    if (!existsSync(assetDir)) continue
+    const dest = join('public', section, slug)
+    mkdirSync(dest, { recursive: true })
+    cpSync(assetDir, dest, { recursive: true })
+  }
 
   mkdirSync('dist', { recursive: true })
   writeFileSync(

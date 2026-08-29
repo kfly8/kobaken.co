@@ -56,9 +56,17 @@ export interface PostCollection {
   getPostsByTag: (tag: string) => Post[]
 }
 
+// A relative `![](lego.jpeg)` resolves against a post's own colocated
+// asset folder — content/<section>/<slug>/ — which scripts/generate-posts.mjs
+// copies to public/<section>/<slug>/ at build time, so it's served at
+// exactly this URL. Absolute paths and full URLs pass through untouched.
+function resolveRelativeImages(html: string, section: string, slug: string): string {
+  return html.replace(/(<img[^>]*\ssrc=")(?!https?:\/\/|\/)([^"]+)(")/g, `$1/${section}/${slug}/$2$3`)
+}
+
 // Turns a slug → raw-Markdown-with-frontmatter map into a Post collection.
 // Shared by /blog and /diary, which differ only in which files they pass in.
-export function createPostCollection(rawPosts: Record<string, string>): PostCollection {
+export function createPostCollection(rawPosts: Record<string, string>, section: string): PostCollection {
   const posts: Post[] = Object.entries(rawPosts)
     .map(([slug, raw]) => {
       const { data, body } = parseFrontMatter(raw)
@@ -71,7 +79,7 @@ export function createPostCollection(rawPosts: Record<string, string>): PostColl
         tags: data.tags ?? [],
         related: data.related ?? [],
         body: trimmedBody,
-        html: marked.parse(trimmedBody) as string,
+        html: resolveRelativeImages(marked.parse(trimmedBody) as string, section, slug),
         contentHash: fnv1a(raw),
       }
     })
