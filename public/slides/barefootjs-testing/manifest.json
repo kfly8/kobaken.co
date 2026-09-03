@@ -1,0 +1,525 @@
+{
+  "version": 1,
+  "peithoVersion": "1.24.1",
+  "title": "BarefootJSの事例からみるテスト技法六選",
+  "slideCount": 35,
+  "plannedDurationMs": 840000,
+  "aspectRatio": "16:9",
+  "canvasWidth": 1280,
+  "canvasHeight": 720,
+  "sections": [
+    {
+      "name": "導入",
+      "startIndex": 0,
+      "endIndex": 0,
+      "plannedDurationMs": 60000
+    },
+    {
+      "name": "自己紹介",
+      "startIndex": 1,
+      "endIndex": 1,
+      "plannedDurationMs": 20000
+    },
+    {
+      "name": "Why Testing",
+      "startIndex": 2,
+      "endIndex": 2,
+      "plannedDurationMs": 10000
+    },
+    {
+      "name": "BarefootJS",
+      "startIndex": 3,
+      "endIndex": 16,
+      "plannedDurationMs": 240000
+    },
+    {
+      "name": "本当に動くのか",
+      "startIndex": 17,
+      "endIndex": 17,
+      "plannedDurationMs": 60000
+    },
+    {
+      "name": "ヒューリスティックから探索へ",
+      "startIndex": 18,
+      "endIndex": 32,
+      "plannedDurationMs": 360000
+    },
+    {
+      "name": "まとめ",
+      "startIndex": 33,
+      "endIndex": 34,
+      "plannedDurationMs": 90000
+    }
+  ],
+  "slides": [
+    {
+      "index": 0,
+      "key": "cover",
+      "src": "slides/000-cover.html",
+      "hasNotes": true,
+      "skip": false,
+      "revealSteps": 0,
+      "text": {
+        "title": "BarefootJSの事例からみるテスト技法六選",
+        "body": "ToKyoto.js #03 / kobaken",
+        "code": ""
+      }
+    },
+    {
+      "index": 1,
+      "key": "whoami",
+      "src": "slides/001-whoami.html",
+      "hasNotes": true,
+      "skip": false,
+      "revealSteps": 0,
+      "text": {
+        "title": "kobaken a.k.a @kfly8",
+        "body": "初めて書いたプログラミング言語は、JavaScript\nYAPC::Tokyo 2019, YAPC::Japan::Online 2022, YAPC::Hiroshima 2024 のリード\n個人事業主、個人開発",
+        "code": ""
+      }
+    },
+    {
+      "index": 2,
+      "key": "why-testing",
+      "src": "slides/002-why-testing.html",
+      "hasNotes": true,
+      "skip": false,
+      "revealSteps": 0,
+      "text": {
+        "title": "この発表で実現できたら嬉しいこと",
+        "body": "未知の不具合発見に役立つこと",
+        "code": ""
+      }
+    },
+    {
+      "index": 3,
+      "key": "overview",
+      "src": "slides/003-overview.html",
+      "hasNotes": true,
+      "skip": false,
+      "revealSteps": 0,
+      "text": {
+        "title": "BarefootJS とは",
+        "body": "signal ベースの TSX を 複数のバックエンド言語のネイティブなテンプレートにコンパイル\nNode.jsが不要\nNext.js といったBFFのレイヤーは不要\nSolidJS 由来の細粒度リアクティビティ\n超釈: jQueryで手動配線 → TSXをコンパイルして自動配線",
+        "code": ""
+      }
+    },
+    {
+      "index": 4,
+      "key": "counter-live",
+      "src": "slides/004-counter-live.html",
+      "hasNotes": true,
+      "skip": false,
+      "revealSteps": 0,
+      "text": {
+        "title": "",
+        "body": "",
+        "code": ""
+      }
+    },
+    {
+      "index": 5,
+      "key": "jquery-counter",
+      "src": "slides/005-jquery-counter.html",
+      "hasNotes": true,
+      "skip": false,
+      "revealSteps": 3,
+      "text": {
+        "title": "jQuery",
+        "body": "「何が変わったから、どこを更新するか」を手動管理",
+        "code": "<div id=\"counter\">\n  <p id=\"value\">0</p>\n  <button id=\"inc\">+1</button>\n</div>\n<script>\nlet count = 0\n$('#inc').on('click', () => {\n  count++\n  $('#value').text(count)\n})\n</script>\n"
+      }
+    },
+    {
+      "index": 6,
+      "key": "counter-src",
+      "src": "slides/006-counter-src.html",
+      "hasNotes": true,
+      "skip": false,
+      "revealSteps": 2,
+      "text": {
+        "title": "Signal based TSX",
+        "body": "",
+        "code": "'use client'\n\nimport { createSignal } from '@barefootjs/client'\n\nexport function Counter(props: { initial?: number }) {\n  const [count, setCount] = createSignal(props.initial ?? 0)\n\n  return (\n    <div>\n      <p>{count()}</p>\n      <button onClick={() => setCount(n => n + 1)}>+1</button>\n    </div>\n  )\n}\n"
+      }
+    },
+    {
+      "index": 7,
+      "key": "counter-expected",
+      "src": "slides/007-counter-expected.html",
+      "hasNotes": true,
+      "skip": false,
+      "revealSteps": 0,
+      "text": {
+        "title": "BarefootJSがTSXをコンパイルして得るもの",
+        "body": "",
+        "code": ""
+      }
+    },
+    {
+      "index": 8,
+      "key": "auto-wiring",
+      "src": "slides/008-auto-wiring.html",
+      "hasNotes": true,
+      "skip": false,
+      "revealSteps": 0,
+      "text": {
+        "title": "手動配線 → 自動配線",
+        "body": "TSXに書いたのは onClick={...} だけ\nbf 属性も $() の selector も、両方コンパイラが生成\nけれど、中身の本質はjQuery時代と同じDOM操作。レガシー\nつまり、BarefootJSはTSXでMPAできるフレームワークとも言える",
+        "code": "# マーカーつきのHTML\n<button bf=\"s2\">+1</button>\n\n# マーカーを利用し、DOM取得、イベント登録\nconst [_s2] = $(__scope, 's2')\n_s2.addEventListener('click', () => setCount(n => n + 1))\n"
+      }
+    },
+    {
+      "index": 9,
+      "key": "counter-hono",
+      "src": "slides/009-counter-hono.html",
+      "hasNotes": false,
+      "skip": false,
+      "revealSteps": 0,
+      "text": {
+        "title": "Hono",
+        "body": "→ hono/jsx",
+        "code": "export function Counter(__allProps: CounterProps & { __instanceId?: string /* ... */ }) {\n  const { __instanceId, /* ... */ ...props } = __allProps\n  const count = () => props.initial ?? 0\n\n  return (\n    <div bf-s={__scopeId} /* bf-r, bf-p ... */>\n      <p bf=\"s1\">{bfText(\"s0\")}{count()}{bfTextEnd()}</p>\n      <button onClick={() => {}} bf=\"s2\">+1</button>\n    </div>\n  )\n}\n"
+      }
+    },
+    {
+      "index": 10,
+      "key": "counter-go",
+      "src": "slides/010-counter-go.html",
+      "hasNotes": false,
+      "skip": false,
+      "revealSteps": 0,
+      "text": {
+        "title": "Go",
+        "body": "→ html/template",
+        "code": "{{define \"Counter\"}}\n{{if .Scripts}}{{.Scripts.Register \"/static/client/barefoot.js\"}}\n             {{.Scripts.Register \"/static/client/Counter.client.js\"}}{{end}}\n<div bf-s=\"{{bfScopeAttr .}}\"\n     {{bfHydrationAttrs .}} {{bfPropsAttr .}}\n     {{if .BfDataKey}} data-key=\"{{.BfDataKey}}\"{{end}}>\n  <p bf=\"s1\">\n    {{bfTextStart \"s0\"}}{{.Count}}{{bfTextEnd}}\n  </p>\n  <button bf=\"s2\">+1</button>\n</div>\n{{end}}\n"
+      }
+    },
+    {
+      "index": 11,
+      "key": "counter-rust",
+      "src": "slides/011-counter-rust.html",
+      "hasNotes": false,
+      "skip": false,
+      "revealSteps": 0,
+      "text": {
+        "title": "Rust",
+        "body": "→ minijinja",
+        "code": "{% set _bf_reg0 = bf.register_script('/static/components/barefoot.js') %}\n{% set _bf_reg1 = bf.register_script('/static/components/Counter.client.js') %}\n{% set count = (initial if (initial is defined and initial is not none) else 0) %}\n<div bf-s=\"{{ bf.scope_attr() }}\"\n     {{ bf.hydration_attrs() | safe }} {{ bf.props_attr() | safe }}>\n  <p bf=\"s1\">\n    {{ bf.text_start(\"s0\") | safe }}{{ bf.string(count) }}{{ bf.text_end() | safe }}\n  </p>\n  <button bf=\"s2\">+1</button>\n</div>\n"
+      }
+    },
+    {
+      "index": 12,
+      "key": "counter-ruby",
+      "src": "slides/012-counter-ruby.html",
+      "hasNotes": false,
+      "skip": false,
+      "revealSteps": 0,
+      "text": {
+        "title": "Ruby",
+        "body": "→ ERB",
+        "code": "<%- bf.register_script('/static/components/barefoot.js') -%>\n<%- bf.register_script('/static/components/Counter.client.js') -%>\n<% v[:count] = ((v[:initial]).nil? ? 0 : v[:initial]) %>\n<div bf-s=\"<%= bf.scope_attr %>\"\n     <%= bf.hydration_attrs %> <%= bf.props_attr %>>\n  <p bf=\"s1\">\n    <%= bf.text_start(\"s0\") %><%= bf.h(v[:count]) %><%= bf.text_end %>\n  </p>\n  <button bf=\"s2\">+1</button>\n</div>\n"
+      }
+    },
+    {
+      "index": 13,
+      "key": "counter-python",
+      "src": "slides/013-counter-python.html",
+      "hasNotes": false,
+      "skip": false,
+      "revealSteps": 0,
+      "text": {
+        "title": "Python",
+        "body": "→ Jinja2",
+        "code": "{% set _bf_reg0 = bf.register_script('/static/components/barefoot.js') %}\n{% set _bf_reg1 = bf.register_script('/static/components/Counter.client.js') %}\n{% set count = (initial if (initial is defined and initial is not none) else 0) %}\n<div bf-s=\"{{ bf.scope_attr() }}\"\n     {{ bf.hydration_attrs() | safe }} {{ bf.props_attr() | safe }}>\n  <p bf=\"s1\">\n    {{ bf.text_start(\"s0\") | safe }}{{ bf.string(count) }}{{ bf.text_end() | safe }}\n  </p>\n  <button bf=\"s2\">+1</button>\n</div>\n"
+      }
+    },
+    {
+      "index": 14,
+      "key": "counter-php",
+      "src": "slides/014-counter-php.html",
+      "hasNotes": false,
+      "skip": false,
+      "revealSteps": 0,
+      "text": {
+        "title": "PHP",
+        "body": "→ Laravel Blade",
+        "code": "@php($bf->register_script('/static/components/barefoot.js'))\n@php($bf->register_script('/static/components/Counter.client.js'))\n@php($count = ($initial ?? 0))\n<div bf-s=\"{!! e($bf->scope_attr()) !!}\"\n     {!! $bf->hydration_attrs() !!} {!! $bf->props_attr() !!}>\n  <p bf=\"s1\">\n    {!! $bf->text_start(\"s0\") !!}{!! e($bf->string($count)) !!}{!! $bf->text_end() !!}\n  </p>\n  <button bf=\"s2\">+1</button>\n</div>\n"
+      }
+    },
+    {
+      "index": 15,
+      "key": "counter-perl",
+      "src": "slides/015-counter-perl.html",
+      "hasNotes": false,
+      "skip": false,
+      "revealSteps": 0,
+      "text": {
+        "title": "Perl",
+        "body": "→ Mojolicious EP",
+        "code": "% bf->register_script('/static/components/barefoot.js');\n% bf->register_script('/static/components/Counter.client.js');\n% my $count = ($initial // 0);\n<div bf-s=\"<%= bf->scope_attr %>\"\n     <%== bf->hydration_attrs %> <%== bf->props_attr %>>\n  <p bf=\"s1\">\n    <%== bf->text_start(\"s0\") %><%= $count %><%== bf->text_end %>\n  </p>\n  <button bf=\"s2\">+1</button>\n</div>\n"
+      }
+    },
+    {
+      "index": 16,
+      "key": "voice",
+      "src": "slides/016-voice.html",
+      "hasNotes": false,
+      "skip": false,
+      "revealSteps": 0,
+      "text": {
+        "title": "街の声",
+        "body": "",
+        "code": ""
+      }
+    },
+    {
+      "index": 17,
+      "key": "really",
+      "src": "slides/017-really.html",
+      "hasNotes": true,
+      "skip": false,
+      "revealSteps": 0,
+      "text": {
+        "title": "本題",
+        "body": "本当に動くのか？",
+        "code": ""
+      }
+    },
+    {
+      "index": 18,
+      "key": "goal",
+      "src": "slides/018-goal.html",
+      "hasNotes": false,
+      "skip": false,
+      "revealSteps": 0,
+      "text": {
+        "title": "本当に動くのか？",
+        "body": "「Counter が動く」のと「TSXが全部動く」のは大きく違う\n「全部」となると、TypeScriptを全て翻訳するのと等価\nスコープを決め、Sound or Loud という方針設定\nSound  期待通りに動く\nLoud - 黙って壊れず明示的にエラー\nこのとき、Clientに処理移譲 /* @client */ directive 利用の提案\nコンパイルが通り動かないケースを探索する",
+        "code": ""
+      }
+    },
+    {
+      "index": 19,
+      "key": "heuristic",
+      "src": "slides/019-heuristic.html",
+      "hasNotes": false,
+      "skip": false,
+      "revealSteps": 0,
+      "text": {
+        "title": "探索のはじまり",
+        "body": "ヒューリスティック\nCounter\nshadcn/ui の移植\nドッグフーディング\nAI Agentにオンボーディングさせる\n→ 仕様・設計を固めていく\n適合性テストの設計",
+        "code": ""
+      }
+    },
+    {
+      "index": 20,
+      "key": "conformance-test",
+      "src": "slides/020-conformance-test.html",
+      "hasNotes": true,
+      "skip": false,
+      "revealSteps": 0,
+      "text": {
+        "title": "1. 適合性テスト(Conformance testing)",
+        "body": "仕様に適合してるか\nTest262\nECMAScriptの仕様書をテストスイートにしたもの\n{ const f=0; const f=0; } はエラーになるべきなど\nRoast\nテストスイートそのものがRakuの仕様そのもの\nBarefootJSの場合、この方式を採用",
+        "code": ""
+      }
+    },
+    {
+      "index": 21,
+      "key": "conformance-test-barefootjs",
+      "src": "slides/021-conformance-test-barefootjs.html",
+      "hasNotes": false,
+      "skip": false,
+      "revealSteps": 0,
+      "text": {
+        "title": "BarefootJSの適合性テスト",
+        "body": "固定したexpectedHtmlを全アダプタ共通の仕様に",
+        "code": "// TSXを入力、Honoアダプタ生成のHTMLを期待値に\nexport const fixture = createFixture({\n  id: 'counter',\n  source: `\n'use client'\nimport { createSignal } from '@barefootjs/client'\nexport function Counter() {\n  const [count, setCount] = createSignal(0)\n  return <button onClick={() => setCount(n => n + 1)}>Count: {count()}</button>\n}\n`,\n  expectedHtml: `\n    <button bf-s=\"test\" bf=\"s1\">Count: <!--bf:s0-->0<!--/--></button>\n  `,\n})\n"
+      }
+    },
+    {
+      "index": 22,
+      "key": "motto",
+      "src": "slides/022-motto.html",
+      "hasNotes": false,
+      "skip": false,
+      "revealSteps": 0,
+      "text": {
+        "title": "ヒューリスティックから構造的な探索へ",
+        "body": "徐々に不具合を発見しづらくなる\nClaude Code /code-review といったスキルでは物足りない\n対象の構造、性質を踏まえて、壊す\ne.g. Gleamコンパイラのファジング",
+        "code": ""
+      }
+    },
+    {
+      "index": 23,
+      "key": "adversarial-concept",
+      "src": "slides/023-adversarial-concept.html",
+      "hasNotes": false,
+      "skip": false,
+      "revealSteps": 0,
+      "text": {
+        "title": "2. 敵対的テスト(Adversarial testing)",
+        "body": "意図的に意地悪な値をいれる手法\n(/code-review もそのエッセンスは入ってる)\n機械的な検証: 境界値カタログ\nデータ型ごとに「壊れやすい値」のカタログを用意\nstring → '', '<b>&\"\\'</b>', '😊' // 空、マーク、マルチバイト\nnumber → 0, -7, Number.MAX_SAFE_INTEGER // ゼロ・負数・巨大値\narray → 空配列\nこのカタログの値に自動差し替えするプログラムを書く",
+        "code": ""
+      }
+    },
+    {
+      "index": 24,
+      "key": "adversarial-apply",
+      "src": "slides/024-adversarial-apply.html",
+      "hasNotes": false,
+      "skip": false,
+      "revealSteps": 0,
+      "text": {
+        "title": "BarefootJSの敵対的境界値テスト",
+        "body": "適合テストのfixtureのPropsのデータ型をみる\n「壊れやすい値」の差し替え検証\n発見例: Go の href が percent-encode で リファレンスの JS と食い違う",
+        "code": "Counter { initial?: number }\n→  initial = 0 / -7 / Number.MAX_SAFE_INTEGER\n"
+      }
+    },
+    {
+      "index": 25,
+      "key": "mutation-concept",
+      "src": "slides/025-mutation-concept.html",
+      "hasNotes": false,
+      "skip": false,
+      "revealSteps": 0,
+      "text": {
+        "title": "3. メタモルフィックテスト(Metamorphic testing)",
+        "body": "期待値が設定困難なときのテスト手法の一つ\n入力を変化させたとき、出力の変化の関係性をテストする\n例: 入力を変化させても、出力は「変わらないはず」と書く",
+        "code": "sort(shuffle(array)) == sort(array)   // 並べ替えても、結果は同じはず\nf(alias(x)) == f(x)             // 名前を付け替えても、結果は同じはず\n"
+      }
+    },
+    {
+      "index": 26,
+      "key": "mutation-apply",
+      "src": "slides/026-mutation-apply.html",
+      "hasNotes": false,
+      "skip": false,
+      "revealSteps": 0,
+      "text": {
+        "title": "BarefootJS のメタモルフィックテスト",
+        "body": "入力のTSXを、フラグメント付与、変数代入経由して変化させる\nけれども出力のHTMLは変わらない、のように検証",
+        "code": "return <div>{x}</div>                        // original\nreturn <><div>{x}</div></>                   // fragment-wrap\n{ const foo = <div>{x}</div>; return foo }   // block-body\n"
+      }
+    },
+    {
+      "index": 27,
+      "key": "oracle-concept",
+      "src": "slides/027-oracle-concept.html",
+      "hasNotes": false,
+      "skip": false,
+      "revealSteps": 0,
+      "text": {
+        "title": "4. 疑似オラクル(Pseudo-oracle)",
+        "body": "期待値が設定困難なときのテスト手法の一つ。メタモルフィックテストの仲間\n入力は変えず、複数の独立した経路の出力をテストする\n例: 経路が違っても、出力は「同じになるはず」と書く",
+        "code": "pathA(x) == pathB(x)          // 独立した経路同士が、食い違わない\nf(op(x)) == f(stateAfter)     // 操作した結果 = 状態を最初から作った結果\n"
+      }
+    },
+    {
+      "index": 28,
+      "key": "oracle-apply",
+      "src": "slides/028-oracle-apply.html",
+      "hasNotes": false,
+      "skip": false,
+      "revealSteps": 0,
+      "text": {
+        "title": "BarefootJS の疑似オラクル",
+        "body": "DOMを生成する経路が、CSR、SSR と複数経路ある\nが、入力が同じであれば、同じDOMになるはず",
+        "code": "// three-point agreement\ndom(SSR) == dom(SSR + hydrate) == dom(CSR)\n\n// 更新経路 == 初期描画経路\ndom(click(el)) == dom(render(nextState))\n"
+      }
+    },
+    {
+      "index": 29,
+      "key": "diff-concept",
+      "src": "slides/029-diff-concept.html",
+      "hasNotes": false,
+      "skip": false,
+      "revealSteps": 0,
+      "text": {
+        "title": "5. 差分テスト(Differential testing)",
+        "body": "同じ入力を 2 つの実装に通し、出力の食い違いを見る手法\n信頼できる実装（リファレンス）が、そのまま期待値になる\nコンパイラや、複数の実装を持つソフトウェアに効く\n適合性テストと違い、期待値は保存せず、その場で比較\n疑似オラクルと違い、リファレンス側を「正」に固定する",
+        "code": "const ref = reference(input)    // 信頼できる実装\nconst out = target(input)       // 検証対象\nexpect(normalize(out)).toBe(normalize(ref))\n"
+      }
+    },
+    {
+      "index": 30,
+      "key": "diff-apply",
+      "src": "slides/030-diff-apply.html",
+      "hasNotes": false,
+      "skip": false,
+      "revealSteps": 0,
+      "text": {
+        "title": "BarefootJS の差分テスト",
+        "body": "発見例: リファレンスのHonoアダプタと、Goアダプタで差があった\nGoが識別子名childrenを決め打ちしていた。",
+        "code": "function Card(props) {\n  const { children: kids } = props   // kidsに付け替え\n  return <div>{kids}</div>\n}\n"
+      }
+    },
+    {
+      "index": 31,
+      "key": "pairwise-concept",
+      "src": "slides/031-pairwise-concept.html",
+      "hasNotes": false,
+      "skip": false,
+      "revealSteps": 0,
+      "text": {
+        "title": "6. ペアワイズ(Pairwise testing)",
+        "body": "全組み合わせが困難なとき、パターンを削減する手法\n「任意の2因子の値の全組合せが最低1回出現」する組み合わせでテスト\nバグの大半は、2〜3 要因の組み合わせで起きる\nあとからテスト強度を上げやすい",
+        "code": ""
+      }
+    },
+    {
+      "index": 32,
+      "key": "pairwise-apply",
+      "src": "slides/032-pairwise-apply.html",
+      "hasNotes": false,
+      "skip": false,
+      "revealSteps": 0,
+      "text": {
+        "title": "BarefootJS のペアワイズ",
+        "body": "2因子でまずは検証\n次にバグを踏んだ実績から、次の3因子の組を強化\nループ構造、イベント、コールバック",
+        "code": "TSXを次の5因子に分解\n- state: 値がどこから来て、書き換え可能かどうか。例 signal value, memo\n- structure: 条件分岐(三項演算子)、ループ、ネストした子コンポーネントなど\n- binding: signalの値がDOMのどこにどう結びつくか\n- event: 何がハンドラを起動するか。click, input など\n- callback: ハンドラの中身の形。単純なインラインのアロー関数\n"
+      }
+    },
+    {
+      "index": 33,
+      "key": "takeaways",
+      "src": "slides/033-takeaways.html",
+      "hasNotes": false,
+      "skip": false,
+      "revealSteps": 0,
+      "text": {
+        "title": "まとめ",
+        "body": "問い 技法 概要\n入力を作る 境界値カタログ 型ごとの壊れやすい値を代入\nペアワイズ 全組合せの代わりに2因子を網羅\n壊れを判定する 適合性テスト 仕様通りに振る舞うか検証\nメタモルフィック 入力を変え、出力の関係を検証\n疑似オラクル 独立した複数経路の出力を照合\n差分テスト 2つの実装の出力を比較",
+        "code": ""
+      }
+    },
+    {
+      "index": 34,
+      "key": "punchline",
+      "src": "slides/034-punchline.html",
+      "hasNotes": true,
+      "skip": false,
+      "revealSteps": 0,
+      "text": {
+        "title": "Happy testing",
+        "body": "& Happy hacking with BarefootJS",
+        "code": ""
+      }
+    }
+  ],
+  "images": [
+    {
+      "src": "assets/cacc014ced554c76-kobaken-icon.jpg"
+    },
+    {
+      "src": "assets/8d8b8e8f3fb514ad-kobaken-photo.jpg"
+    },
+    {
+      "src": "assets/dcd3968405437492-counter-live.png"
+    },
+    {
+      "src": "assets/9a35b0a602736261-11c52451d35decfb7f3047e912e2e69c949244bc82d76a7c29977e1b1d587497.png"
+    }
+  ]
+}

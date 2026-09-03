@@ -1,0 +1,851 @@
+/*
+  Deck theme for "BarefootJS のテスト手法" (tokyoto.js).
+  Palette follows barefootjs.dev: white background, near-black text,
+  green accent (oklch(0.65 0.18 145)), GitHub-light code colors.
+  Font sizes are tuned to read from the back of a meetup room.
+*/
+
+@font-face {
+  font-family: "Inter";
+  src: url("theme-fonts/Inter-Regular.woff2") format("woff2");
+  font-weight: 400;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: "Inter";
+  src: url("theme-fonts/Inter-SemiBold.woff2") format("woff2");
+  font-weight: 600;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: "Inter";
+  src: url("theme-fonts/Inter-Bold.woff2") format("woff2");
+  font-weight: 700;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: "JetBrains Mono";
+  src: url("theme-fonts/JetBrainsMono-Regular.woff2") format("woff2");
+  font-weight: 400;
+  font-style: normal;
+  font-display: swap;
+}
+
+:root, .peitho-slide {
+  color-scheme: light;
+  --bg: #ffffff;
+  --ink: #0f0f0f;
+  --ink: oklch(0.145 0 0);
+  --primary: #1f1f1f;
+  --primary: oklch(0.205 0 0);
+  --muted: #737373;
+  --muted: oklch(0.556 0 0);
+  --accent: #3fa45b;
+  --accent: oklch(0.65 0.18 145);
+  --accent-soft: rgba(63, 164, 91, 0.14);
+  --surface: #f5f5f5;
+  --surface: oklch(0.97 0 0);
+  --rule: #e5e5e5;
+  --code-bg: #f6f8fa;
+  --code-border: #e5e7eb;
+  --sans: "Inter", "Hiragino Sans", "Hiragino Kaku Gothic ProN", "Noto Sans JP",
+    "Yu Gothic", system-ui, -apple-system, sans-serif;
+  --mono: "JetBrains Mono", ui-monospace, "SF Mono", Menlo, Consolas, monospace;
+}
+
+/* ---------- Slide root ---------- */
+
+.peitho-slide {
+  position: relative;
+  color-scheme: light;
+  width: var(--peitho-canvas-width, 1280px);
+  height: var(--peitho-canvas-height, 720px);
+  display: flex;
+  flex-direction: column;
+  gap: 26px;
+  padding: 52px 68px 60px;
+  box-sizing: border-box;
+  overflow: hidden;
+  background: var(--bg);
+  color: var(--ink);
+  font-family: var(--sans);
+  word-break: auto-phrase;
+  line-break: strict;
+}
+
+.peitho-slide[data-peitho-page-number]::after {
+  content: attr(data-peitho-page-number);
+  position: absolute;
+  right: 26px;
+  bottom: 20px;
+  font-size: 20px;
+  color: var(--muted);
+  font-variant-numeric: tabular-nums;
+}
+
+.peitho-slide[data-peitho-page-total]::after {
+  content: attr(data-peitho-page-number) " / " attr(data-peitho-page-total);
+}
+
+/* ---------- Title ---------- */
+
+.peitho-slide h1 {
+  margin: 0;
+  font-size: 60px;
+  line-height: 1.12;
+  font-weight: 700;
+  letter-spacing: -0.025em;
+}
+
+.peitho-slide h1::before {
+  content: "";
+  display: block;
+  width: 56px;
+  height: 6px;
+  margin-bottom: 16px;
+  border-radius: 3px;
+  background: var(--accent);
+}
+
+.slot-title {
+  display: inline-block;
+}
+
+.peitho-slide h1 em {
+  font-style: normal;
+  color: var(--accent);
+}
+
+.peitho-slide h1 code {
+  font-family: var(--mono);
+  font-size: 0.8em;
+  font-weight: 400;
+  color: var(--ink);
+}
+
+/* ---------- Body ---------- */
+
+.body {
+  min-width: 0;
+  overflow: hidden;
+}
+
+.slot-body {
+  font-size: 40px;
+  line-height: 1.38;
+}
+
+.slot-body p {
+  margin: 0 0 20px;
+}
+
+.slot-body > :last-child {
+  margin-bottom: 0;
+}
+
+.slot-body strong {
+  font-weight: 700;
+  color: var(--accent);
+}
+
+.slot-body em {
+  font-style: normal;
+  color: var(--accent);
+}
+
+.slot-body code {
+  font-family: var(--mono);
+  font-size: 0.82em;
+  padding: 2px 8px;
+  border-radius: 6px;
+  background: var(--surface);
+  color: var(--ink);
+}
+
+.slot-body a {
+  color: var(--ink);
+  text-decoration: underline;
+  text-decoration-color: var(--accent);
+  text-underline-offset: 0.18em;
+}
+
+.slot-body blockquote {
+  margin: 0 0 var(--peitho-blockquote-spacing, 22px);
+  padding-left: var(--peitho-blockquote-spacing, 22px);
+  border-left: 5px solid var(--accent);
+  color: var(--muted);
+}
+
+.slot-body blockquote > :last-child {
+  margin-bottom: 0;
+}
+
+.slot-body ul,
+.slot-body ol {
+  margin: 0 0 18px;
+  padding-left: 1.1em;
+}
+
+.slot-body li {
+  margin: 0 0 11px;
+  padding-left: 0.2em;
+}
+
+.slot-body li::marker {
+  color: var(--accent);
+}
+
+.slot-body li ul {
+  margin-top: 8px;
+  margin-bottom: 0;
+  font-size: 0.86em;
+  color: var(--muted);
+}
+
+.slot-body table {
+  width: 100%;
+  margin: 0 0 var(--peitho-table-spacing, 20px);
+  border-collapse: collapse;
+  font-size: 28px;
+  line-height: 1.28;
+}
+
+.slot-body th,
+.slot-body td {
+  padding: 9px 14px;
+  border-bottom: 1px solid var(--rule);
+  vertical-align: top;
+  text-align: left;
+}
+
+.slot-body th {
+  font-weight: 600;
+  font-size: 0.88em;
+  color: var(--muted);
+  border-bottom: 2px solid var(--ink);
+}
+
+.slot-body td:first-child {
+  font-weight: 600;
+  white-space: nowrap;
+}
+
+.slot-body table code {
+  font-size: 0.88em;
+  padding: 1px 6px;
+}
+
+.slot-body hr {
+  border: 0;
+  border-top: 1px solid var(--rule);
+  margin: 18px 0;
+}
+
+/* ---------- Footnotes ---------- */
+
+.footnotes {
+  min-width: 0;
+  margin-top: auto;
+  overflow: hidden;
+  font-size: 34px;
+  line-height: 1.35;
+}
+
+.peitho-slide[data-empty-slots~="footnotes"] .footnotes {
+  display: none;
+}
+
+.peitho-footnotes {
+  margin-top: 22px;
+  padding-top: 14px;
+  border-top: 1px solid var(--rule);
+  font-size: 0.58em;
+  line-height: 1.35;
+  color: var(--muted);
+}
+
+.peitho-footnotes ol {
+  margin: 0;
+  padding-left: 1.45em;
+}
+
+.peitho-footnotes p {
+  margin: 0 0 8px;
+}
+
+.peitho-footnote-ref {
+  font-size: 0.6em;
+  line-height: 0;
+  vertical-align: super;
+}
+
+/* ---------- Code (GitHub light palette, as on barefootjs.dev) ---------- */
+
+.code {
+  min-width: 0;
+  margin: 0;
+  overflow: hidden;
+}
+
+:is(.slot-code, .slot-code-left, .slot-code-right),
+.slot-body pre {
+  display: block;
+  margin: 0;
+  padding: 16px 20px;
+  border-radius: 10px;
+  border: 1px solid var(--code-border);
+  background: var(--code-bg);
+  color: #24292e;
+  font-family: var(--mono);
+  font-size: 26px;
+  line-height: 1.34;
+  white-space: pre-wrap;
+  overflow-wrap: anywhere;
+  word-break: normal;
+  tab-size: 2;
+}
+
+.slot-body pre {
+  margin-bottom: 22px;
+}
+
+.peitho-slide .hl-comment {
+  color: #6a737d;
+  font-style: italic;
+}
+
+.peitho-slide .hl-string {
+  color: #032f62;
+}
+
+.peitho-slide .hl-keyword,
+.peitho-slide .hl-storage {
+  color: #d73a49;
+}
+
+.peitho-slide .hl-constant {
+  color: #005cc5;
+}
+
+.peitho-slide .hl-function {
+  color: #6f42c1;
+}
+
+.peitho-slide .hl-type {
+  color: #22863a;
+}
+
+:is(.slot-code, .slot-code-left, .slot-code-right) .code-line {
+  display: inline-block;
+  width: 100%;
+}
+
+:is(.slot-code, .slot-code-left, .slot-code-right) .code-line-emphasis {
+  background: var(--peitho-emphasis-background, rgba(63, 164, 91, 0.16));
+  box-shadow: inset 4px 0 0 var(--peitho-emphasis-marker, #3fa45b);
+}
+
+:is(.slot-code, .slot-code-left, .slot-code-right):has(.code-line-emphasis) .code-line:not(.code-line-emphasis) {
+  opacity: var(--peitho-emphasis-dim, 0.5);
+}
+
+/* ---------- Layout: cover ---------- */
+
+.layout-cover {
+  justify-content: center;
+}
+
+.layout-cover .cover-inner {
+  max-width: 1100px;
+}
+
+.layout-cover h1 {
+  font-size: 100px;
+  line-height: 1.04;
+  letter-spacing: -0.035em;
+  margin-bottom: 24px;
+}
+
+.layout-cover h1::before {
+  display: none;
+}
+
+.layout-cover .slot-body {
+  font-size: 36px;
+  color: var(--muted);
+}
+
+.layout-cover .slot-body p {
+  margin-bottom: 12px;
+}
+
+.layout-cover .slot-body strong {
+  color: var(--ink);
+}
+
+/* ---------- Layout: statement ---------- */
+
+.layout-statement {
+  justify-content: center;
+  align-items: flex-start;
+}
+
+.layout-statement .statement-inner {
+  max-width: 1120px;
+}
+
+.layout-statement h1 {
+  font-size: 84px;
+  line-height: 1.12;
+  letter-spacing: -0.03em;
+  margin-bottom: 22px;
+}
+
+.layout-statement h1::before {
+  width: 84px;
+  height: 8px;
+  margin-bottom: 26px;
+}
+
+.layout-statement .slot-body {
+  font-size: 36px;
+  color: var(--muted);
+}
+
+.layout-statement .slot-body strong {
+  color: var(--ink);
+}
+
+.layout-statement[data-empty-slots~="body"] .statement-body {
+  display: none;
+}
+
+/* Link paragraphs on statement slides render as barefootjs.dev-style buttons */
+
+.layout-statement .slot-body p > a:only-child {
+  display: inline-block;
+  padding: 10px 26px;
+  border-radius: 8px;
+  border: 2px solid var(--primary);
+  color: var(--primary);
+  background: var(--bg);
+  font-size: 30px;
+  font-weight: 600;
+  text-decoration: none;
+}
+
+.layout-statement .slot-body p:nth-of-type(2) > a:only-child {
+  background: var(--primary);
+  color: #ffffff;
+}
+
+/* ---------- Layout: code ---------- */
+
+.layout-code {
+  gap: 14px;
+  padding: 38px 60px 38px;
+}
+
+.layout-code .code-head {
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+  gap: 32px;
+  flex-wrap: wrap;
+}
+
+.layout-code h1 {
+  font-size: 50px;
+}
+
+.layout-code h1::before {
+  width: 44px;
+  height: 5px;
+  margin-bottom: 10px;
+}
+
+.layout-code .code-caption .slot-body {
+  font-size: 28px;
+  color: var(--muted);
+}
+
+.layout-code .code-caption .slot-body p {
+  margin: 0;
+}
+
+.layout-code[data-empty-slots~="body"] .code-caption {
+  display: none;
+}
+
+.layout-code .slot-code {
+  font-size: 23px;
+  line-height: 1.3;
+}
+
+/* ---------- Layout: profile (title + two small photos + single-column facts) ---------- */
+
+.layout-profile {
+  gap: 24px;
+}
+
+.layout-profile .profile-main {
+  display: flex;
+  gap: 48px;
+  align-items: flex-start;
+  min-height: 0;
+}
+
+.layout-profile .profile-photos {
+  display: flex;
+  gap: 20px;
+  flex: none;
+}
+
+.layout-profile .photo {
+  margin: 0;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 10px;
+}
+
+.layout-profile .photo img {
+  width: 200px;
+  height: 200px;
+  object-fit: cover;
+  border-radius: 16px;
+  border: 1px solid var(--rule);
+  background: var(--surface);
+}
+
+.layout-profile .profile-body {
+  flex: 1;
+  min-width: 0;
+  padding-top: 6px;
+}
+
+.layout-profile .profile-body .slot-body {
+  font-size: 36px;
+}
+
+/* ---------- Layout: centerpiece (small kicker + one big centered message) ---------- */
+
+.layout-centerpiece {
+  justify-content: center;
+  align-items: center;
+}
+
+.layout-centerpiece .centerpiece-inner {
+  max-width: 1080px;
+  text-align: center;
+}
+
+.layout-centerpiece .centerpiece-kicker {
+  margin: 0 0 20px;
+  font-size: 26px;
+  font-weight: 600;
+  letter-spacing: 0.06em;
+  color: var(--muted);
+}
+
+.layout-centerpiece .centerpiece-message .slot-body {
+  font-size: 68px;
+  line-height: 1.25;
+  font-weight: 700;
+  letter-spacing: -0.02em;
+  color: var(--ink);
+}
+
+.layout-centerpiece .centerpiece-message .slot-body p {
+  margin: 0;
+}
+
+.layout-centerpiece .centerpiece-message .slot-body strong,
+.layout-centerpiece .centerpiece-message .slot-body em {
+  color: var(--accent);
+  font-style: normal;
+}
+
+/* ---------- Layout: shot (full screenshot proof) ---------- */
+
+.layout-shot {
+  justify-content: center;
+  align-items: center;
+}
+
+.layout-shot .shot-frame {
+  display: flex;
+  justify-content: center;
+}
+
+.layout-shot .shot-frame img {
+  max-height: 440px;
+  width: auto;
+  border-radius: 20px;
+  box-shadow: 0 20px 50px -20px rgba(15, 15, 15, 0.25);
+}
+
+.layout-shot[data-empty-slots~="title"] h1 {
+  display: none;
+}
+
+/* ---------- Layout: dual-code (HTML | JavaScript side by side) ---------- */
+
+.layout-dual-code {
+  gap: 12px;
+  padding: 26px 60px 26px;
+}
+
+.layout-dual-code .dual-code-head {
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+  gap: 32px;
+  flex-wrap: wrap;
+}
+
+.layout-dual-code h1 {
+  font-size: 50px;
+}
+
+.layout-dual-code h1::before {
+  width: 44px;
+  height: 5px;
+  margin-bottom: 10px;
+}
+
+.layout-dual-code .dual-code-caption .slot-body {
+  font-size: 28px;
+  color: var(--muted);
+}
+
+.layout-dual-code .dual-code-caption .slot-body p {
+  margin: 0;
+}
+
+.layout-dual-code[data-empty-slots~="body"] .dual-code-caption {
+  display: none;
+}
+
+.layout-dual-code .dual-code-columns {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 32px;
+  min-height: 0;
+  flex: 1;
+}
+
+.layout-dual-code .dual-code-columns .code {
+  margin: 0;
+  min-width: 0;
+  min-height: 0;
+  display: flex;
+}
+
+.layout-dual-code :is(.slot-code-left, .slot-code-right) {
+  padding: 10px 16px;
+  font-size: 22px;
+  line-height: 1.22;
+  width: 100%;
+}
+
+/* ---------- Layout: scope (goal-setting diagram) ---------- */
+
+.layout-scope .scope-main {
+  display: flex;
+  align-items: stretch;
+  gap: 40px;
+  min-height: 0;
+}
+
+.layout-scope .scope-field {
+  position: relative;
+  flex: 1.5;
+  border-radius: 20px;
+  border: 1px solid var(--rule);
+  background-color: var(--surface);
+  background-image: radial-gradient(var(--rule) 2.5px, transparent 2.5px);
+  background-size: 30px 30px;
+  background-position: 16px 16px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 300px;
+}
+
+.layout-scope .scope-box {
+  padding: 22px 38px;
+  border-radius: 14px;
+  background: var(--bg);
+  border: 3px solid var(--accent);
+  box-shadow: 0 0 0 10px var(--accent-soft);
+  font-size: 34px;
+  font-weight: 700;
+  color: var(--accent);
+  font-family: var(--mono);
+}
+
+.layout-scope .scope-out {
+  position: absolute;
+  right: 26px;
+  bottom: 20px;
+  font-size: 22px;
+  color: var(--muted);
+}
+
+.layout-scope .scope-modes {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  gap: 32px;
+}
+
+.layout-scope .scope-mode {
+  display: flex;
+  align-items: center;
+  gap: 22px;
+}
+
+.layout-scope .scope-mode p {
+  margin: 0;
+  font-size: 28px;
+  font-weight: 600;
+}
+
+.layout-scope .mode-icon {
+  flex: none;
+  width: 72px;
+  height: 72px;
+  border-radius: 14px;
+  background: var(--surface);
+  border: 1px solid var(--rule);
+  position: relative;
+}
+
+.mode-icon-heuristic span {
+  position: absolute;
+  width: 9px;
+  height: 9px;
+  border-radius: 50%;
+  background: var(--muted);
+}
+
+.mode-icon-heuristic span:nth-child(1) { top: 12%; left: 18%; }
+.mode-icon-heuristic span:nth-child(2) { top: 58%; left: 12%; }
+.mode-icon-heuristic span:nth-child(3) { top: 24%; left: 58%; }
+.mode-icon-heuristic span:nth-child(4) { top: 68%; left: 62%; }
+.mode-icon-heuristic span:nth-child(5) { top: 42%; left: 38%; }
+
+.mode-icon-mechanical {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  grid-template-rows: repeat(3, 1fr);
+  gap: 8px;
+  padding: 12px;
+}
+
+.mode-icon-mechanical span {
+  border-radius: 50%;
+  background: var(--accent);
+}
+
+.layout-scope .scope-body .slot-body {
+  font-size: 30px;
+  color: var(--muted);
+  text-align: center;
+}
+
+.layout-scope .scope-body .slot-body p {
+  margin: 0;
+}
+
+.layout-scope[data-empty-slots~="body"] .scope-body {
+  display: none;
+}
+
+/* ---------- Layout: split-code ---------- */
+
+.layout-split-code .split {
+  display: grid;
+  grid-template-columns: 1fr 1.05fr;
+  gap: 40px;
+  align-items: start;
+  min-height: 0;
+}
+
+.layout-split-code .slot-code {
+  font-size: 26px;
+  line-height: 1.26;
+}
+
+.layout-split-code .slot-body {
+  font-size: 35px;
+}
+
+/* ---------- Layout: snippet (title + <=3-line code + takeaways) ---------- */
+
+.layout-snippet {
+  gap: 20px;
+}
+
+.layout-snippet h1 {
+  font-size: 54px;
+}
+
+.layout-snippet .slot-code {
+  font-size: 27px;
+  line-height: 1.36;
+  padding: 18px 22px;
+}
+
+.layout-snippet .slot-body {
+  font-size: 32px;
+  line-height: 1.36;
+}
+
+.layout-snippet .slot-body li {
+  margin-bottom: 7px;
+}
+
+.layout-snippet[data-empty-slots~="body"] .body {
+  display: none;
+}
+
+/* ---------- Keyed overrides ---------- */
+
+[data-slide-key="counter-src"] .slot-code,
+[data-slide-key="counter-hono"] .slot-code,
+[data-slide-key="counter-go"] .slot-code,
+[data-slide-key="counter-rust"] .slot-code,
+[data-slide-key="counter-ruby"] .slot-code,
+[data-slide-key="counter-python"] .slot-code,
+[data-slide-key="counter-php"] .slot-code,
+[data-slide-key="counter-perl"] .slot-code {
+  font-size: 21px;
+  line-height: 1.2;
+}
+
+[data-slide-key="takeaways"] table {
+  font-size: 25px;
+}
+
+[data-slide-key="takeaways"] td:first-child {
+  color: var(--muted);
+  font-weight: 600;
+}
+
+[data-slide-key="takeaways"] td:nth-child(2) {
+  font-weight: 600;
+}
+
+[data-slide-key="oracle-concept"] .slot-body {
+  font-size: 38px;
+}
+

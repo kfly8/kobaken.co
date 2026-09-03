@@ -1,0 +1,27 @@
+<section class="peitho-slide layout-code" data-slide-key="conformance-test-barefootjs" data-peitho-page-number="22" data-peitho-page-total="35">
+  <header class="code-head">
+    <h1><span class="slot-title">BarefootJSの適合性テスト</span></h1>
+    <div class="code-caption slot-body-wrap">
+      <div class="slot-body"><p>固定したexpectedHtmlを全アダプタ共通の仕様に</p>
+</div>
+    </div>
+  </header>
+  <figure class="code">
+    <pre class="slot-code"><code class="language-typescript"><span class="hl-source hl-ts"><span class="hl-comment hl-line hl-double-slash hl-ts"><span class="hl-punctuation hl-definition hl-comment hl-ts">//</span></span><span class="hl-comment hl-line hl-double-slash hl-ts"> TSXを入力、Honoアダプタ生成のHTMLを期待値に</span>
+<span class="hl-meta hl-var hl-expr hl-ts"><span class="hl-keyword hl-control hl-export hl-ts">export</span> <span class="hl-storage hl-type hl-ts">const</span> <span class="hl-meta hl-var-single-variable hl-expr hl-ts"><span class="hl-meta hl-definition hl-variable hl-ts"><span class="hl-variable hl-other hl-constant hl-ts">fixture</span></span> </span><span class="hl-keyword hl-operator hl-assignment hl-ts">=</span> <span class="hl-meta hl-function-call hl-ts"><span class="hl-entity hl-name hl-function hl-ts">createFixture</span></span><span class="hl-meta hl-brace hl-round hl-ts">(</span><span class="hl-meta hl-objectliteral hl-ts"><span class="hl-punctuation hl-definition hl-block hl-ts">{</span>
+  <span class="hl-meta hl-object hl-member hl-ts"><span class="hl-meta hl-object-literal hl-key hl-ts">id</span></span><span class="hl-meta hl-object hl-member hl-ts"><span class="hl-meta hl-object-literal hl-key hl-ts"><span class="hl-punctuation hl-separator hl-key-value hl-ts">:</span></span> <span class="hl-string hl-quoted hl-single hl-ts"><span class="hl-punctuation hl-definition hl-string hl-begin hl-ts">&#39;</span>counter<span class="hl-punctuation hl-definition hl-string hl-end hl-ts">&#39;</span></span></span><span class="hl-punctuation hl-separator hl-comma hl-ts">,</span>
+  <span class="hl-meta hl-object hl-member hl-ts"><span class="hl-meta hl-object-literal hl-key hl-ts">source</span></span><span class="hl-meta hl-object hl-member hl-ts"><span class="hl-meta hl-object-literal hl-key hl-ts"><span class="hl-punctuation hl-separator hl-key-value hl-ts">:</span></span> <span class="hl-string hl-template hl-ts"><span class="hl-punctuation hl-definition hl-string hl-template hl-begin hl-ts">`</span>
+&#39;use client&#39;
+import { createSignal } from &#39;@barefootjs/client&#39;
+export function Counter() {
+  const [count, setCount] = createSignal(0)
+  return &lt;button onClick={() =&gt; setCount(n =&gt; n + 1)}&gt;Count: {count()}&lt;/button&gt;
+}
+<span class="hl-punctuation hl-definition hl-string hl-template hl-end hl-ts">`</span></span></span><span class="hl-punctuation hl-separator hl-comma hl-ts">,</span>
+  <span class="hl-meta hl-object hl-member hl-ts"><span class="hl-meta hl-object-literal hl-key hl-ts">expectedHtml</span></span><span class="hl-meta hl-object hl-member hl-ts"><span class="hl-meta hl-object-literal hl-key hl-ts"><span class="hl-punctuation hl-separator hl-key-value hl-ts">:</span></span> <span class="hl-string hl-template hl-ts"><span class="hl-punctuation hl-definition hl-string hl-template hl-begin hl-ts">`</span>
+    &lt;button bf-s=&quot;test&quot; bf=&quot;s1&quot;&gt;Count: &lt;!--bf:s0--&gt;0&lt;!--/--&gt;&lt;/button&gt;
+  <span class="hl-punctuation hl-definition hl-string hl-template hl-end hl-ts">`</span></span></span><span class="hl-punctuation hl-separator hl-comma hl-ts">,</span>
+<span class="hl-punctuation hl-definition hl-block hl-ts">}</span></span><span class="hl-meta hl-brace hl-round hl-ts">)</span></span>
+</span></code></pre>
+  </figure>
+</section>

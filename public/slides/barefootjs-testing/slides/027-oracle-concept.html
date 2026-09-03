@@ -1,0 +1,17 @@
+<section class="peitho-slide" data-slide-key="oracle-concept" data-empty-slots="footnotes" data-peitho-page-number="28" data-peitho-page-total="35">
+  <h1><span class="slot-title">4. 疑似オラクル(Pseudo-oracle)</span></h1>
+  <div class="body">
+    <div class="slot-body"><ul>
+<li>期待値が設定困難なときのテスト手法の一つ。メタモルフィックテストの仲間</li>
+<li>入力は変えず、<strong>複数の独立した経路の出力</strong>をテストする</li>
+<li>例: 経路が違っても、出力は「同じになるはず」と書く</li>
+</ul>
+</div>
+  </div>
+  <figure class="code">
+    <pre class="slot-code"><code class="language-ts"><span class="hl-source hl-ts"><span class="hl-meta hl-function-call hl-ts"><span class="hl-entity hl-name hl-function hl-ts">pathA</span></span><span class="hl-meta hl-brace hl-round hl-ts">(</span><span class="hl-variable hl-other hl-readwrite hl-ts">x</span><span class="hl-meta hl-brace hl-round hl-ts">)</span> <span class="hl-keyword hl-operator hl-comparison hl-ts">==</span> <span class="hl-meta hl-function-call hl-ts"><span class="hl-entity hl-name hl-function hl-ts">pathB</span></span><span class="hl-meta hl-brace hl-round hl-ts">(</span><span class="hl-variable hl-other hl-readwrite hl-ts">x</span><span class="hl-meta hl-brace hl-round hl-ts">)</span>          <span class="hl-comment hl-line hl-double-slash hl-ts"><span class="hl-punctuation hl-definition hl-comment hl-ts">//</span></span><span class="hl-comment hl-line hl-double-slash hl-ts"> 独立した経路同士が、食い違わない</span>
+<span class="hl-meta hl-function-call hl-ts"><span class="hl-entity hl-name hl-function hl-ts">f</span></span><span class="hl-meta hl-brace hl-round hl-ts">(</span><span class="hl-meta hl-function-call hl-ts"><span class="hl-entity hl-name hl-function hl-ts">op</span></span><span class="hl-meta hl-brace hl-round hl-ts">(</span><span class="hl-variable hl-other hl-readwrite hl-ts">x</span><span class="hl-meta hl-brace hl-round hl-ts">)</span><span class="hl-meta hl-brace hl-round hl-ts">)</span> <span class="hl-keyword hl-operator hl-comparison hl-ts">==</span> <span class="hl-meta hl-function-call hl-ts"><span class="hl-entity hl-name hl-function hl-ts">f</span></span><span class="hl-meta hl-brace hl-round hl-ts">(</span><span class="hl-variable hl-other hl-readwrite hl-ts">stateAfter</span><span class="hl-meta hl-brace hl-round hl-ts">)</span>     <span class="hl-comment hl-line hl-double-slash hl-ts"><span class="hl-punctuation hl-definition hl-comment hl-ts">//</span></span><span class="hl-comment hl-line hl-double-slash hl-ts"> 操作した結果 = 状態を最初から作った結果</span>
+</span></code></pre>
+  </figure>
+  <footer class="footnotes"></footer>
+</section>

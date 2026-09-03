@@ -1,0 +1,20 @@
+<section class="peitho-slide layout-snippet" data-slide-key="auto-wiring" data-peitho-page-number="9" data-peitho-page-total="35">
+  <h1><span class="slot-title">手動配線 → 自動配線</span></h1>
+  <figure class="code">
+    <pre class="slot-code"><code># マーカーつきのHTML
+&lt;button bf="s2"&gt;+1&lt;/button&gt;
+
+# マーカーを利用し、DOM取得、イベント登録
+const [_s2] = $(__scope, 's2')
+_s2.addEventListener('click', () =&gt; setCount(n =&gt; n + 1))</code></pre>
+  </figure>
+  <div class="body slot-body-wrap">
+    <div class="slot-body"><ul>
+<li>TSXに書いたのは <code>onClick={...}</code> だけ</li>
+<li><code>bf</code> 属性も <code>$()</code> の selector も、両方コンパイラが生成</li>
+<li>けれど、中身の本質はjQuery時代と同じDOM操作。レガシー</li>
+<li>つまり、<em>BarefootJSはTSXでMPAできるフレームワーク</em>とも言える</li>
+</ul>
+</div>
+  </div>
+</section>

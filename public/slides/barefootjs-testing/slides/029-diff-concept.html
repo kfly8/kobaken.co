@@ -1,0 +1,20 @@
+<section class="peitho-slide" data-slide-key="diff-concept" data-empty-slots="footnotes" data-peitho-page-number="30" data-peitho-page-total="35">
+  <h1><span class="slot-title">5. 差分テスト(Differential testing)</span></h1>
+  <div class="body">
+    <div class="slot-body"><ul>
+<li>同じ入力を 2 つの実装に通し、出力の食い違いを見る手法</li>
+<li>信頼できる実装（リファレンス）が、そのまま期待値になる</li>
+<li>コンパイラや、複数の実装を持つソフトウェアに効く</li>
+<li>適合性テストと違い、期待値は保存せず、その場で比較</li>
+<li>疑似オラクルと違い、リファレンス側を「正」に固定する</li>
+</ul>
+</div>
+  </div>
+  <figure class="code">
+    <pre class="slot-code"><code class="language-ts"><span class="hl-source hl-ts"><span class="hl-meta hl-var hl-expr hl-ts"><span class="hl-storage hl-type hl-ts">const</span> <span class="hl-meta hl-var-single-variable hl-expr hl-ts"><span class="hl-meta hl-definition hl-variable hl-ts"><span class="hl-variable hl-other hl-constant hl-ts">ref</span></span> </span><span class="hl-keyword hl-operator hl-assignment hl-ts">=</span> <span class="hl-meta hl-function-call hl-ts"><span class="hl-entity hl-name hl-function hl-ts">reference</span></span><span class="hl-meta hl-brace hl-round hl-ts">(</span><span class="hl-variable hl-other hl-readwrite hl-ts">input</span><span class="hl-meta hl-brace hl-round hl-ts">)</span>    <span class="hl-comment hl-line hl-double-slash hl-ts"><span class="hl-punctuation hl-definition hl-comment hl-ts">//</span></span><span class="hl-comment hl-line hl-double-slash hl-ts"> 信頼できる実装</span></span>
+<span class="hl-meta hl-var hl-expr hl-ts"><span class="hl-storage hl-type hl-ts">const</span> <span class="hl-meta hl-var-single-variable hl-expr hl-ts"><span class="hl-meta hl-definition hl-variable hl-ts"><span class="hl-variable hl-other hl-constant hl-ts">out</span></span> </span><span class="hl-keyword hl-operator hl-assignment hl-ts">=</span> <span class="hl-meta hl-function-call hl-ts"><span class="hl-entity hl-name hl-function hl-ts">target</span></span><span class="hl-meta hl-brace hl-round hl-ts">(</span><span class="hl-variable hl-other hl-readwrite hl-ts">input</span><span class="hl-meta hl-brace hl-round hl-ts">)</span>       <span class="hl-comment hl-line hl-double-slash hl-ts"><span class="hl-punctuation hl-definition hl-comment hl-ts">//</span></span><span class="hl-comment hl-line hl-double-slash hl-ts"> 検証対象</span></span>
+<span class="hl-meta hl-function-call hl-ts"><span class="hl-entity hl-name hl-function hl-ts">expect</span></span><span class="hl-meta hl-brace hl-round hl-ts">(</span><span class="hl-meta hl-function-call hl-ts"><span class="hl-entity hl-name hl-function hl-ts">normalize</span></span><span class="hl-meta hl-brace hl-round hl-ts">(</span><span class="hl-variable hl-other hl-readwrite hl-ts">out</span><span class="hl-meta hl-brace hl-round hl-ts">)</span><span class="hl-meta hl-brace hl-round hl-ts">)</span><span class="hl-meta hl-function-call hl-ts"><span class="hl-punctuation hl-accessor hl-ts">.</span><span class="hl-entity hl-name hl-function hl-ts">toBe</span></span><span class="hl-meta hl-brace hl-round hl-ts">(</span><span class="hl-meta hl-function-call hl-ts"><span class="hl-entity hl-name hl-function hl-ts">normalize</span></span><span class="hl-meta hl-brace hl-round hl-ts">(</span><span class="hl-variable hl-other hl-readwrite hl-ts">ref</span><span class="hl-meta hl-brace hl-round hl-ts">)</span><span class="hl-meta hl-brace hl-round hl-ts">)</span>
+</span></code></pre>
+  </figure>
+  <footer class="footnotes"></footer>
+</section>

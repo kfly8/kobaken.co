@@ -1,0 +1,16 @@
+<section class="peitho-slide layout-dual-code">
+  <header class="dual-code-head">
+    <h1><slot name="title" accepts="inline" arity="1"></slot></h1>
+    <div class="dual-code-caption slot-body-wrap">
+      <slot name="body" accepts="blocks" arity="0..1"></slot>
+    </div>
+  </header>
+  <div class="dual-code-columns">
+    <figure class="code dual-code-left">
+      <slot name="code-left" accepts="code" arity="1"></slot>
+    </figure>
+    <figure class="code dual-code-right">
+      <slot name="code-right" accepts="code" arity="1"></slot>
+    </figure>
+  </div>
+</section>

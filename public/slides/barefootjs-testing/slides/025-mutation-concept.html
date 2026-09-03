@@ -1,0 +1,17 @@
+<section class="peitho-slide" data-slide-key="mutation-concept" data-empty-slots="footnotes" data-peitho-page-number="26" data-peitho-page-total="35">
+  <h1><span class="slot-title">3. メタモルフィックテスト(Metamorphic testing)</span></h1>
+  <div class="body">
+    <div class="slot-body"><ul>
+<li>期待値が設定困難なときのテスト手法の一つ</li>
+<li><strong>入力を変化させたとき</strong>、出力の変化の関係性をテストする</li>
+<li>例: 入力を変化させても、出力は「変わらないはず」と書く</li>
+</ul>
+</div>
+  </div>
+  <figure class="code">
+    <pre class="slot-code"><code class="language-ts"><span class="hl-source hl-ts"><span class="hl-meta hl-function-call hl-ts"><span class="hl-entity hl-name hl-function hl-ts">sort</span></span><span class="hl-meta hl-brace hl-round hl-ts">(</span><span class="hl-meta hl-function-call hl-ts"><span class="hl-entity hl-name hl-function hl-ts">shuffle</span></span><span class="hl-meta hl-brace hl-round hl-ts">(</span><span class="hl-variable hl-other hl-readwrite hl-ts">array</span><span class="hl-meta hl-brace hl-round hl-ts">)</span><span class="hl-meta hl-brace hl-round hl-ts">)</span> <span class="hl-keyword hl-operator hl-comparison hl-ts">==</span> <span class="hl-meta hl-function-call hl-ts"><span class="hl-entity hl-name hl-function hl-ts">sort</span></span><span class="hl-meta hl-brace hl-round hl-ts">(</span><span class="hl-variable hl-other hl-readwrite hl-ts">array</span><span class="hl-meta hl-brace hl-round hl-ts">)</span>   <span class="hl-comment hl-line hl-double-slash hl-ts"><span class="hl-punctuation hl-definition hl-comment hl-ts">//</span></span><span class="hl-comment hl-line hl-double-slash hl-ts"> 並べ替えても、結果は同じはず</span>
+<span class="hl-meta hl-function-call hl-ts"><span class="hl-entity hl-name hl-function hl-ts">f</span></span><span class="hl-meta hl-brace hl-round hl-ts">(</span><span class="hl-meta hl-function-call hl-ts"><span class="hl-entity hl-name hl-function hl-ts">alias</span></span><span class="hl-meta hl-brace hl-round hl-ts">(</span><span class="hl-variable hl-other hl-readwrite hl-ts">x</span><span class="hl-meta hl-brace hl-round hl-ts">)</span><span class="hl-meta hl-brace hl-round hl-ts">)</span> <span class="hl-keyword hl-operator hl-comparison hl-ts">==</span> <span class="hl-meta hl-function-call hl-ts"><span class="hl-entity hl-name hl-function hl-ts">f</span></span><span class="hl-meta hl-brace hl-round hl-ts">(</span><span class="hl-variable hl-other hl-readwrite hl-ts">x</span><span class="hl-meta hl-brace hl-round hl-ts">)</span>             <span class="hl-comment hl-line hl-double-slash hl-ts"><span class="hl-punctuation hl-definition hl-comment hl-ts">//</span></span><span class="hl-comment hl-line hl-double-slash hl-ts"> 名前を付け替えても、結果は同じはず</span>
+</span></code></pre>
+  </figure>
+  <footer class="footnotes"></footer>
+</section>

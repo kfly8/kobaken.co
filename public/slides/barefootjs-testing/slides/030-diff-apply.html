@@ -1,0 +1,20 @@
+<section class="peitho-slide layout-snippet" data-slide-key="diff-apply" data-peitho-page-number="31" data-peitho-page-total="35">
+  <h1><span class="slot-title">BarefootJS の差分テスト</span></h1>
+  <figure class="code">
+    <pre class="slot-code"><code class="language-tsx"><span class="hl-source hl-tsx"><span class="hl-meta hl-function hl-tsx"><span class="hl-storage hl-type hl-function hl-tsx">function</span> <span class="hl-meta hl-definition hl-function hl-tsx"><span class="hl-entity hl-name hl-function hl-tsx">Card</span></span><span class="hl-meta hl-parameters hl-tsx"><span class="hl-punctuation hl-definition hl-parameters hl-begin hl-tsx">(</span><span class="hl-variable hl-parameter hl-tsx">props</span><span class="hl-punctuation hl-definition hl-parameters hl-end hl-tsx">)</span></span> <span class="hl-meta hl-block hl-tsx"><span class="hl-punctuation hl-definition hl-block hl-tsx">{</span>
+  <span class="hl-meta hl-var hl-expr hl-tsx"><span class="hl-storage hl-type hl-tsx">const</span> <span class="hl-meta hl-object-binding-pattern-variable hl-tsx"><span class="hl-punctuation hl-definition hl-binding-pattern hl-object hl-tsx">{</span> <span class="hl-variable hl-object hl-property hl-tsx">children</span><span class="hl-punctuation hl-destructuring hl-tsx">:</span> <span class="hl-meta hl-definition hl-variable hl-tsx"><span class="hl-variable hl-other hl-constant hl-tsx">kids</span></span> <span class="hl-punctuation hl-definition hl-binding-pattern hl-object hl-tsx">}</span> </span><span class="hl-keyword hl-operator hl-assignment hl-tsx">=</span> <span class="hl-variable hl-other hl-readwrite hl-tsx">props</span>   <span class="hl-comment hl-line hl-double-slash hl-tsx"><span class="hl-punctuation hl-definition hl-comment hl-tsx">//</span></span><span class="hl-comment hl-line hl-double-slash hl-tsx"> kidsに付け替え</span></span>
+  <span class="hl-keyword hl-control hl-flow hl-tsx">return</span> <span class="hl-meta hl-tag hl-without-attributes hl-tsx"><span class="hl-punctuation hl-definition hl-tag hl-begin hl-tsx">&lt;</span><span class="hl-entity hl-name hl-tag hl-tsx">div</span><span class="hl-punctuation hl-definition hl-tag hl-end hl-tsx">&gt;</span></span><span class="hl-meta hl-tag hl-without-attributes hl-tsx"><span class="hl-meta hl-jsx hl-children hl-tsx"><span class="hl-punctuation hl-section hl-embedded hl-begin hl-tsx">{</span><span class="hl-meta hl-embedded hl-expression hl-tsx"><span class="hl-variable hl-other hl-readwrite hl-tsx">kids</span></span><span class="hl-punctuation hl-section hl-embedded hl-end hl-tsx">}</span></span><span class="hl-punctuation hl-definition hl-tag hl-begin hl-tsx">&lt;/</span><span class="hl-entity hl-name hl-tag hl-tsx">div</span><span class="hl-punctuation hl-definition hl-tag hl-end hl-tsx">&gt;</span></span>
+<span class="hl-punctuation hl-definition hl-block hl-tsx">}</span></span></span>
+</span></code></pre>
+  </figure>
+  <div class="body slot-body-wrap">
+    <div class="slot-body"><ul>
+<li>発見例: リファレンスのHonoアダプタと、Goアダプタで差があった
+<ul>
+<li>Goが識別子名childrenを決め打ちしていた。</li>
+</ul>
+</li>
+</ul>
+</div>
+  </div>
+</section>

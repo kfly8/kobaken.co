@@ -1,0 +1,18 @@
+<section class="peitho-slide layout-snippet" data-slide-key="oracle-apply" data-peitho-page-number="29" data-peitho-page-total="35">
+  <h1><span class="slot-title">BarefootJS の疑似オラクル</span></h1>
+  <figure class="code">
+    <pre class="slot-code"><code class="language-ts"><span class="hl-source hl-ts"><span class="hl-comment hl-line hl-double-slash hl-ts"><span class="hl-punctuation hl-definition hl-comment hl-ts">//</span></span><span class="hl-comment hl-line hl-double-slash hl-ts"> three-point agreement</span>
+<span class="hl-meta hl-function-call hl-ts"><span class="hl-entity hl-name hl-function hl-ts">dom</span></span><span class="hl-meta hl-brace hl-round hl-ts">(</span><span class="hl-variable hl-other hl-constant hl-ts">SSR</span><span class="hl-meta hl-brace hl-round hl-ts">)</span> <span class="hl-keyword hl-operator hl-comparison hl-ts">==</span> <span class="hl-meta hl-function-call hl-ts"><span class="hl-entity hl-name hl-function hl-ts">dom</span></span><span class="hl-meta hl-brace hl-round hl-ts">(</span><span class="hl-variable hl-other hl-constant hl-ts">SSR</span> <span class="hl-keyword hl-operator hl-arithmetic hl-ts">+</span> <span class="hl-variable hl-other hl-readwrite hl-ts">hydrate</span><span class="hl-meta hl-brace hl-round hl-ts">)</span> <span class="hl-keyword hl-operator hl-comparison hl-ts">==</span> <span class="hl-meta hl-function-call hl-ts"><span class="hl-entity hl-name hl-function hl-ts">dom</span></span><span class="hl-meta hl-brace hl-round hl-ts">(</span><span class="hl-variable hl-other hl-constant hl-ts">CSR</span><span class="hl-meta hl-brace hl-round hl-ts">)</span>
+
+<span class="hl-comment hl-line hl-double-slash hl-ts"><span class="hl-punctuation hl-definition hl-comment hl-ts">//</span></span><span class="hl-comment hl-line hl-double-slash hl-ts"> 更新経路 == 初期描画経路</span>
+<span class="hl-meta hl-function-call hl-ts"><span class="hl-entity hl-name hl-function hl-ts">dom</span></span><span class="hl-meta hl-brace hl-round hl-ts">(</span><span class="hl-meta hl-function-call hl-ts"><span class="hl-entity hl-name hl-function hl-ts">click</span></span><span class="hl-meta hl-brace hl-round hl-ts">(</span><span class="hl-variable hl-other hl-readwrite hl-ts">el</span><span class="hl-meta hl-brace hl-round hl-ts">)</span><span class="hl-meta hl-brace hl-round hl-ts">)</span> <span class="hl-keyword hl-operator hl-comparison hl-ts">==</span> <span class="hl-meta hl-function-call hl-ts"><span class="hl-entity hl-name hl-function hl-ts">dom</span></span><span class="hl-meta hl-brace hl-round hl-ts">(</span><span class="hl-meta hl-function-call hl-ts"><span class="hl-entity hl-name hl-function hl-ts">render</span></span><span class="hl-meta hl-brace hl-round hl-ts">(</span><span class="hl-variable hl-other hl-readwrite hl-ts">nextState</span><span class="hl-meta hl-brace hl-round hl-ts">)</span><span class="hl-meta hl-brace hl-round hl-ts">)</span>
+</span></code></pre>
+  </figure>
+  <div class="body slot-body-wrap">
+    <div class="slot-body"><ul>
+<li>DOMを生成する経路が、CSR、SSR と複数経路ある</li>
+<li>が、入力が同じであれば、同じDOMになるはず</li>
+</ul>
+</div>
+  </div>
+</section>

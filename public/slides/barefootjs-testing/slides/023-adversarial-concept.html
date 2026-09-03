@@ -1,0 +1,29 @@
+<section class="peitho-slide" data-slide-key="adversarial-concept" data-empty-slots="code footnotes" data-peitho-page-number="24" data-peitho-page-total="35">
+  <h1><span class="slot-title">2. 敵対的テスト(Adversarial testing)</span></h1>
+  <div class="body">
+    <div class="slot-body"><ul>
+<li>意図的に意地悪な値をいれる手法
+<ul>
+<li>(<code>/code-review</code> もそのエッセンスは入ってる)</li>
+</ul>
+</li>
+<li>機械的な検証: 境界値カタログ
+<ul>
+<li>データ型ごとに「壊れやすい値」のカタログを用意
+<ul>
+<li>string → <code>'', '&lt;b&gt;&amp;"\'&lt;/b&gt;', '😊'</code> // 空、マーク、マルチバイト</li>
+<li>number → <code>0, -7, Number.MAX_SAFE_INTEGER</code> // ゼロ・負数・巨大値</li>
+<li>array → 空配列</li>
+</ul>
+</li>
+<li>このカタログの値に自動差し替えするプログラムを書く</li>
+</ul>
+</li>
+</ul>
+</div>
+  </div>
+  <figure class="code">
+    
+  </figure>
+  <footer class="footnotes"></footer>
+</section>
