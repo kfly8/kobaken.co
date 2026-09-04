@@ -66,9 +66,17 @@ function patchIndexHtml(slug, title, canvasWidth, canvasHeight) {
     `<meta name="twitter:site" content="@kfly8">`,
     `<meta name="twitter:creator" content="@kfly8">`,
   ]
-  const head = lines.join('\n  ')
+  // Wrapped in a marker comment pair so a second run (e.g. `npm run build`
+  // twice without an intervening `peitho build`) replaces the whole
+  // previously-injected block instead of stacking a duplicate one after
+  // it — the plain <title> tag alone can't tell "pristine" and
+  // "already-patched" apart, since the patched title still matches it.
+  const block = `<!-- ogp:start -->\n  ${lines.join('\n  ')}\n  <!-- ogp:end -->`
 
-  const html = readFileSync(indexPath, 'utf-8').replace(/<title>[^<]*<\/title>/, head)
+  const original = readFileSync(indexPath, 'utf-8')
+  const html = /<!-- ogp:start -->[\s\S]*?<!-- ogp:end -->/.test(original)
+    ? original.replace(/<!-- ogp:start -->[\s\S]*?<!-- ogp:end -->/, block)
+    : original.replace(/<title>[^<]*<\/title>/, block)
   writeFileSync(indexPath, html)
 }
 
