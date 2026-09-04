@@ -33,6 +33,7 @@
 }
 
 .blog-list .title a {
+  font-size: 1.15em;
   text-decoration: underline;
   text-decoration-style: dotted;
   text-underline-offset: 0.2em;
