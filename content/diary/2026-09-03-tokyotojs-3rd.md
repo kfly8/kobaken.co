@@ -1,7 +1,7 @@
 ---
 title: "ToKyoto.js #3 に初参加して、発表した"
 date: "2026-09-04"
-description: ""
+description: "ToKyoto.js #3に初参加して登壇した記録。V8ドキュメント全読とテストにまつわる学びと、懇親会で聞かれたBarefootJSを作った理由について。"
 tags: ["diary"]
 published: true
 ---
