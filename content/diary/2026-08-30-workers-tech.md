@@ -1,7 +1,7 @@
 ---
 title: "Cloudflare Workers Tech Talks in Tokyo #8 に参加した。最高だった。"
 date: "2026-08-30"
-description: "Cloudflare Workers Tech Talks in Tokyo #8に参加した記録。Workers Cache・soniox・pullfrogの学びと、宮本佳林さんの言葉について。"
+description: "宮本佳林さんが、さらっと言っていた。『着想してから仕様書ができるまで1日以内にする』。何がそう言わせるんだろう。"
 tags: ["diary"]
 published: true
 ---
