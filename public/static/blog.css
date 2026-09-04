@@ -32,6 +32,11 @@
   color: var(--color-text-sub);
 }
 
+.blog-list .tags {
+  margin: 6px 0 0;
+  padding-left: 103px;
+}
+
 .blog-list .title a {
   font-size: 1.15em;
   text-decoration: underline;

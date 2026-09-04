@@ -22,12 +22,12 @@ export function PostList(props: PostListProps) {
                 <span className="date">{post.date}</span>
                 <span className="title">
                   <a href={`${props.basePath}/${post.slug}`}>{post.title}</a>
-                  {post.tags.length > 0 && (
-                    <span className="ml-2"><PostTags tags={post.tags} basePath={props.basePath} /></span>
-                  )}
                 </span>
               </div>
               {post.description && <p className="description">{post.description}</p>}
+              {post.tags.length > 0 && (
+                <div className="tags"><PostTags tags={post.tags} basePath={props.basePath} /></div>
+              )}
             </li>
           ))}
         </ul>
