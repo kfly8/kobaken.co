@@ -18,13 +18,16 @@ export function PostList(props: PostListProps) {
         <ul>
           {props.posts.map((post) => (
             <li key={post.slug}>
-              <span className="date">{post.date}</span>
-              <span className="title">
-                <a href={`${props.basePath}/${post.slug}`}>{post.title}</a>
-                {post.tags.length > 0 && (
-                  <span className="ml-2"><PostTags tags={post.tags} basePath={props.basePath} /></span>
-                )}
-              </span>
+              <div className="row">
+                <span className="date">{post.date}</span>
+                <span className="title">
+                  <a href={`${props.basePath}/${post.slug}`}>{post.title}</a>
+                  {post.tags.length > 0 && (
+                    <span className="ml-2"><PostTags tags={post.tags} basePath={props.basePath} /></span>
+                  )}
+                </span>
+              </div>
+              {post.description && <p className="description">{post.description}</p>}
             </li>
           ))}
         </ul>

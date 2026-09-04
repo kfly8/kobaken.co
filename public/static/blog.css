@@ -7,9 +7,12 @@
 }
 
 .blog-list li {
+  margin: 20px 0;
+}
+
+.blog-list .row {
   display: flex;
   align-items: baseline;
-  margin: 20px 0;
 }
 
 .blog-list .date {
@@ -19,6 +22,14 @@
   margin-right: 13px;
   width: 90px;
   text-align: right;
+}
+
+.blog-list .description {
+  margin: 6px 0 0;
+  padding-left: 103px;
+  font-size: 0.9em;
+  line-height: 1.6;
+  color: var(--color-text-sub);
 }
 
 .blog-list .title a {
