@@ -31,3 +31,15 @@ echo '{ "date": "YYYY-MM-DD" }' > talks/<slug>/talk.json
 ```
 
 `talk.json` を忘れたまま `manifest.json` だけビルド済みの状態にすると、`npm run build`/`dev` は静かに一覧から漏らすのではなく**エラーで止まる**（何を作ればいいかのコマンド付き）。`talk.json` も通常どおり `git add` してコミットする。
+
+## OGP画像
+
+`public/slides/<slug>/index.html`（Workers Assetsが静的配信するページ本体）のOGP/Twitterカードのタグは `scripts/generate-slides.mjs` がビルドの度に自動で埋め込む（title/URLは`manifest.json`とslugから）。ただしOGP画像だけは自動生成されない。
+
+```bash
+# スライド1枚目を public/slides/<slug>/og.png として書き出す
+# （peitho export pdf → sips で変換。フルビルドのたびに重い処理をしたくないので手動実行）
+node scripts/generate-slide-ogp.mjs <slug>
+```
+
+`og.png` を作っていないトークは、サイト共通の共有画像（`kobaken.jpg`）にフォールバックする。`og.png` はスライド1枚目を変えたときだけ作り直せばよい。`public/slides/<slug>/og.png` も通常どおり `git add` してコミットする。
