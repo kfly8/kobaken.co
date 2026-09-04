@@ -3,6 +3,7 @@ title: "Cloudflare Workers Tech Talks in Tokyo #8 に参加した。最高だっ
 date: "2026-08-30"
 description: "宮本佳林さんが、さらっと言っていた。『着想してから仕様書ができるまで1日以内にする』。何がそう言わせるんだろう。"
 tags: ["cloudflare", "meetup"]
+tweetUrl: "https://x.com/kfly8/status/2093852480736207157"
 published: true
 ---
 

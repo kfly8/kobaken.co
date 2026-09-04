@@ -3,6 +3,7 @@ title: "ToKyoto.js #3 に初参加して、発表した"
 date: "2026-09-04"
 description: "懇親会で「なぜBarefootJSを作ったか」を聞かれた。ビール片手にちゃんと答えられた気がしないけれど、伝え方にはまだ迷いがある。"
 tags: ["barefootjs", "meetup"]
+tweetUrl: "https://x.com/kfly8/status/2095706458394624264"
 published: true
 ---
 

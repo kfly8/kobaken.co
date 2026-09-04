@@ -7,6 +7,8 @@ interface FrontMatter {
   tags?: string[]
   // Hand-curated related-post slugs — resolved to posts at render time.
   related?: string[]
+  // Companion post on X, invites readers to reply there instead of a comment section.
+  tweetUrl?: string
 }
 
 // FNV-1a over the raw (pre-parse) Markdown, exposed as Post.contentHash —
@@ -43,6 +45,7 @@ export interface Post {
   description?: string
   tags: string[]
   related: string[]
+  tweetUrl?: string
   // Raw Markdown body (frontmatter stripped) — served as-is at /<section>/<slug>.md.
   body: string
   html: string
@@ -78,6 +81,7 @@ export function createPostCollection(rawPosts: Record<string, string>, section: 
         description: data.description,
         tags: data.tags ?? [],
         related: data.related ?? [],
+        tweetUrl: data.tweetUrl,
         body: trimmedBody,
         html: resolveRelativeImages(marked.parse(trimmedBody) as string, section, slug),
         contentHash: fnv1a(raw),
