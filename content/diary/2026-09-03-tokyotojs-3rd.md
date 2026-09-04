@@ -48,8 +48,8 @@ published: true
 
 <blockquote class="twitter-tweet"><p lang="ja" dir="ltr">ある程度アプリに機能が出てきたのでリッチにしたかったタイミングだったんですが、HTMXだとちょい限界(UI/UXと主に僕のコードの視認コスト)だったのがよかった感じですね。<br><br>若干迷ったところとしてはディレクトリ構造どうするのが綺麗なのかは迷いました。(goだし趣味プロダクトなので雑に配置した)</p>&mdash; 八雲アナグラ (@AnaTofuZ) <a href="https://x.com/AnaTofuZ/status/2092878499992449046?ref_src=twsrc%5Etfw">August 27, 2026</a></blockquote> <script async src="https://platform.x.com/widgets.js" charset="utf-8"></script>
 
-既存のツールは素晴らしいし、大抵は巨人の肩に乗るのが正解だと思う、一方、
-自分はBarefootJSの開発体験に助けられているので、PR??伝達??の仕方に困っているので助けてほしい気持ちです🤔
+既存のツールは素晴らしいし、大抵は巨人の肩に乗るのが正解だと思う。一方、
+自分はBarefootJSの開発体験に助けられているので、人への伝え方に困っているので助けてほしい気持ちです🤔
 
 ---
 
