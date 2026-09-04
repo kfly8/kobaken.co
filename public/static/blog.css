@@ -16,6 +16,7 @@
 }
 
 .blog-list .date {
+  flex-shrink: 0;
   white-space: nowrap;
   font-weight: 300;
   font-family: monospace;
