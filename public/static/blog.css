@@ -2,6 +2,10 @@
   margin-bottom: 20px;
 }
 
+.blog-list .empty {
+  color: var(--color-text-sub);
+}
+
 .blog-list li {
   display: flex;
   align-items: baseline;
