@@ -11,13 +11,14 @@ interface PostArticleProps {
 
 // Points at the companion tweet's reply composer, not just the tweet itself —
 // one click should land the reader in "write a reply", not "read the tweet".
-// Pre-filling the body with a thumbs-up means the box isn't blank on arrival —
-// an empty reply field asks the reader to compose something, a pre-filled one
-// only asks them to edit or send.
+// Pre-filling the body means the box isn't blank on arrival — an empty reply
+// field asks the reader to compose something, a pre-filled one only asks
+// them to edit or send. The text states a fact ("read it") rather than an
+// opinion, so it stays true regardless of how the reader actually felt.
 function tweetReplyUrl(tweetUrl: string): string {
   const id = tweetUrl.match(/status\/(\d+)/)?.[1]
   if (!id) return tweetUrl
-  const params = new URLSearchParams({ in_reply_to: id, text: '👍️' })
+  const params = new URLSearchParams({ in_reply_to: id, text: '読んだよ👍' })
   return `https://twitter.com/intent/tweet?${params}`
 }
 
