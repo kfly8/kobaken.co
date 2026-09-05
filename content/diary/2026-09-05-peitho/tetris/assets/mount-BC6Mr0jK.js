@@ -1,0 +1,1 @@
+import{r as n}from"./components/Tetris.tsx-CZHCw9Tn.js";function e(){const t=document.getElementById("tetris-root");t&&!t.dataset.mounted&&(t.dataset.mounted="1",n(t,"Tetris"))}new MutationObserver(e).observe(document.documentElement,{childList:!0,subtree:!0});e();

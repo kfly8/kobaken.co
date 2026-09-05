@@ -1,0 +1,23 @@
+<section class="peitho-slide layout-game" data-slide-key="tetris-with-barefootjs">
+  <div class="game-header">
+    <h1><span class="slot-title">Tetris with BarefootJS</span></h1>
+    <div class="game-hint slot-body-wrap">
+      <div class="slot-body"><p>← → で移動 / ↑ で回転 / ↓ でソフトドロップ / Space でハードドロップ</p>
+</div>
+    </div>
+  </div>
+  <div id="tetris-root" class="tetris-mount"></div>
+  <!--
+    Tetris swallows every arrow/space keydown at the window capture
+    phase while mounted (see component/Tetris.tsx), so the deck's own
+    keyboard navigation never reaches this slide. This button is the
+    only discoverable way to move on — it loops back to slide 1 since
+    this is the last slide in the deck; update the target if a slide
+    is ever added after this one.
+  -->
+  <button
+    type="button"
+    class="next-loop-btn"
+    onclick="event.stopPropagation(); location.search = '?slide=1'"
+  >次へ →</button>
+</section>

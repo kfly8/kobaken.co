@@ -1,0 +1,75 @@
+/*
+  Minimal cover deck: white background, near-black ink, green accent —
+  same palette as the barefootjs-testing deck, for continuity.
+*/
+
+:root, .peitho-slide {
+  color-scheme: light;
+  --bg: #ffffff;
+  --ink: #0f0f0f;
+  --muted: #737373;
+  --accent: #3fa45b;
+  --sans: "Hiragino Sans", "Hiragino Kaku Gothic ProN", "Noto Sans JP", "Yu Gothic",
+    system-ui, -apple-system, sans-serif;
+}
+
+.peitho-slide {
+  position: relative;
+  width: var(--peitho-canvas-width, 1280px);
+  height: var(--peitho-canvas-height, 720px);
+  box-sizing: border-box;
+  overflow: hidden;
+  background: var(--bg);
+  color: var(--ink);
+  font-family: var(--sans);
+}
+
+.layout-cover {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.cover-columns {
+  display: flex;
+  align-items: center;
+  gap: 72px;
+}
+
+.cover-inner {
+  text-align: left;
+}
+
+.cover-inner h1 {
+  margin: 0 0 20px;
+  font-size: 60px;
+  line-height: 1.15;
+  font-weight: 760;
+}
+
+.cover-body {
+  font-size: 28px;
+  color: var(--muted);
+}
+
+.cover-body p {
+  margin: 0;
+}
+
+/* ---------- Cat card ---------- */
+
+.cat-card {
+  flex: none;
+  width: 280px;
+  aspect-ratio: 9 / 16;
+  border-radius: 28px;
+  overflow: hidden;
+  box-shadow: 0 24px 60px rgba(15, 15, 15, 0.18);
+}
+
+.cat-card video {
+  display: block;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}

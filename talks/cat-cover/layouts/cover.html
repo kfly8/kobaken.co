@@ -1,0 +1,13 @@
+<section class="peitho-slide layout-cover">
+  <div class="cover-columns">
+    <div class="cover-inner">
+      <h1><slot name="title" accepts="inline" arity="1"></slot></h1>
+      <div class="cover-body slot-body-wrap">
+        <slot name="body" accepts="blocks" arity="0..*"></slot>
+      </div>
+    </div>
+    <div class="cat-card">
+      <video src="cat-goro.mp4" autoplay muted loop playsinline></video>
+    </div>
+  </div>
+</section>

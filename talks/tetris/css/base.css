@@ -1,0 +1,249 @@
+/*
+  Same palette as the other kobaken.co Peitho demos: white background,
+  near-black ink, green accent — except the Tetris board itself, which
+  wants a dark arcade-style panel to read the piece colors clearly.
+*/
+
+:root, .peitho-slide {
+  color-scheme: light;
+  --bg: #ffffff;
+  --ink: #0f0f0f;
+  --muted: #737373;
+  --accent: #3fa45b;
+  --sans: "Hiragino Sans", "Hiragino Kaku Gothic ProN", "Noto Sans JP", "Yu Gothic",
+    system-ui, -apple-system, sans-serif;
+}
+
+.peitho-slide {
+  position: relative;
+  width: var(--peitho-canvas-width, 1280px);
+  height: var(--peitho-canvas-height, 720px);
+  box-sizing: border-box;
+  overflow: hidden;
+  background: var(--bg);
+  color: var(--ink);
+  font-family: var(--sans);
+}
+
+/* ---------- Cover slide ---------- */
+
+.layout-cover {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.cover-inner {
+  text-align: center;
+}
+
+.cover-inner h1 {
+  margin: 0 0 20px;
+  font-size: 60px;
+  line-height: 1.15;
+  font-weight: 760;
+}
+
+.cover-body {
+  font-size: 28px;
+  color: var(--muted);
+}
+
+.cover-body p {
+  margin: 0;
+}
+
+/* ---------- Code slide ---------- */
+
+.layout-code {
+  display: flex;
+  flex-direction: column;
+  padding: 56px 68px;
+  gap: 16px;
+}
+
+.layout-code h1 {
+  margin: 0;
+  font-size: 50px;
+  font-weight: 760;
+}
+
+.code-hint {
+  font-size: 26px;
+  color: var(--muted);
+}
+
+.code-hint p {
+  margin: 0;
+}
+
+.code-hint code {
+  background: var(--accent-soft, rgba(63, 164, 91, 0.14));
+  color: var(--ink);
+  padding: 0.1em 0.4em;
+  border-radius: 4px;
+  font-family: "JetBrains Mono", ui-monospace, "SF Mono", Menlo, Consolas, monospace;
+}
+
+.code-figure {
+  margin: 8px 0 0;
+  flex: 1;
+  min-height: 0;
+}
+
+.slot-code {
+  display: block;
+  height: 100%;
+  box-sizing: border-box;
+  margin: 0;
+  padding: 24px 28px;
+  background: #111318;
+  color: #e6e6e6;
+  border-radius: 12px;
+  overflow: auto;
+  font-family: "JetBrains Mono", ui-monospace, "SF Mono", Menlo, Consolas, monospace;
+  font-size: 25px;
+  line-height: 1.5;
+  white-space: pre-wrap;
+}
+
+.peitho-slide .hl-comment { color: #8b8f9a; }
+.peitho-slide .hl-string { color: #7ee787; }
+.peitho-slide .hl-keyword,
+.peitho-slide .hl-storage { color: #ff7b72; }
+.peitho-slide .hl-constant { color: #ffa657; }
+.peitho-slide .hl-function { color: #d2a8ff; }
+.peitho-slide .hl-type { color: #79c0ff; }
+
+/* ---------- Game slide ---------- */
+
+.layout-game {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 24px;
+}
+
+.game-header {
+  text-align: center;
+}
+
+.game-header h1 {
+  margin: 0 0 8px;
+  font-size: 46px;
+  font-weight: 760;
+}
+
+.game-hint {
+  font-size: 21px;
+  color: var(--muted);
+}
+
+.game-hint p {
+  margin: 0;
+}
+
+.tetris-mount {
+  display: flex;
+}
+
+/* ---------- Tetris component ---------- */
+
+.tetris-app {
+  display: flex;
+  gap: 24px;
+  align-items: flex-start;
+}
+
+.tetris-board {
+  display: grid;
+  grid-template-columns: repeat(10, 27px);
+  grid-template-rows: repeat(20, 27px);
+  gap: 1px;
+  background: #111318;
+  padding: 6px;
+  border-radius: 10px;
+  box-shadow: 0 20px 50px rgba(15, 15, 15, 0.25);
+}
+
+.tetris-board .tetris-cell {
+  width: 27px;
+  height: 27px;
+  border-radius: 2px;
+}
+
+.tetris-side {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  width: 140px;
+}
+
+.tetris-panel {
+  background: #111318;
+  color: #fff;
+  border-radius: 10px;
+  padding: 10px 14px;
+}
+
+.tetris-label {
+  font-size: 11px;
+  letter-spacing: 0.08em;
+  color: #8b8f9a;
+}
+
+.tetris-value {
+  font-size: 22px;
+  font-weight: 700;
+  font-variant-numeric: tabular-nums;
+}
+
+.tetris-next {
+  display: grid;
+  grid-template-columns: repeat(4, 14px);
+  grid-template-rows: repeat(4, 14px);
+  gap: 1px;
+  margin-top: 8px;
+  background: #000;
+  padding: 4px;
+  border-radius: 6px;
+}
+
+.tetris-next .tetris-cell {
+  width: 14px;
+  height: 14px;
+  border-radius: 1px;
+}
+
+.next-loop-btn {
+  position: absolute;
+  right: 40px;
+  bottom: 36px;
+  font: inherit;
+  font-size: 16px;
+  font-weight: 700;
+  color: #fff;
+  background: var(--accent);
+  border: none;
+  border-radius: 999px;
+  padding: 10px 22px;
+  cursor: pointer;
+  box-shadow: 0 8px 20px rgba(63, 164, 91, 0.35);
+}
+
+.next-loop-btn:hover {
+  filter: brightness(1.08);
+}
+
+.tetris-gameover {
+  background: rgba(220, 38, 38, 0.12);
+  border: 1px solid #dc2626;
+  color: #dc2626;
+  font-weight: 700;
+  text-align: center;
+  padding: 12px;
+  border-radius: 10px;
+  font-size: 13px;
+  line-height: 1.6;
+}

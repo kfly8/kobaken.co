@@ -1,0 +1,27 @@
+{
+  "version": 1,
+  "peithoVersion": "1.24.1",
+  "title": "HTMLなら",
+  "slideCount": 1,
+  "plannedDurationMs": null,
+  "aspectRatio": "16:9",
+  "canvasWidth": 1280,
+  "canvasHeight": 720,
+  "sections": [],
+  "slides": [
+    {
+      "index": 0,
+      "key": "html",
+      "src": "slides/000-html.html",
+      "hasNotes": false,
+      "skip": false,
+      "revealSteps": 0,
+      "text": {
+        "title": "HTMLなら",
+        "body": "三毛猫がゴロゴロできる",
+        "code": ""
+      }
+    }
+  ],
+  "images": []
+}

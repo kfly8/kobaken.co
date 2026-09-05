@@ -1,0 +1,53 @@
+{
+  "version": 1,
+  "peithoVersion": "1.24.1",
+  "title": "BarefootJSはCSRもできる",
+  "slideCount": 3,
+  "plannedDurationMs": null,
+  "aspectRatio": "16:9",
+  "canvasWidth": 1280,
+  "canvasHeight": 720,
+  "sections": [],
+  "slides": [
+    {
+      "index": 0,
+      "key": "barefootjs-csr",
+      "src": "slides/000-barefootjs-csr.html",
+      "hasNotes": false,
+      "skip": false,
+      "revealSteps": 0,
+      "text": {
+        "title": "BarefootJSはCSRもできる",
+        "body": "@barefootjs/client/csr-adapter でセットアップする",
+        "code": "import { barefoot } from '@barefootjs/vite'\nimport { CSRAdapter } from '@barefootjs/client/csr-adapter'\n\nexport default defineConfig({\n  plugins: [\n    barefoot({ adapter: new CSRAdapter(), components: ['./components'] }),\n  ],\n})\n"
+      }
+    },
+    {
+      "index": 1,
+      "key": "slide-2",
+      "src": "slides/001-slide-2.html",
+      "hasNotes": false,
+      "skip": false,
+      "revealSteps": 0,
+      "text": {
+        "title": "エントリーポイント",
+        "body": "@barefootjs/client/runtime でコンポーネントを render する",
+        "code": "import { render } from '@barefootjs/client/runtime'\nimport './components/Tetris.tsx'\n\nrender(document.getElementById('tetris-root'), 'Tetris')\n"
+      }
+    },
+    {
+      "index": 2,
+      "key": "tetris-with-barefootjs",
+      "src": "slides/002-tetris-with-barefootjs.html",
+      "hasNotes": false,
+      "skip": false,
+      "revealSteps": 0,
+      "text": {
+        "title": "Tetris with BarefootJS",
+        "body": "← → で移動 / ↑ で回転 / ↓ でソフトドロップ / Space でハードドロップ",
+        "code": ""
+      }
+    }
+  ],
+  "images": []
+}
