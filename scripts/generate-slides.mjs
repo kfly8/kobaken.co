@@ -25,7 +25,13 @@ import { existsSync, mkdirSync, readdirSync, readFileSync, statSync, writeFileSy
 import { join } from 'node:path'
 
 const SITE_URL = 'https://kobaken.co'
-const FALLBACK_IMAGE = `${SITE_URL}/static/img/kobaken.jpg`
+// Same default share card renderer.tsx falls back to for pages with no
+// page-specific OGP image — kept in sync so every "no dedicated image"
+// page on the site shares one 1200x630 default instead of the old
+// 400x400 profile photo.
+const FALLBACK_IMAGE = `${SITE_URL}/static/img/og-default.jpg`
+const FALLBACK_WIDTH = 1200
+const FALLBACK_HEIGHT = 630
 
 const talksDir = 'talks'
 const slugs = readdirSync(talksDir).filter((f) => statSync(join(talksDir, f)).isDirectory())
@@ -45,6 +51,9 @@ function patchIndexHtml(slug, title, canvasWidth, canvasHeight) {
   const image = hasOgImage ? `${url}og.png` : FALLBACK_IMAGE
   const escapedTitle = escapeHtml(title)
 
+  const imageWidth = hasOgImage ? canvasWidth : FALLBACK_WIDTH
+  const imageHeight = hasOgImage ? canvasHeight : FALLBACK_HEIGHT
+
   const lines = [
     `<title>${escapedTitle} — kobaken</title>`,
     `<meta name="description" content="${escapedTitle}">`,
@@ -52,16 +61,15 @@ function patchIndexHtml(slug, title, canvasWidth, canvasHeight) {
     `<meta property="og:title" content="${escapedTitle}">`,
     `<meta property="og:description" content="${escapedTitle}">`,
     `<meta property="og:site_name" content="kobaken.co">`,
+    `<meta property="og:locale" content="ja_JP">`,
     `<meta property="og:url" content="${url}">`,
     `<meta property="og:image" content="${image}">`,
-    ...(hasOgImage
-      ? [
-          `<meta property="og:image:width" content="${canvasWidth}">`,
-          `<meta property="og:image:height" content="${canvasHeight}">`,
-        ]
-      : []),
+    `<meta property="og:image:width" content="${imageWidth}">`,
+    `<meta property="og:image:height" content="${imageHeight}">`,
     `<meta property="og:type" content="website">`,
-    `<meta name="twitter:card" content="${hasOgImage ? 'summary_large_image' : 'summary'}">`,
+    `<meta name="twitter:card" content="summary_large_image">`,
+    `<meta name="twitter:title" content="${escapedTitle}">`,
+    `<meta name="twitter:description" content="${escapedTitle}">`,
     `<meta name="twitter:image" content="${image}">`,
     `<meta name="twitter:site" content="@kfly8">`,
     `<meta name="twitter:creator" content="@kfly8">`,

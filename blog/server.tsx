@@ -57,5 +57,7 @@ blog.get('/:slug', (c) => {
     description: post.description,
     canonical: `${BASE}/${post.slug}`,
     image: `${BASE}/${post.slug}/og.png`,
+    type: 'article',
+    publishedTime: post.date,
   })
 })
