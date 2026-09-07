@@ -3,6 +3,9 @@ import { cors } from 'hono/cors'
 import { renderer } from './renderer'
 import { blog } from './blog/server'
 import { diary } from './diary/server'
+import { posts as blogPosts } from './blog/content'
+import { posts as diaryPosts } from './diary/content'
+import { renderSitemap } from './content/sitemap'
 
 import { Root } from '@/components/Root'
 import { ProfilePage } from '@/components/ProfilePage'
@@ -11,6 +14,11 @@ import { SlidesIndex } from '@/components/SlidesIndex'
 const app = new Hono()
 
 app.use('/api/*', cors())
+
+app.get('/sitemap.xml', (c) =>
+  c.body(renderSitemap(blogPosts, diaryPosts), 200, { 'Content-Type': 'application/xml; charset=utf-8' }),
+)
+
 app.use('*', renderer)
 app.route('/blog', blog)
 app.route('/diary', diary)
