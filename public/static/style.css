@@ -107,26 +107,17 @@ body {
 .home-ai-links {
   margin-top: 48px;
   font-size: 14px;
-}
-
-.home-ai-links p {
-  margin: 0 0 8px;
   color: var(--color-text-sub);
-  font-size: 12px;
-  letter-spacing: 0.04em;
-}
-
-.home-ai-links > div {
   display: flex;
+  align-items: center;
   flex-wrap: wrap;
-  gap: 8px;
+  gap: 4px;
 }
 
 .home-ai-links a {
   display: inline-flex;
   align-items: center;
   justify-content: center;
-  gap: 6px;
   min-width: 44px;
   min-height: 44px;
   padding: 0 8px;
@@ -136,6 +127,7 @@ body {
 }
 
 .home-ai-links a:hover {
+  color: var(--color-text-main);
   text-decoration-style: solid;
 }
 
