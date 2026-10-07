@@ -89,13 +89,70 @@ body {
   padding: 20px;
 }
 
-/* The top page centers Profile in the viewport height (100svh) below the
-   header — vertical page-layout padding would push it down further than
-   before the Layout unification, so it's zeroed out here (horizontal
-   padding is kept, matching every other page). */
+/* Center the home content below the header; allow it to grow naturally
+   when a short viewport cannot accommodate the profile and links. */
 .page-layout.home {
-  padding-top: 0;
-  padding-bottom: 0;
+  min-height: calc(100svh - 72px);
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  padding-top: 40px;
+  padding-bottom: 40px;
+}
+
+.home > section {
+  min-height: 0;
+}
+
+.home-ai-links {
+  margin-top: 48px;
+  font-size: 14px;
+}
+
+.home-ai-links p {
+  margin: 0 0 8px;
+  color: var(--color-text-sub);
+  font-size: 12px;
+  letter-spacing: 0.04em;
+}
+
+.home-ai-links > div {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+}
+
+.home-ai-links a {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 6px;
+  min-width: 44px;
+  min-height: 44px;
+  padding: 0 8px;
+  color: inherit;
+  text-decoration: underline dotted var(--color-text-sub);
+  text-underline-offset: 0.2em;
+}
+
+.home-ai-links a:hover {
+  text-decoration-style: solid;
+}
+
+.home-ai-links a:focus-visible {
+  outline: 2px solid currentColor;
+  outline-offset: 2px;
+}
+
+/* Keep the quiet secondary links in the corner only when there is room.
+   Phones, landscape phones and short/zoomed windows use document flow. */
+@media (min-width: 768px) and (min-height: 600px) {
+  .home-ai-links {
+    position: fixed;
+    right: 24px;
+    bottom: 24px;
+    margin-top: 0;
+  }
 }
 
 /* Shared across every page's main heading (Profile's name, Activities,
@@ -152,4 +209,3 @@ h1 {
   position: absolute;
   width: 1px
 }
-
