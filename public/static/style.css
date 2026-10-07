@@ -102,9 +102,11 @@ body {
 
 .home > section {
   min-height: 0;
+  margin-block: auto;
 }
 
 .home-ai-links {
+  align-self: flex-end;
   margin-top: 48px;
   font-size: 14px;
   color: var(--color-text-sub);
@@ -136,8 +138,8 @@ body {
   outline-offset: 2px;
 }
 
-/* Keep the quiet secondary links in the corner only when there is room.
-   Phones, landscape phones and short/zoomed windows use document flow. */
+/* On smaller screens the flex layout places links at the bottom-right
+   in document flow, so short windows can scroll without any overlap. */
 @media (min-width: 768px) and (min-height: 600px) {
   .home-ai-links {
     position: fixed;
