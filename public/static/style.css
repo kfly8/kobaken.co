@@ -116,6 +116,13 @@ body {
   gap: 4px;
 }
 
+.home-ai-robot {
+  width: 24px;
+  height: 24px;
+  flex: none;
+  margin-right: 4px;
+}
+
 .home-ai-links a {
   display: inline-flex;
   align-items: center;
