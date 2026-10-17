@@ -1,7 +1,7 @@
 import { Layout } from './Layout'
 import { PostTags } from './PostTags'
 import type { Post } from '../content/posts'
-import { type Lang, LANG_NAME, localized, switchLink } from '../i18n'
+import { type Lang, LANG_NAME_IN, localized, languageMenu } from '../i18n'
 
 interface PostListProps {
   posts: Post[]
@@ -16,15 +16,13 @@ interface PostListProps {
 }
 
 export function PostList(props: PostListProps) {
-  const switchTo = switchLink(props.path ?? props.section, props.lang)
+  const menu = languageMenu(props.path ?? props.section, props.lang)
   return (
     <Layout
       className="blog-list"
       lang={props.lang}
       active={props.section === '/diary' ? 'diary' : 'blog'}
-      switchHref={switchTo.href}
-      switchLabel={switchTo.label}
-      switchLang={switchTo.lang}
+      menu={menu}
     >
       <h1>{props.heading}</h1>
       {props.posts.length === 0 ? (
@@ -39,7 +37,7 @@ export function PostList(props: PostListProps) {
                 <span className="date">{post.date}</span>
                 <span className="title">
                   <a href={localized(`${props.section}/${post.slug}`, post.lang)}>{post.title}</a>
-                  {post.lang === props.lang ? null : <span className="post-lang"> ({LANG_NAME[post.lang]})</span>}
+                  {post.lang === props.lang ? null : <span className="post-lang"> ({LANG_NAME_IN[props.lang][post.lang]})</span>}
                 </span>
               </div>
               {post.description && <p className="description">{post.description}</p>}

@@ -1,11 +1,11 @@
 import { SLIDES } from '../dist/slides'
 import { Layout } from './Layout'
-import { type Lang, switchLink } from '../i18n'
+import { type Lang, languageMenu } from '../i18n'
 
 export function SlidesIndex(props: { lang: Lang }) {
-  const switchTo = switchLink('/slides', props.lang)
+  const menu = languageMenu('/slides', props.lang)
   return (
-    <Layout className="slides-list" active="slides" lang={props.lang} switchHref={switchTo.href} switchLabel={switchTo.label} switchLang={switchTo.lang}>
+    <Layout className="slides-list" active="slides" lang={props.lang} menu={menu}>
       <h1>Slides</h1>
       <ul>
         {SLIDES.map((talk) => (

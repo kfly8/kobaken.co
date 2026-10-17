@@ -1,11 +1,11 @@
 import { Layout } from './Layout'
 import { Profile } from './Profile'
-import { type Lang, switchLink } from '../i18n'
+import { type Lang, languageMenu } from '../i18n'
 
 export const Root = (props: { lang: Lang }) => {
-  const switchTo = switchLink('/', props.lang)
+  const menu = languageMenu('/', props.lang)
   return (
-    <Layout className="home" showLogo={false} lang={props.lang} switchHref={switchTo.href} switchLabel={switchTo.label} switchLang={switchTo.lang}>
+    <Layout className="home" showLogo={false} lang={props.lang} menu={menu}>
       <Profile />
       <nav className="home-ai-links" aria-label="Related sites">
         <svg className="home-ai-robot" viewBox="0 0 32 32" aria-hidden="true">

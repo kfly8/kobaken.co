@@ -1,7 +1,7 @@
 import { Layout } from './Layout'
 import { PostTags } from './PostTags'
 import type { Post } from '../content/posts'
-import { type Lang, localized, messages, switchLink } from '../i18n'
+import { type Lang, localized, messages, languageMenu } from '../i18n'
 
 interface PostArticleProps {
   post: Post
@@ -32,16 +32,13 @@ export function PostArticle(props: PostArticleProps) {
   const t = messages[props.lang]
   const basePath = localized(props.section, props.lang)
   const path = `${props.section}/${props.post.slug}`
-  // Offered only when the post has a version in the other language.
-  const switchTo = props.translated ? switchLink(path, props.lang) : undefined
+  const menu = languageMenu(path, props.lang, props.translated)
   return (
     <Layout
       className="blog-article"
       lang={props.lang}
       active={props.section === '/diary' ? 'diary' : 'blog'}
-      switchHref={switchTo?.href}
-      switchLabel={switchTo?.label}
-      switchLang={switchTo?.lang}
+      menu={menu}
     >
       <article>
         <h1>{props.post.title}</h1>

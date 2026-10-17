@@ -27,9 +27,16 @@ export const localized = (path: string, lang: Lang): string => (path === '/' ? `
 
 export const OG_LOCALE: Record<Lang, string> = { en: 'en_US', ja: 'ja_JP' }
 
-// The name of each language, written in that language: the switch shows it
-// to readers who may not read the current one.
+// The name of each language, written in that language: the language menu
+// lists them so, for readers who may not read the current one.
 export const LANG_NAME: Record<Lang, string> = { en: 'English', ja: '日本語' }
+
+// The name of each language in the page's language, for text on the page:
+// an English list says a post is "(Japanese)".
+export const LANG_NAME_IN: Record<Lang, Record<Lang, string>> = {
+  en: { en: 'English', ja: 'Japanese' },
+  ja: { en: '英語', ja: '日本語' },
+}
 
 export const messages = {
   en: {
@@ -43,6 +50,8 @@ export const messages = {
     backTo: (label: string) => `← Back to ${label}`,
     reply: 'Reply on X',
     replyText: 'Read it 👍',
+    languageMenu: 'Language',
+    notTranslated: 'This page is not in Japanese yet',
   },
   ja: {
     homeDescription:
@@ -55,13 +64,36 @@ export const messages = {
     backTo: (label: string) => `← Back to ${label}`,
     reply: 'おたよりはコチラ',
     replyText: '読んだよ👍',
+    languageMenu: '言語',
+    notTranslated: 'このページの英語版はまだありません',
   },
 } satisfies Record<Lang, Record<string, unknown>>
 
-// The link to a page's version in the other language. It goes through the
-// entry point with ?lang=, which remembers the choice in a cookie before
-// leading there (negotiate() in server.tsx).
-export const switchLink = (path: string, lang: Lang): { href: string; label: string; lang: Lang } => {
+// What the header's language menu shows for a page in lang at path (its
+// path without a language): the current language, and the link to the
+// page in the other one, which goes through the entry point with ?lang=,
+// so the choice is kept in a cookie (negotiate() in server.tsx). A page
+// with no version in the other language passes translated: false, and the
+// menu lists that language without a link.
+export interface LanguageMenu {
+  lang: Lang
+  name: string
+  menuLabel: string
+  otherLang: Lang
+  otherName: string
+  otherHref?: string
+  notTranslated: string
+}
+
+export const languageMenu = (path: string, lang: Lang, translated = true): LanguageMenu => {
   const other = otherLang(lang)
-  return { href: `${path}?lang=${other}`, label: LANG_NAME[other], lang: other }
+  return {
+    lang,
+    name: LANG_NAME[lang],
+    menuLabel: `${messages[lang].languageMenu}: ${LANG_NAME[lang]}`,
+    otherLang: other,
+    otherName: LANG_NAME[other],
+    otherHref: translated ? `${path}?lang=${other}` : undefined,
+    notTranslated: messages[lang].notTranslated,
+  }
 }
