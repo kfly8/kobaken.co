@@ -1,12 +1,17 @@
 import { Layout } from './Layout'
 import { PostTags } from './PostTags'
 import type { Post } from '../content/posts'
+import { type Lang, localized, messages, switchLink } from '../i18n'
 
 interface PostArticleProps {
   post: Post
   related?: Post[]
-  basePath: string
+  lang: Lang
+  // '/blog' or '/diary', without the language.
+  section: string
   backLabel: string
+  // Whether the post also has a version in the other language.
+  translated: boolean
 }
 
 // Points at the companion tweet's reply composer, not just the tweet itself —
@@ -15,17 +20,29 @@ interface PostArticleProps {
 // field asks the reader to compose something, a pre-filled one only asks
 // them to edit or send. The text states a fact ("read it") rather than an
 // opinion, so it stays true regardless of how the reader actually felt.
-function tweetReplyUrl(tweetUrl: string): string {
+function tweetReplyUrl(tweetUrl: string, text: string): string {
   const id = tweetUrl.match(/status\/(\d+)/)?.[1]
   if (!id) return tweetUrl
-  const params = new URLSearchParams({ in_reply_to: id, text: '読んだよ👍' })
+  const params = new URLSearchParams({ in_reply_to: id, text })
   return `https://twitter.com/intent/tweet?${params}`
 }
 
 export function PostArticle(props: PostArticleProps) {
   const related = props.related ?? []
+  const t = messages[props.lang]
+  const basePath = localized(props.section, props.lang)
+  const path = `${props.section}/${props.post.slug}`
+  // Offered only when the post has a version in the other language.
+  const switchTo = props.translated ? switchLink(path, props.lang) : undefined
   return (
-    <Layout className="blog-article" active={props.basePath === '/diary' ? 'diary' : 'blog'}>
+    <Layout
+      className="blog-article"
+      lang={props.lang}
+      active={props.section === '/diary' ? 'diary' : 'blog'}
+      switchHref={switchTo?.href}
+      switchLabel={switchTo?.label}
+      switchLang={switchTo?.lang}
+    >
       <article>
         <h1>{props.post.title}</h1>
         <p className="date">
@@ -35,7 +52,7 @@ export function PostArticle(props: PostArticleProps) {
           {/* Children must stay on one line: the compiled template keeps the
               surrounding whitespace, and the underline would cover it. */}
           <a
-            href={`${props.basePath}/${props.post.slug}.md`}
+            href={`${basePath}/${props.post.slug}.md`}
             data-bf-router="false"
             className="ml-3 underline decoration-dotted underline-offset-[0.2em] decoration-[var(--color-text-sub)] hover:text-color-[var(--color-text-main)] hover:decoration-[var(--color-text-main)]"
           >Markdown</a>
@@ -47,29 +64,29 @@ export function PostArticle(props: PostArticleProps) {
         {props.post.tweetUrl && (
           <div className="mt-10">
             <a
-              href={tweetReplyUrl(props.post.tweetUrl)}
+              href={tweetReplyUrl(props.post.tweetUrl, t.replyText)}
               className="inline-flex items-center gap-1 underline decoration-dotted underline-offset-[0.2em] decoration-[var(--color-text-sub)] hover:decoration-[var(--color-text-main)]"
             >
               <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="w-[0.9em] h-[0.9em]" aria-hidden="true">
                 <line x1="22" y1="2" x2="11" y2="13" />
                 <polygon points="22 2 15 22 11 13 2 9 22 2" />
               </svg>
-              おたよりはコチラ
+              {t.reply}
             </a>
           </div>
         )}
         {props.post.tags.length > 0 && (
-          <div className="mt-10"><PostTags tags={props.post.tags} basePath={props.basePath} /></div>
+          <div className="mt-10"><PostTags tags={props.post.tags} basePath={basePath} /></div>
         )}
       </article>
       {related.length > 0 && (
         <section className="mt-10">
-          <h2 className="font-bold mb-3">関連記事</h2>
+          <h2 className="font-bold mb-3">{t.related}</h2>
           <ul>
             {related.map((r) => (
-              <li key={r.slug} className="my-2">
+              <li key={r.slug} className="my-2" lang={r.lang === props.lang ? undefined : r.lang}>
                 <a
-                  href={`${props.basePath}/${r.slug}`}
+                  href={localized(`${props.section}/${r.slug}`, r.lang)}
                   className="underline decoration-dotted underline-offset-[0.2em] decoration-[var(--color-text-sub)] tracking-[0.03em] hover:decoration-[var(--color-text-main)]"
                 >{r.title}</a>
               </li>
@@ -77,7 +94,7 @@ export function PostArticle(props: PostArticleProps) {
           </ul>
         </section>
       )}
-      <p className="back"><a href={props.basePath}>← Back to {props.backLabel}</a></p>
+      <p className="back"><a href={basePath}>{t.backTo(props.backLabel)}</a></p>
     </Layout>
   )
 }

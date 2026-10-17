@@ -1,4 +1,5 @@
 import { marked } from 'marked'
+import { type Lang, LANGS, UNMARKED_LANG, isLang } from '../i18n'
 
 interface FrontMatter {
   title: string
@@ -9,6 +10,8 @@ interface FrontMatter {
   related?: string[]
   // Companion post on X, invites readers to reply there instead of a comment section.
   tweetUrl?: string
+  // The language of a file without one in its name (<slug>.md).
+  lang?: string
 }
 
 // FNV-1a over the raw (pre-parse) Markdown, exposed as Post.contentHash —
@@ -40,6 +43,9 @@ function parseFrontMatter(raw: string): { data: FrontMatter; body: string } {
 
 export interface Post {
   slug: string
+  // A post may come in English, Japanese or both: <slug>.en.md and
+  // <slug>.ja.md are the same post, one per language.
+  lang: Lang
   title: string
   date: string
   description?: string
@@ -54,9 +60,25 @@ export interface Post {
 }
 
 export interface PostCollection {
+  // Every version of every post, newest first.
   posts: Post[]
-  getPost: (slug: string) => Post | undefined
-  getPostsByTag: (tag: string) => Post[]
+  // One version of each post, newest first: the one in lang where there
+  // is one, else the post's other language. A list in either language
+  // shows every post, so an English list is not empty while posts are
+  // being translated.
+  listIn: (lang: Lang) => Post[]
+  getPost: (slug: string, lang: Lang) => Post | undefined
+  // The languages a post has, in LANGS order. Empty for no such post.
+  langsOf: (slug: string) => Lang[]
+  getPostsByTag: (tag: string, lang: Lang) => Post[]
+}
+
+// The key generate-posts.mjs gives a file is its name without .md: <slug>,
+// <slug>.en or <slug>.ja.
+function splitKey(key: string, declared: string | undefined): { slug: string; lang: Lang } {
+  const m = key.match(/^(.*)\.(en|ja)$/)
+  if (m) return { slug: m[1], lang: m[2] as Lang }
+  return { slug: key, lang: isLang(declared) ? declared : UNMARKED_LANG }
 }
 
 // A relative `![](lego.jpeg)` resolves against a post's own colocated
@@ -71,11 +93,13 @@ function resolveRelativeImages(html: string, section: string, slug: string): str
 // Shared by /blog and /diary, which differ only in which files they pass in.
 export function createPostCollection(rawPosts: Record<string, string>, section: string): PostCollection {
   const posts: Post[] = Object.entries(rawPosts)
-    .map(([slug, raw]) => {
+    .map(([key, raw]) => {
       const { data, body } = parseFrontMatter(raw)
+      const { slug, lang } = splitKey(key, data.lang)
       const trimmedBody = body.trim()
       return {
         slug,
+        lang,
         title: data.title,
         date: data.date,
         description: data.description,
@@ -87,11 +111,23 @@ export function createPostCollection(rawPosts: Record<string, string>, section: 
         contentHash: fnv1a(raw),
       }
     })
-    .sort((a, b) => b.date.localeCompare(a.date))
+    .sort((a, b) => b.date.localeCompare(a.date) || a.lang.localeCompare(b.lang))
+
+  for (const [i, a] of posts.entries()) {
+    if (posts.findIndex((b) => b.slug === a.slug && b.lang === a.lang) !== i) {
+      throw new Error(`${section}/${a.slug} has two ${a.lang} versions`)
+    }
+  }
+
+  const getPost = (slug: string, lang: Lang) => posts.find((p) => p.slug === slug && p.lang === lang)
+  const listIn = (lang: Lang) =>
+    posts.filter((p) => p.lang === lang || !getPost(p.slug, lang))
 
   return {
     posts,
-    getPost: (slug) => posts.find((p) => p.slug === slug),
-    getPostsByTag: (tag) => posts.filter((p) => p.tags.includes(tag)),
+    listIn,
+    getPost,
+    langsOf: (slug) => LANGS.filter((lang) => getPost(slug, lang)),
+    getPostsByTag: (tag, lang) => listIn(lang).filter((p) => p.tags.includes(tag)),
   }
 }
