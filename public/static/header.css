@@ -18,6 +18,15 @@
   text-decoration: none;
 }
 
+.site-logo {
+  /* The nav grows with the language switch; the logo keeps its size. */
+  flex-shrink: 0;
+}
+
+.site-nav .lang-code {
+  display: none;
+}
+
 .site-logo img {
   width: 32px;
   height: 32px;
@@ -33,6 +42,7 @@
 }
 
 .site-nav a {
+  white-space: nowrap;
   text-decoration: underline;
   text-decoration-style: dotted;
   text-underline-offset: 0.2em;
@@ -67,5 +77,24 @@
 @media (max-width: 480px) {
   .site-logo span {
     display: none;
+  }
+
+  /* Room for the language switch beside the four sections. */
+  .site-nav {
+    gap: 12px;
+  }
+
+  .site-nav .lang-name {
+    display: none;
+  }
+
+  .site-nav .lang-code {
+    display: inline;
+  }
+}
+
+@media (max-width: 340px) {
+  .site-nav {
+    gap: 9px;
   }
 }

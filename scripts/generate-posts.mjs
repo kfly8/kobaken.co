@@ -36,7 +36,8 @@ function generate(section) {
     .join('\n')
 
   for (const f of published) {
-    const slug = basename(f, '.md')
+    // <slug>.en.md and <slug>.ja.md share content/<section>/<slug>/.
+    const slug = basename(f, '.md').replace(/\.(en|ja)$/, '')
     const assetDir = join(dir, slug)
     if (!existsSync(assetDir)) continue
     const dest = join('public', section, slug)
