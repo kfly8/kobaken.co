@@ -38,9 +38,6 @@ export const LANG_NAME_IN: Record<Lang, Record<Lang, string>> = {
   ja: { en: '英語', ja: '日本語' },
 }
 
-// The two-letter code the header shows for the language a page is in.
-export const LANG_CODE: Record<Lang, string> = { en: 'EN', ja: 'JA' }
-
 export const messages = {
   en: {
     homeDescription:
@@ -80,7 +77,6 @@ export const messages = {
 // menu lists that language without a link.
 export interface LanguageMenu {
   lang: Lang
-  code: string
   name: string
   menuLabel: string
   otherLang: Lang
@@ -93,7 +89,6 @@ export const languageMenu = (path: string, lang: Lang, translated = true): Langu
   const other = otherLang(lang)
   return {
     lang,
-    code: LANG_CODE[lang],
     name: LANG_NAME[lang],
     menuLabel: `${messages[lang].languageMenu}: ${LANG_NAME[lang]}`,
     otherLang: other,

@@ -25,8 +25,7 @@
   flex-shrink: 0;
 }
 
-/* The language menu: a globe and the current language's code, opening a
-   small list below it. */
+/* The language menu: a globe, opening a small list below it. */
 .lang-menu {
   position: relative;
   /* A <details> is a block whose line box adds space under the summary,
@@ -39,7 +38,6 @@
 .lang-menu summary {
   display: inline-flex;
   align-items: center;
-  gap: 4px;
   cursor: pointer;
   list-style: none;
 }
@@ -52,11 +50,6 @@
 .lang-menu summary svg {
   width: 1.4em;
   height: 1.4em;
-}
-
-.lang-menu .lang-code {
-  font-size: 0.8em;
-  letter-spacing: 0.04em;
 }
 
 .lang-menu ul {
@@ -165,7 +158,4 @@
     gap: 6px;
   }
 
-  .lang-menu summary {
-    gap: 2px;
-  }
 }
