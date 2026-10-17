@@ -23,8 +23,15 @@
   flex-shrink: 0;
 }
 
-.site-nav .lang-code {
-  display: none;
+.site-nav .lang-switch {
+  display: inline-flex;
+  text-decoration: none;
+}
+
+/* The size of the theme toggle's icon beside it. */
+.site-nav .lang-switch svg {
+  width: 1.4em;
+  height: 1.4em;
 }
 
 .site-logo img {
@@ -82,14 +89,6 @@
   /* Room for the language switch beside the four sections. */
   .site-nav {
     gap: 12px;
-  }
-
-  .site-nav .lang-name {
-    display: none;
-  }
-
-  .site-nav .lang-code {
-    display: inline;
   }
 }
 
