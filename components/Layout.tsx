@@ -2,6 +2,7 @@
 
 import { Region } from '@barefootjs/client'
 import { Header } from './Header'
+import type { LanguageMenu } from '../i18n'
 
 interface LayoutProps {
   children?: unknown
@@ -9,9 +10,7 @@ interface LayoutProps {
   lang: string
   showLogo?: boolean
   active?: 'profile' | 'blog' | 'diary' | 'slides'
-  switchHref?: string
-  switchLabel?: string
-  switchLang?: string
+  menu: LanguageMenu
 }
 
 export function Layout(props: LayoutProps) {
@@ -25,9 +24,7 @@ export function Layout(props: LayoutProps) {
         lang={props.lang}
         showLogo={props.showLogo}
         active={props.active}
-        switchHref={props.switchHref}
-        switchLabel={props.switchLabel}
-        switchLang={props.switchLang}
+        menu={props.menu}
       />
       <main className={props.className ? `page-layout ${props.className}` : 'page-layout'}>
         {props.children}

@@ -6,6 +6,8 @@
      renders or not (hidden on the top page) — otherwise the page body
      shifts down by the difference when navigating between pages. */
   min-height: 72px;
+  /* Keeps the logo off the nav on the narrowest phones. */
+  column-gap: 6px;
 }
 
 .site-logo {
@@ -23,15 +25,76 @@
   flex-shrink: 0;
 }
 
-.site-nav .lang-switch {
+/* The language menu: a globe and the current language's code, opening a
+   small list below it. */
+.lang-menu {
+  position: relative;
+}
+
+.lang-menu summary {
   display: inline-flex;
-  text-decoration: none;
+  align-items: center;
+  gap: 4px;
+  cursor: pointer;
+  list-style: none;
+}
+
+.lang-menu summary::-webkit-details-marker {
+  display: none;
 }
 
 /* The size of the theme toggle's icon beside it. */
-.site-nav .lang-switch svg {
+.lang-menu summary svg {
   width: 1.4em;
   height: 1.4em;
+}
+
+.lang-menu .lang-code {
+  font-size: 0.8em;
+  letter-spacing: 0.04em;
+}
+
+.lang-menu ul {
+  position: absolute;
+  right: 0;
+  top: calc(100% + 8px);
+  z-index: 10;
+  min-width: 8em;
+  margin: 0;
+  padding: 6px 0;
+  list-style: none;
+  background: var(--color-background);
+  border: 1px solid var(--color-text-sub);
+  border-radius: 6px;
+}
+
+.lang-menu .lang-option {
+  display: block;
+  padding: 6px 14px;
+  white-space: nowrap;
+}
+
+.site-nav .lang-menu a.lang-option {
+  text-decoration: none;
+}
+
+.site-nav .lang-menu a.lang-option:hover {
+  text-decoration: underline;
+}
+
+/* The current language, marked as the one in use. */
+.lang-menu .lang-option[aria-current="true"] {
+  font-weight: 700;
+}
+
+.lang-menu .lang-option[aria-current="true"]::before {
+  content: "✓ ";
+}
+
+/* A language this page is not in yet. */
+.lang-menu .lang-option[aria-disabled="true"] {
+  color: var(--color-text-sub);
+  cursor: not-allowed;
 }
 
 .site-logo img {
@@ -94,6 +157,10 @@
 
 @media (max-width: 340px) {
   .site-nav {
-    gap: 9px;
+    gap: 6px;
+  }
+
+  .lang-menu summary {
+    gap: 2px;
   }
 }
