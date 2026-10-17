@@ -34,11 +34,22 @@ export function Header(props: HeaderProps) {
             client router swaps, so a page in the other language must load
             in full, or the document would keep this language's lang. */}
         {props.switchHref ? (
-          <a href={props.switchHref} hreflang={props.switchLang} lang={props.switchLang} aria-label={props.switchLabel} data-bf-router="false">
-            {/* The name on wide screens, the two-letter code on a phone,
-                where the nav has no room for "English". */}
-            <span className="lang-name">{props.switchLabel}</span>
-            <span className="lang-code">{props.switchLang === 'ja' ? 'JA' : 'EN'}</span>
+          <a
+            href={props.switchHref}
+            hreflang={props.switchLang}
+            lang={props.switchLang}
+            aria-label={props.switchLabel}
+            title={props.switchLabel}
+            className="lang-switch"
+            data-bf-router="false"
+          >
+            {/* A globe, beside the theme toggle: the language it leads to is
+                in the label and the tooltip. */}
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.6" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
+              <circle cx="12" cy="12" r="9" />
+              <path d="M3 12h18" />
+              <path d="M12 3c2.5 2.6 3.8 5.6 3.8 9s-1.3 6.4-3.8 9c-2.5-2.6-3.8-5.6-3.8-9S9.5 5.6 12 3z" />
+            </svg>
           </a>
         ) : null}
         <ToggleTheme />
