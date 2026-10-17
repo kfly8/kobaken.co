@@ -29,6 +29,11 @@
    small list below it. */
 .lang-menu {
   position: relative;
+  /* A <details> is a block whose line box adds space under the summary,
+     which put the globe above the links beside it. As a flex box it is
+     the summary's height, and the nav centers it like the others. */
+  display: flex;
+  align-items: center;
 }
 
 .lang-menu summary {
