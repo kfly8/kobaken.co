@@ -1,9 +1,9 @@
 ---
-title: "Peitho Studio - PeithoでHTMLスライドを書くアプリの紹介"
+title: "Peitho Studio —— 触れるHTMLスライドを作ろう！"
 date: "2026-11-04"
 description: "アプリにAIは組み込まなかった。代わりに、手元のAI Agentにコメントを待っていてもらうことにした。"
 tags: ["peitho", "peitho-studio", "ai-agent"]
-published: false
+published: true
 ---
 
 [YAPC::Tokyo 2026](https://yapcjapan.org/)に向けてスライド準備している人もいると思うので、スライドツールのアナウンスです。
