@@ -1,0 +1,270 @@
+/*
+  Deck theme for the Peitho Studio introduction (kobaken.co diary embed).
+  Follows peitho-studio.piconic.ai: warm off-white paper, near-black ink,
+  a serif for the wordmark, and no accent color beyond ink and gray.
+*/
+
+:root, .peitho-slide {
+  color-scheme: light;
+  --bg: #fbfaf8;
+  --surface: #ffffff;
+  --ink: #1c1917;
+  --muted: #6b635d;
+  --line: #e7e5e4;
+  --soft: #f3f1ee;
+  --sans: -apple-system, BlinkMacSystemFont, "Hiragino Sans", "Hiragino Kaku Gothic ProN",
+    "Noto Sans JP", "Segoe UI", Helvetica, Arial, sans-serif;
+  --serif: "Charis SIL", Charter, "Bitstream Charter", Georgia, "Hiragino Mincho ProN", serif;
+  --mono: ui-monospace, SFMono-Regular, "SF Mono", Menlo, Consolas, monospace;
+}
+
+.peitho-slide {
+  position: relative;
+  width: var(--peitho-canvas-width, 1280px);
+  height: var(--peitho-canvas-height, 720px);
+  display: flex;
+  flex-direction: column;
+  gap: 28px;
+  padding: 64px 88px;
+  box-sizing: border-box;
+  overflow: hidden;
+  background: var(--bg);
+  color: var(--ink);
+  font-family: var(--sans);
+  font-size: 32px;
+  line-height: 1.6;
+  word-break: auto-phrase;
+  line-break: strict;
+}
+
+.peitho-slide[data-peitho-page-number]::after {
+  content: attr(data-peitho-page-number);
+  position: absolute;
+  right: 32px;
+  bottom: 24px;
+  font-size: 18px;
+  color: var(--muted);
+  font-variant-numeric: tabular-nums;
+}
+
+.peitho-slide h1 {
+  margin: 0;
+  font-size: 52px;
+  line-height: 1.25;
+  font-weight: 700;
+  letter-spacing: -0.01em;
+}
+
+.peitho-slide p { margin: 0; }
+.peitho-slide strong { font-weight: 700; }
+.peitho-slide a { color: inherit; }
+
+.peitho-slide code {
+  font-family: var(--mono);
+  font-size: 0.85em;
+  padding: 0.1em 0.35em;
+  border-radius: 6px;
+  background: var(--soft);
+}
+
+/* ---------- Text (default) ---------- */
+
+.layout-text .body {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
+.layout-text ul {
+  margin: 0;
+  padding: 0;
+  list-style: none;
+  display: flex;
+  flex-direction: column;
+  gap: 18px;
+}
+
+.layout-text li {
+  position: relative;
+  padding-left: 32px;
+}
+
+.layout-text li::before {
+  content: "";
+  position: absolute;
+  left: 4px;
+  top: 0.75em;
+  width: 10px;
+  height: 2px;
+  background: var(--muted);
+}
+
+.layout-text figure.code {
+  margin: 0;
+}
+
+.layout-text figure.code:empty { display: none; }
+
+.layout-text pre {
+  margin: 0;
+  padding: 24px 28px;
+  border: 1px solid var(--line);
+  border-radius: 12px;
+  background: var(--surface);
+  font-family: var(--mono);
+  font-size: 24px;
+  line-height: 1.55;
+  overflow: hidden;
+}
+
+.layout-text pre code {
+  padding: 0;
+  background: none;
+  font-size: inherit;
+}
+
+/* ---------- Cover ---------- */
+
+.layout-cover {
+  justify-content: center;
+  align-items: center;
+  text-align: center;
+  gap: 20px;
+}
+
+.layout-cover .cover-icon img {
+  width: 132px;
+  height: 132px;
+  display: block;
+}
+
+.layout-cover h1 {
+  font-family: var(--serif);
+  font-weight: 400;
+  font-size: 84px;
+  letter-spacing: -0.03em;
+}
+
+.layout-cover .cover-body {
+  color: var(--muted);
+  font-size: 28px;
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+
+/* ---------- Statement ---------- */
+
+.layout-statement {
+  justify-content: center;
+  gap: 24px;
+}
+
+.statement-kicker {
+  color: var(--muted);
+  font-size: 28px;
+}
+
+.statement-body {
+  font-size: 56px;
+  font-weight: 700;
+  line-height: 1.4;
+}
+
+/* ---------- Screenshot ---------- */
+
+.layout-shot {
+  gap: 20px;
+  padding-bottom: 48px;
+}
+
+.layout-shot h1 { font-size: 44px; }
+
+.shot-frame {
+  flex: 1;
+  min-height: 0;
+  display: flex;
+  justify-content: center;
+}
+
+.shot-frame img {
+  height: 100%;
+  width: auto;
+  max-width: 100%;
+  object-fit: contain;
+  border: 1px solid var(--line);
+  border-radius: 12px;
+  background: var(--surface);
+}
+
+.shot-caption {
+  color: var(--muted);
+  font-size: 24px;
+  text-align: center;
+}
+
+.shot-caption:empty { display: none; }
+
+/* ---------- Live demo ---------- */
+
+.layout-live { gap: 20px; }
+
+.live-hint { color: var(--muted); font-size: 26px; }
+
+.particle-demo {
+  flex: 1;
+  width: 100%;
+  min-height: 0;
+  border: 0;
+  border-radius: 12px;
+  background: #101018;
+}
+
+.layout-video { gap: 24px; padding: 44px 64px; }
+.layout-video video {
+  width: 100%;
+  flex: 1;
+  min-height: 0;
+  object-fit: contain;
+  background: var(--ink);
+  border-radius: 12px;
+}
+
+.layout-install { justify-content: center; gap: 36px; }
+.layout-install h1 { font-size: 68px; }
+.install-body { font-size: 38px; line-height: 1.5; max-width: 980px; }
+.install-code { margin: 0; }
+.install-code pre {
+  margin: 0;
+  padding: 28px 36px;
+  border: 1px solid var(--line);
+  border-radius: 14px;
+  background: var(--surface);
+  font-size: 34px;
+  line-height: 1.6;
+  white-space: pre-wrap;
+}
+.install-code pre code { padding: 0; background: none; font-size: inherit; }
+
+.language-switch {
+  position: absolute;
+  top: 18px;
+  right: 32px;
+  display: flex;
+  gap: 6px;
+  font-size: 18px;
+  line-height: 1.4;
+}
+.language-switch button {
+  border: 1px solid var(--line);
+  border-radius: 6px;
+  padding: 4px 10px;
+  background: var(--surface);
+  color: var(--muted);
+  font: inherit;
+  cursor: pointer;
+}
+.language-switch button[aria-pressed="true"] { background: var(--ink); color: var(--bg); }
+.peitho-slide[lang="en"] { word-break: normal; }
+.layout-text[lang="en"] { font-size: 28px; }
+.layout-text[lang="en"] ul { gap: 14px; }

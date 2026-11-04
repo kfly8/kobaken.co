@@ -1,0 +1,118 @@
+<section class="peitho-slide layout-live">
+  <h1><slot name="title" accepts="inline" arity="1"></slot></h1>
+  <div class="live-hint"><slot name="body" accepts="blocks" arity="0..*"></slot></div>
+  <iframe class="particle-demo" title="Interactive particle animation" sandbox="allow-scripts" srcdoc="&lt;!doctype html&gt;&lt;meta charset=&quot;utf-8&quot;&gt;
+&lt;style&gt;
+*{box-sizing:border-box}body{margin:0;background:#101018;color:#fbfaf8;font:24px/1.5 system-ui;display:grid;grid-template-columns:280px 1fr;height:100vh;overflow:hidden}
+.controls{padding:32px;display:flex;flex-direction:column;justify-content:center;gap:28px;border-right:1px solid #333344}label{display:grid;gap:10px}.control-heading{display:flex;justify-content:space-between;align-items:baseline;gap:16px;white-space:nowrap}output{font-variant-numeric:tabular-nums;color:#a5dfff}input{width:100%;accent-color:#a5dfff;cursor:pointer}p{margin:0;color:#b5b5c8;font-size:18px}canvas{width:100%;height:100%;min-width:0;min-height:0}
+&lt;/style&gt;
+&lt;div class=&quot;controls&quot;&gt;
+&lt;label&gt;&lt;span class=&quot;control-heading&quot;&gt;&lt;span data-ja=&quot;粒子数&quot; data-en=&quot;Particles&quot;&gt;粒子数&lt;/span&gt;&lt;output id=&quot;countValue&quot;&gt;240&lt;/output&gt;&lt;/span&gt;&lt;input id=&quot;count&quot; aria-label=&quot;Particle count&quot; type=&quot;range&quot; min=&quot;40&quot; max=&quot;600&quot; step=&quot;10&quot; value=&quot;240&quot; oninput=&quot;countValue.value=this.value&quot;&gt;&lt;/label&gt;
+&lt;label&gt;&lt;span class=&quot;control-heading&quot;&gt;&lt;span data-ja=&quot;速度&quot; data-en=&quot;Speed&quot;&gt;速度&lt;/span&gt;&lt;output id=&quot;speedValue&quot;&gt;0.6&lt;/output&gt;&lt;/span&gt;&lt;input id=&quot;speed&quot; aria-label=&quot;Animation speed&quot; type=&quot;range&quot; min=&quot;0&quot; max=&quot;2&quot; step=&quot;0.1&quot; value=&quot;0.6&quot; oninput=&quot;speedValue.value=this.value&quot;&gt;&lt;/label&gt;
+&lt;label&gt;&lt;span class=&quot;control-heading&quot;&gt;&lt;span data-ja=&quot;色&quot; data-en=&quot;Hue&quot;&gt;色&lt;/span&gt;&lt;output id=&quot;hueValue&quot;&gt;190&lt;/output&gt;&lt;/span&gt;&lt;input id=&quot;hue&quot; aria-label=&quot;Particle hue&quot; type=&quot;range&quot; min=&quot;0&quot; max=&quot;360&quot; value=&quot;190&quot; oninput=&quot;hueValue.value=this.value&quot;&gt;&lt;/label&gt;
+&lt;p data-ja=&quot;スライダーを動かして、渦の表情を変えてみる。&quot; data-en=&quot;Move the sliders to reshape the spiral.&quot;&gt;スライダーを動かして、渦の表情を変えてみる。&lt;/p&gt;
+&lt;/div&gt;&lt;canvas id=&quot;art&quot; aria-label=&quot;Animated particle spiral&quot;&gt;&lt;/canvas&gt;
+&lt;script&gt;
+const canvas = document.querySelector(&#x27;canvas&#x27;);
+const context = canvas.getContext(&#x27;2d&#x27;);
+const count = document.querySelector(&#x27;#count&#x27;);
+const speed = document.querySelector(&#x27;#speed&#x27;);
+const hue = document.querySelector(&#x27;#hue&#x27;);
+let phase = 0, last = 0;
+function draw(ms) {
+  phase += Math.min((ms - last) / 1000, 0.05) * Number(speed.value);
+  last = ms;
+  const width = canvas.clientWidth, height = canvas.clientHeight;
+  const dpr = devicePixelRatio || 1;
+  canvas.width = width * dpr; canvas.height = height * dpr;
+  context.scale(dpr, dpr); context.translate(width / 2, height / 2);
+  const scale = Math.max(0, Math.min(width, height) / 2 - 22) / Math.sqrt(Number(count.value));
+  for (let i = 0; i &lt; Number(count.value); i++) {
+    const angle = i * 2.39996 + phase;
+    const radius = Math.sqrt(i) * scale * Math.sin(phase + i / 90);
+    context.fillStyle = `hsl(${Number(hue.value) + i / 2} 100% 70%)`;
+    context.shadowColor = context.fillStyle; context.shadowBlur = 12;
+    context.beginPath();
+    context.arc(Math.cos(angle) * radius, Math.sin(angle) * radius, 2.5, 0, Math.PI * 2);
+    context.fill();
+  }
+  requestAnimationFrame(draw);
+}
+requestAnimationFrame(draw);
+addEventListener(&#x27;message&#x27;, event =&gt; {
+  if (event.source !== parent || event.data?.type !== &#x27;peitho-language&#x27;) return;
+  const language = event.data.language === &#x27;en&#x27; ? &#x27;en&#x27; : &#x27;ja&#x27;;
+  document.documentElement.lang = language;
+  for (const element of document.querySelectorAll(&#x27;[data-ja]&#x27;)) element.textContent = element.dataset[language];
+});
+&lt;/script&gt;"></iframe>
+  <!-- language:start --><script>
+(() => {
+  if (window.peithoDeckLanguage) return;
+  const translations = new Map([
+    ['Peitho Studioとは', 'What is Peitho Studio?'],
+    ['さん作のスライドツール ', "'s presentation engine "],
+    [' をエンジンとしたアプリ', ' powers this desktop app'],
+    ['Markdownでコンテンツを整え、HTMLのスライドができる', 'Write content in Markdown. Present it as HTML slides.'],
+    ['CSSは見た目', 'CSS controls the appearance'],
+    ['JavaScriptはふるまい', 'JavaScript controls the behavior'],
+    ['HTMLスライドはいい', 'HTML slides are great'],
+    ['HTMLスライドは「触れる」', 'HTML slides are interactive'],
+    ['従来の読むだけの紙芝居スライドでなく、触って動かせる体験が作れる。', 'Go beyond a read-only slideshow. Build an experience people can interact with.'],
+    ['設計の系譜', 'Design lineage'],
+    ['万人向けスライドツール。表現力豊かで、楽に使える', 'An expressive, easy-to-use presentation tool for everyone'],
+    ['Google Slidesの表現力とMarkdownによるコンテンツ管理を両立させる', 'Combines Google Slides visuals with content managed in Markdown'],
+    ['k1LoW/deckの表現とコンテンツの分離設計は活かしつつ、表現手段をGoogle SlidesからHTMLに切り替え、よりAIフレンドリーに', 'Keeps deck\'s separation of content and presentation, replacing Google Slides with HTML to work better with AI'],
+    ['Peithoを楽に使えることを目指す', 'Makes Peitho easier to use'],
+    ['Peitho Studioで\nHTMLスライドを作ってみませんか？', 'Try creating HTML slides\nwith Peitho Studio!'],
+    ['Peitho Studioで HTMLスライドを作ってみませんか？', 'Try creating HTML slides with Peitho Studio!']
+  ]);
+  const roots = new Set();
+  const originals = new WeakMap();
+  let language = 'ja';
+  try { language = localStorage.getItem('peitho-deck-language') === 'en' ? 'en' : 'ja'; } catch {}
+  function apply(root) {
+    root.lang = language;
+    const walker = document.createTreeWalker(root, NodeFilter.SHOW_TEXT);
+    for (let node = walker.nextNode(); node; node = walker.nextNode()) {
+      if (node.parentElement.closest('script, style, .language-switch, pre')) continue;
+      if (!originals.has(node)) originals.set(node, node.textContent);
+      const original = originals.get(node);
+      const text = original.trim();
+      const translated = translations.get(original) ?? translations.get(text);
+      node.textContent = language === 'en' && translated ? original.replace(text, translated.trim()) : original;
+    }
+    for (const button of root.querySelectorAll('[data-language]')) {
+      button.setAttribute('aria-pressed', String(button.dataset.language === language));
+    }
+    for (const frame of root.querySelectorAll('.particle-demo')) {
+      const update = () => frame.contentWindow?.postMessage({ type: 'peitho-language', language }, '*');
+      if (!frame.dataset.languageBound) {
+        frame.dataset.languageBound = 'true';
+        frame.addEventListener('load', update);
+      }
+      update();
+    }
+  }
+  function register(root) {
+    const slide = root.matches?.('.peitho-slide') ? root : root.querySelector('.peitho-slide');
+    if (!slide) return;
+    roots.add(slide);
+    apply(slide);
+  }
+  window.peithoDeckLanguage = {
+    set(next) {
+      language = next === 'en' ? 'en' : 'ja';
+      try { localStorage.setItem('peitho-deck-language', language); } catch {}
+      for (const root of roots) {
+        if (root.isConnected) apply(root);
+        else roots.delete(root);
+      }
+    }
+  };
+  window.addEventListener('peitho:shadow-mounted', event => register(event.detail.root));
+  for (const detail of window.__peithoShadowRoots ?? []) register(detail.root);
+  for (const slide of document.querySelectorAll('.peitho-slide')) register(slide);
+})();
+</script><!-- language:end -->
+</section>
