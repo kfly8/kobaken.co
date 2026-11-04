@@ -1,0 +1,78 @@
+<section class="peitho-slide layout-text">
+  <h1><slot name="title" accepts="inline" arity="1"></slot></h1>
+  <div class="body">
+    <slot name="body" accepts="blocks" arity="0..*"></slot>
+  </div>
+  <figure class="code">
+    <slot name="code" accepts="code" arity="0..1"></slot>
+  </figure>
+  <!-- language:start --><script>
+(() => {
+  if (window.peithoDeckLanguage) return;
+  const translations = new Map([
+    ['Peitho Studioとは', 'What is Peitho Studio?'],
+    ['さん作のスライドツール ', "'s presentation engine "],
+    [' をエンジンとしたアプリ', ' powers this desktop app'],
+    ['Markdownでコンテンツを整え、HTMLのスライドができる', 'Write content in Markdown. Present it as HTML slides.'],
+    ['CSSは見た目', 'CSS controls the appearance'],
+    ['JavaScriptはふるまい', 'JavaScript controls the behavior'],
+    ['HTMLスライドはいい', 'HTML slides are great'],
+    ['HTMLスライドは「触れる」', 'HTML slides are interactive'],
+    ['従来の読むだけの紙芝居スライドでなく、触って動かせる体験が作れる。', 'Go beyond a read-only slideshow. Build an experience people can interact with.'],
+    ['設計の系譜', 'Design lineage'],
+    ['万人向けスライドツール。表現力豊かで、楽に使える', 'An expressive, easy-to-use presentation tool for everyone'],
+    ['Google Slidesの表現力とMarkdownによるコンテンツ管理を両立させる', 'Combines Google Slides visuals with content managed in Markdown'],
+    ['k1LoW/deckの表現とコンテンツの分離設計は活かしつつ、表現手段をGoogle SlidesからHTMLに切り替え、よりAIフレンドリーに', 'Keeps deck\'s separation of content and presentation, replacing Google Slides with HTML to work better with AI'],
+    ['Peithoを楽に使えることを目指す', 'Makes Peitho easier to use'],
+    ['Peitho Studioで\nHTMLスライドを作ってみませんか？', 'Try creating HTML slides\nwith Peitho Studio!'],
+    ['Peitho Studioで HTMLスライドを作ってみませんか？', 'Try creating HTML slides with Peitho Studio!']
+  ]);
+  const roots = new Set();
+  const originals = new WeakMap();
+  let language = 'ja';
+  try { language = localStorage.getItem('peitho-deck-language') === 'en' ? 'en' : 'ja'; } catch {}
+  function apply(root) {
+    root.lang = language;
+    const walker = document.createTreeWalker(root, NodeFilter.SHOW_TEXT);
+    for (let node = walker.nextNode(); node; node = walker.nextNode()) {
+      if (node.parentElement.closest('script, style, .language-switch, pre')) continue;
+      if (!originals.has(node)) originals.set(node, node.textContent);
+      const original = originals.get(node);
+      const text = original.trim();
+      const translated = translations.get(original) ?? translations.get(text);
+      node.textContent = language === 'en' && translated ? original.replace(text, translated.trim()) : original;
+    }
+    for (const button of root.querySelectorAll('[data-language]')) {
+      button.setAttribute('aria-pressed', String(button.dataset.language === language));
+    }
+    for (const frame of root.querySelectorAll('.particle-demo')) {
+      const update = () => frame.contentWindow?.postMessage({ type: 'peitho-language', language }, '*');
+      if (!frame.dataset.languageBound) {
+        frame.dataset.languageBound = 'true';
+        frame.addEventListener('load', update);
+      }
+      update();
+    }
+  }
+  function register(root) {
+    const slide = root.matches?.('.peitho-slide') ? root : root.querySelector('.peitho-slide');
+    if (!slide) return;
+    roots.add(slide);
+    apply(slide);
+  }
+  window.peithoDeckLanguage = {
+    set(next) {
+      language = next === 'en' ? 'en' : 'ja';
+      try { localStorage.setItem('peitho-deck-language', language); } catch {}
+      for (const root of roots) {
+        if (root.isConnected) apply(root);
+        else roots.delete(root);
+      }
+    }
+  };
+  window.addEventListener('peitho:shadow-mounted', event => register(event.detail.root));
+  for (const detail of window.__peithoShadowRoots ?? []) register(detail.root);
+  for (const slide of document.querySelectorAll('.peitho-slide')) register(slide);
+})();
+</script><!-- language:end -->
+</section>

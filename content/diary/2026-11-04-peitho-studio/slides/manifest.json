@@ -1,0 +1,96 @@
+{
+  "version": 1,
+  "peithoVersion": "1.48.0",
+  "title": "Peitho Studio",
+  "slideCount": 6,
+  "plannedDurationMs": null,
+  "aspectRatio": "16:9",
+  "canvasWidth": 1280,
+  "canvasHeight": 720,
+  "sections": [],
+  "slides": [
+    {
+      "index": 0,
+      "key": "cover",
+      "src": "slides/000-cover.html",
+      "hasNotes": false,
+      "skip": false,
+      "revealSteps": 0,
+      "text": {
+        "title": "Peitho Studio",
+        "body": "Write HTML slides with Peitho.",
+        "code": ""
+      }
+    },
+    {
+      "index": 1,
+      "key": "what-is-peitho",
+      "src": "slides/001-what-is-peitho.html",
+      "hasNotes": false,
+      "skip": false,
+      "revealSteps": 0,
+      "text": {
+        "title": "Peitho Studioとは",
+        "body": "mizzyさん作のスライドツール Peitho をエンジンとしたアプリ\nMarkdownでコンテンツを整え、HTMLのスライドができる\nCSSは見た目\nJavaScriptはふるまい\n⇒ HTMLスライドはいい",
+        "code": ""
+      }
+    },
+    {
+      "index": 2,
+      "key": "live-demo",
+      "src": "slides/002-live-demo.html",
+      "hasNotes": false,
+      "skip": false,
+      "revealSteps": 0,
+      "text": {
+        "title": "HTMLスライドは「触れる」",
+        "body": "従来の読むだけの紙芝居スライドでなく、触って動かせる体験が作れる。",
+        "code": ""
+      }
+    },
+    {
+      "index": 3,
+      "key": "peitho-html",
+      "src": "slides/003-peitho-html.html",
+      "hasNotes": false,
+      "skip": false,
+      "revealSteps": 0,
+      "text": {
+        "title": "設計の系譜",
+        "body": "Google Slides\n万人向けスライドツール。表現力豊かで、楽に使える\nk1LoW/deck\nGoogle Slidesの表現力とMarkdownによるコンテンツ管理を両立させる\nmizzy/Peitho\nk1LoW/deckの表現とコンテンツの分離設計は活かしつつ、表現手段をGoogle SlidesからHTMLに切り替え、よりAIフレンドリーに\nPeitho Studio\nPeithoを楽に使えることを目指す",
+        "code": ""
+      }
+    },
+    {
+      "index": 4,
+      "key": "studio-files",
+      "src": "slides/004-studio-files.html",
+      "hasNotes": false,
+      "skip": false,
+      "revealSteps": 0,
+      "text": {
+        "title": "DEMO",
+        "body": "",
+        "code": ""
+      }
+    },
+    {
+      "index": 5,
+      "key": "install",
+      "src": "slides/005-install.html",
+      "hasNotes": false,
+      "skip": false,
+      "revealSteps": 0,
+      "text": {
+        "title": "Let's goooooo!!",
+        "body": "Peitho Studioで HTMLスライドを作ってみませんか？",
+        "code": "brew install --cask \\\n  piconic-ai/tap/peitho-studio\n"
+      }
+    }
+  ],
+  "images": [
+    {
+      "src": "assets/288410d0c053339b-app-icon.png"
+    }
+  ]
+}
