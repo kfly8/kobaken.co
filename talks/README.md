@@ -34,12 +34,10 @@ echo '{ "date": "YYYY-MM-DD" }' > talks/<slug>/talk.json
 
 ## OGP画像
 
-`public/slides/<slug>/index.html`（Workers Assetsが静的配信するページ本体）のOGP/Twitterカードのタグは `scripts/generate-slides.mjs` がビルドの度に自動で埋め込む（title/URLは`manifest.json`とslugから）。ただしOGP画像だけは自動生成されない。
+共有カードの中身はスライド1枚目。`public/slides/<slug>/index.html`（Workers Assetsが静的配信するページ本体）のOGP/Twitterカードのタグは、`scripts/generate-slides.mjs` がビルドの度に自動で埋め込む（タイトルと説明は `manifest.json` の1枚目の見出しと本文から）。`?slide=2` 以降のURLも、同じ1枚目のカードになる。
 
-```bash
-# スライド1枚目を public/slides/<slug>/og.png として書き出す
-# （peitho export pdf → sips で変換。フルビルドのたびに重い処理をしたくないので手動実行）
-node scripts/generate-slide-ogp.mjs <slug>
-```
+カード画像は `/slides/<slug>/og.png`。Workers Assetsではなく Worker（`slides/ogp.ts`）が返し、ブログ・日記のカード画像と同じ `Cache-Control` で Cloudflare のキャッシュに載る。中身は、ビルドが1枚目を描いた `public/slides/<slug>/og-cover-<hash>.png`（`<hash>` は1枚目のHTMLとCSSから計算し、ETagにも使う）。
 
-`og.png` を作っていないトークは、サイト共通の共有画像（`kobaken.jpg`）にフォールバックする。`og.png` はスライド1枚目を変えたときだけ作り直せばよい。`public/slides/<slug>/og.png` も通常どおり `git add` してコミットする。
+- 1枚目が変わると、`npm run build`/`dev` が描き直す（peitho export pdf → sips、数秒）。1枚目が変わらなければ何もしない
+- 描き直した `og-cover-<hash>.png` は通常どおり `git add` してコミットする（古いものはビルドが消す）
+- peitho か sips が無い環境（CI など）では描き直さず、警告を出して前回の画像を使い続ける

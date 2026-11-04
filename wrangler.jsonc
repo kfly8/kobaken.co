@@ -15,7 +15,10 @@
   // directly by Workers Assets. The Worker script handles everything
   // else — SSR, API routes, etc.
   "assets": {
-    "directory": "./public"
+    "directory": "./public",
+    // Lets the Worker read a static file itself — slides/ogp.ts serves a
+    // deck's cover PNG with its own cache headers.
+    "binding": "ASSETS"
   },
   // Blog post source files are imported as raw text (frontmatter parsed
   // and Markdown rendered at request time in blog/content.ts).
