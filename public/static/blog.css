@@ -129,6 +129,11 @@
   margin: 1.5em 0;
 }
 
+.blog-article .body .article-media {
+  display: block;
+  margin: 4em 0 1.5em;
+}
+
 .blog-article .body img {
   display: block;
   max-width: 100%;
