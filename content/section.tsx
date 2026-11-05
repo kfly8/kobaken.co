@@ -81,7 +81,7 @@ export function createSection(collection: PostCollection, options: SectionOption
       description: post.description,
       path,
       alternates: collection.langsOf(post.slug),
-      image: `${localized(path, lang)}/og.png`,
+      image: post.image ?? `${localized(path, lang)}/og.png`,
       type: 'article',
       publishedTime: post.date,
     })

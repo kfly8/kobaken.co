@@ -1,7 +1,8 @@
 ---
 title: "Peitho Studio: Let's make interactive HTML slides"
 date: "2026-11-04"
-description: "An introduction to Peitho Studio, interactive HTML slides, and using crit to connect a desktop app with a coding agent."
+description: "Create interactive HTML slides with Peitho Studio. See multilingual slides and live demos, and learn how crit connects the app with your coding agent."
+image: "/diary/2026-11-04-peitho-studio/og.png"
 tags: ["peitho", "peitho-studio", "ai-agent"]
 published: true
 ---

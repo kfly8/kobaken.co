@@ -5,6 +5,7 @@ interface FrontMatter {
   title: string
   date: string
   description?: string
+  image?: string
   tags?: string[]
   // Hand-curated related-post slugs — resolved to posts at render time.
   related?: string[]
@@ -49,6 +50,7 @@ export interface Post {
   title: string
   date: string
   description?: string
+  image?: string
   tags: string[]
   related: string[]
   tweetUrl?: string
@@ -112,6 +114,7 @@ export function createPostCollection(rawPosts: Record<string, string>, section: 
         title: data.title,
         date: data.date,
         description: data.description,
+        image: data.image,
         tags: data.tags ?? [],
         related: data.related ?? [],
         tweetUrl: data.tweetUrl,

@@ -1,7 +1,8 @@
 ---
 title: "Peitho Studio —— 触れるHTMLスライドを作ろう"
 date: "2026-11-04"
-description: "TODO"
+description: "触れるHTMLスライドを作れるPeitho Studioを紹介します。多言語切り替えや動くデモ、critを介していつものCoding Agentと連携する仕組みを解説します。"
+image: "/diary/2026-11-04-peitho-studio/og.png"
 tags: ["peitho", "peitho-studio", "ai-agent"]
 published: true
 ---
