@@ -89,6 +89,15 @@ function resolveRelativeImages(html: string, section: string, slug: string): str
   return html.replace(/(<img[^>]*\ssrc=")(?!https?:\/\/|\/)([^"]+)(")/g, `$1/${section}/${slug}/$2$3`)
 }
 
+function localizeSlideEmbeds(html: string, lang: Lang): string {
+  return html.replace(/(<iframe\b[^>]*\ssrc=)(["'])(\/slides\/[^"']*)\2/gi, (_, prefix, quote, src) => {
+    const url = new URL(src.replaceAll('&amp;', '&'), 'https://kobaken.co')
+    url.searchParams.set('lang', lang)
+    const localized = `${url.pathname}${url.search}${url.hash}`.replaceAll('&', '&amp;')
+    return `${prefix}${quote}${localized}${quote}`
+  })
+}
+
 // Turns a slug → raw-Markdown-with-frontmatter map into a Post collection.
 // Shared by /blog and /diary, which differ only in which files they pass in.
 export function createPostCollection(rawPosts: Record<string, string>, section: string): PostCollection {
@@ -107,7 +116,7 @@ export function createPostCollection(rawPosts: Record<string, string>, section: 
         related: data.related ?? [],
         tweetUrl: data.tweetUrl,
         body: trimmedBody,
-        html: resolveRelativeImages(marked.parse(trimmedBody) as string, section, slug),
+        html: localizeSlideEmbeds(resolveRelativeImages(marked.parse(trimmedBody) as string, section, slug), lang),
         contentHash: fnv1a(raw),
       }
     })

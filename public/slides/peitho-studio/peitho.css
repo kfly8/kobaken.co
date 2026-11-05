@@ -211,7 +211,7 @@
 
 .live-hint { color: var(--muted); font-size: 26px; }
 
-.particle-demo {
+.particle-demo, .circle-area-demo {
   flex: 1;
   width: 100%;
   min-height: 0;

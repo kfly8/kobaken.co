@@ -2,6 +2,12 @@
 
 kobaken's homepage
 
+## Diagrams
+
+Store JSON Canvas diagrams in `content/<section>/<slug>/*.canvas` and embed them as `![Description](diagram.svg)` in the article. `npm run build` generates the SVG in `public/<section>/<slug>/` from the canvas. Edit the `.canvas` file to change the diagram.
+
+The renderer supports text nodes with a `# Heading`, plain text, and labeled edges. Unsupported node types fail the build. Run `node --test scripts/render-canvas.test.mjs` to check the renderer.
+
 ## Prerequisites
 
 スライド（`/slides`）を作成・更新するには [peitho](https://github.com/mizzy/peitho)（Markdownを起点にHTMLネイティブなプレゼンテーションを生成するツール）が必要です。

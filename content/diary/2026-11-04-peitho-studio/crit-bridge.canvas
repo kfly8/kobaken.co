@@ -1,0 +1,102 @@
+{
+  "nodes": [
+    {
+      "id": "studio",
+      "type": "text",
+      "x": -10,
+      "y": 20,
+      "width": 300,
+      "height": 240,
+      "text": "# Peitho Studio\nPreview & review"
+    },
+    {
+      "id": "crit",
+      "type": "text",
+      "x": 440,
+      "y": 20,
+      "width": 300,
+      "height": 240,
+      "text": "# crit\nComments & replies"
+    },
+    {
+      "id": "agent",
+      "type": "text",
+      "x": 890,
+      "y": 20,
+      "width": 300,
+      "height": 240,
+      "text": "# Coding Agent\nClaude Code / Codex"
+    },
+    {
+      "id": "files",
+      "type": "text",
+      "x": 440.0,
+      "y": 430,
+      "width": 300,
+      "height": 160,
+      "text": "# Local deck files\ndeck.md\nlayouts/ · css/"
+    }
+  ],
+  "edges": [
+    {
+      "id": "studio-request",
+      "fromNode": "studio",
+      "fromSide": "right",
+      "toNode": "crit",
+      "toSide": "left",
+      "fromEnd": "none",
+      "toEnd": "arrow",
+      "label": "Comments\nFinish review"
+    },
+    {
+      "id": "studio-response",
+      "fromNode": "crit",
+      "fromSide": "left",
+      "toNode": "studio",
+      "toSide": "right",
+      "fromEnd": "none",
+      "toEnd": "arrow",
+      "label": "Replies\nEvents"
+    },
+    {
+      "id": "agent-response",
+      "fromNode": "crit",
+      "fromSide": "right",
+      "toNode": "agent",
+      "toSide": "left",
+      "fromEnd": "none",
+      "toEnd": "arrow",
+      "label": "Comments\nNext steps"
+    },
+    {
+      "id": "agent-request",
+      "fromNode": "agent",
+      "fromSide": "left",
+      "toNode": "crit",
+      "toSide": "right",
+      "fromEnd": "none",
+      "toEnd": "arrow",
+      "label": "Send reply\nWait for review"
+    },
+    {
+      "id": "preview",
+      "fromNode": "files",
+      "fromSide": "left",
+      "toNode": "studio",
+      "toSide": "bottom",
+      "fromEnd": "none",
+      "toEnd": "arrow",
+      "label": "Preview"
+    },
+    {
+      "id": "edit",
+      "fromNode": "agent",
+      "fromSide": "bottom",
+      "toNode": "files",
+      "toSide": "right",
+      "fromEnd": "none",
+      "toEnd": "arrow",
+      "label": "Edit"
+    }
+  ]
+}

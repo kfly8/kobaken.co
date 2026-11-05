@@ -9,6 +9,11 @@ const navigation = `<nav class="language-switch" aria-label="Slide language">
 for (const name of readdirSync(directory).filter(name => name.endsWith('.html'))) {
   const file = new URL(name, directory);
   let html = readFileSync(file, 'utf8').replace(/\n  <!-- language:start -->[\s\S]*?<!-- language:end -->/g, '');
+  if (name === 'circle-area.html') {
+    const demo = readFileSync(new URL('../assets/circle-area.html', import.meta.url), 'utf8');
+    const srcdoc = demo.replaceAll('&', '&amp;').replaceAll('"', '&quot;').replaceAll('<', '&lt;').replaceAll('>', '&gt;');
+    html = html.replace(/srcdoc="[^"]*"/, () => `srcdoc="${srcdoc}"`);
+  }
   if (name === 'cover.html') {
     html = html.replace(/(<section[^>]*>)/, `$1\n  <!-- language:start -->${navigation}<!-- language:end -->`);
   }

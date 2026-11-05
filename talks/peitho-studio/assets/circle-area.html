@@ -1,0 +1,129 @@
+<!doctype html>
+<html lang="ja">
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Circle area, one slice at a time</title>
+<style>
+  * { box-sizing: border-box; }
+  :root { color-scheme: light; font-family: -apple-system, BlinkMacSystemFont, "Hiragino Sans", "Segoe UI", sans-serif; color: #292524; background: #f3f1ee; }
+  body { margin: 0; height: 100vh; display: grid; grid-template-rows: auto minmax(0, 1fr) auto; padding: 18px 24px 16px; gap: 8px; overflow: hidden; }
+  .controls { display: grid; grid-template-columns: 1fr 1fr; gap: 48px; }
+  label { display: grid; gap: 6px; font-size: 19px; }
+  .label { display: flex; justify-content: space-between; align-items: baseline; gap: 12px; }
+  output { font-variant-numeric: tabular-nums; font-weight: 650; }
+  input { width: 100%; margin: 3px 0; accent-color: #0f766e; cursor: pointer; }
+  input:focus-visible { outline: 2px solid #0f766e; outline-offset: 4px; }
+  svg { width: 100%; height: 100%; min-height: 0; overflow: visible; }
+  svg text { fill: #57534e; font-size: 20px; font-family: inherit; }
+  .diagram-heading { fill: #292524; font-size: 23px; font-weight: 650; }
+  .dimension { stroke: #78716c; stroke-width: 1.5; fill: none; }
+  .radius { stroke: #292524; stroke-width: 2; fill: none; }
+  .formula { display: flex; align-items: baseline; justify-content: center; gap: 12px; font-size: 26px; white-space: nowrap; }
+  .formula .circumference { color: #b45309; }
+  .formula .height { color: #0f766e; }
+  .note { text-align: center; margin: 5px 0 0; font-size: 16px; color: #78716c; }
+  @media (max-width: 700px) {
+    body { padding: 12px 16px; gap: 4px; }
+    .controls { gap: 24px; }
+    label { font-size: 15px; gap: 2px; }
+    .formula { font-size: 19px; gap: 7px; }
+    .note { font-size: 12px; }
+  }
+</style>
+<div class="controls">
+  <label for="pieces">
+    <span class="label"><span data-ja="ピザを何切れにする？" data-en="How many slices?">ピザを何切れにする？</span><output id="piece-count" for="pieces">8</output></span>
+    <input id="pieces" type="range" min="4" max="64" step="2" value="8" aria-label="ピザの分割数" data-aria-ja="ピザの分割数" data-aria-en="Number of pizza slices">
+  </label>
+  <label for="spread">
+    <span class="label"><span data-ja="切ったピザを並べる" data-en="Unfold the slices">切ったピザを並べる</span><output id="spread-value" for="spread">100%</output></span>
+    <input id="spread" type="range" min="0" max="100" value="100" aria-label="円から一列への並べ替え" data-aria-ja="円から一列への並べ替え" data-aria-en="Rearrange from a circle into a row">
+  </label>
+</div>
+<svg viewBox="0 0 1100 275" role="img" aria-label="円を扇形に切り、同じ面積のまま一列に並べる図" data-aria-ja="円を扇形に切り、同じ面積のまま一列に並べる図" data-aria-en="A circle cut into sectors and rearranged into a row with the same area">
+  <text class="diagram-heading" x="190" y="26" text-anchor="middle" data-ja="円を切る" data-en="Slice the circle">円を切る</text>
+  <text class="diagram-heading" x="780" y="26" text-anchor="middle" data-ja="同じピザを、一列に" data-en="Same slices, in a row">同じピザを、一列に</text>
+  <g id="circle"></g>
+  <path class="radius" d="M190 145 H280"></path>
+  <text x="230" y="137" text-anchor="middle" data-ja="半径 r" data-en="radius r">半径 r</text>
+  <text x="190" y="260" text-anchor="middle" style="fill:#b45309">2πr</text>
+  <text x="368" y="153" text-anchor="middle" style="font-size:34px;fill:#a8a29e">→</text>
+  <g id="row"></g>
+  <g id="dimensions">
+    <path id="base-dimension" class="dimension"></path>
+    <path id="height-dimension" class="dimension"></path>
+    <text id="height-label" style="fill:#0f766e" data-ja="r" data-en="r">r</text>
+    <text x="780" y="260" text-anchor="middle" style="fill:#b45309" data-ja="底辺の合計 → 2πr" data-en="Sum of bases → 2πr">底辺の合計 → 2πr</text>
+  </g>
+</svg>
+<footer>
+  <div class="formula" aria-live="off">
+    <span data-ja="円の面積" data-en="Circle area">円の面積</span><span>=</span>
+    <span class="circumference">2πr</span><span>×</span>
+    <span class="height" data-ja="半径" data-en="radius">半径</span><span>× ½ = πr²</span>
+  </div>
+  <p class="note" data-ja="弧の合計はいつも2πr。細かく切るほど、三角形の底辺は弧に、高さは半径に近づく。" data-en="The arcs always add up to 2πr. With more slices, triangle bases approach the arcs, and heights approach r.">弧の合計はいつも2πr。細かく切るほど、三角形の底辺は弧に、高さは半径に近づく。</p>
+</footer>
+<script>
+  const pieces = document.querySelector('#pieces');
+  const spread = document.querySelector('#spread');
+  const circle = document.querySelector('#circle');
+  const row = document.querySelector('#row');
+  const dimensions = document.querySelector('#dimensions');
+  const namespace = 'http://www.w3.org/2000/svg';
+  const radius = 90;
+  const colors = ['#e6a552', '#64aaa1'];
+
+  function sector(path, x, y, rotation, index) {
+    const shape = document.createElementNS(namespace, 'path');
+    shape.setAttribute('d', path);
+    shape.setAttribute('transform', `translate(${x} ${y}) rotate(${rotation})`);
+    shape.setAttribute('fill', colors[index % colors.length]);
+    shape.setAttribute('stroke', '#fbfaf8');
+    shape.setAttribute('stroke-width', '1');
+    return shape;
+  }
+
+  function draw() {
+    const count = Number(pieces.value);
+    const progress = Number(spread.value) / 100;
+    const angle = Math.PI / count;
+    const halfBase = radius * Math.sin(angle);
+    const height = radius * Math.cos(angle);
+    const width = count * 2 * halfBase;
+    const left = 780 - width / 2;
+    const path = `M0 0 L${-halfBase} ${height} A${radius} ${radius} 0 0 0 ${halfBase} ${height} Z`;
+    const circleSectors = [];
+    const rowSectors = [];
+    for (let index = 0; index < count; index++) {
+      const rotation = (index + 0.5) * 360 / count - 90;
+      const targetX = left + (index + 0.5) * 2 * halfBase;
+      circleSectors.push(sector(path, 190, 145, rotation, index));
+      rowSectors.push(sector(path, 780 + (targetX - 780) * progress, 145 - 45 * progress, rotation * (1 - progress), index));
+    }
+    circle.replaceChildren(...circleSectors);
+    row.replaceChildren(...rowSectors);
+    document.querySelector('#piece-count').value = String(count);
+    document.querySelector('#spread-value').value = `${spread.value}%`;
+    dimensions.setAttribute('opacity', String(Math.max(0, (progress - 0.8) / 0.2)));
+    document.querySelector('#base-dimension').setAttribute('d', `M${left} 210 v10 H${left + width} v-10`);
+    document.querySelector('#height-dimension').setAttribute('d', `M${left + width + 8} 100 h10 v${radius} h-10`);
+    document.querySelector('#height-label').setAttribute('x', String(left + width + 24));
+    document.querySelector('#height-label').setAttribute('y', '152');
+  }
+
+  function setLanguage(language) {
+    document.documentElement.lang = language;
+    for (const element of document.querySelectorAll('[data-ja]')) element.textContent = element.dataset[language];
+    for (const element of document.querySelectorAll('[data-aria-ja]')) element.setAttribute('aria-label', element.getAttribute(`data-aria-${language}`));
+  }
+
+  pieces.addEventListener('input', draw);
+  spread.addEventListener('input', draw);
+  addEventListener('message', event => {
+    if (event.source !== parent || event.data?.type !== 'peitho-language') return;
+    setLanguage(event.data.language === 'en' ? 'en' : 'ja');
+  });
+  draw();
+</script>
+</html>

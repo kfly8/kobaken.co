@@ -8,7 +8,7 @@ page_numbers: current
 
 ![Peitho Studio](assets/app-icon.png)
 
-Write HTML slides with *Peitho*.
+PeithoでHTMLスライドをつくる
 
 ---
 <!-- {"key":"what-is-peitho","layout":"title-body-code"} -->
@@ -22,6 +22,12 @@ Write HTML slides with *Peitho*.
 
 ---
 <!-- {"key":"live-demo","layout":"live"} -->
+# HTMLスライドは「触れる」
+
+従来の読むだけの紙芝居スライドでなく、触って動かせる体験が作れる。
+
+---
+<!-- {"key":"circle-area","layout":"circle-area"} -->
 # HTMLスライドは「触れる」
 
 従来の読むだけの紙芝居スライドでなく、触って動かせる体験が作れる。

@@ -17,6 +17,7 @@
 
 import { cpSync, existsSync, mkdirSync, readdirSync, readFileSync, writeFileSync } from 'node:fs'
 import { basename, join } from 'node:path'
+import { renderCanvas } from './render-canvas.mjs'
 
 const PUBLISHED = /^published:\s*true\s*$/m
 const includeDrafts = process.argv.includes('--dev')
@@ -43,6 +44,11 @@ function generate(section) {
     const dest = join('public', section, slug)
     mkdirSync(dest, { recursive: true })
     cpSync(assetDir, dest, { recursive: true })
+    for (const asset of readdirSync(assetDir, { recursive: true })) {
+      if (!asset.endsWith('.canvas')) continue
+      const canvas = JSON.parse(readFileSync(join(assetDir, asset), 'utf-8'))
+      writeFileSync(join(dest, asset.replace(/\.canvas$/, '.svg')), renderCanvas(canvas))
+    }
   }
 
   mkdirSync('dist', { recursive: true })

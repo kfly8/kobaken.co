@@ -1,0 +1,209 @@
+<section class="peitho-slide layout-live">
+  <h1><slot name="title" accepts="inline" arity="1"></slot></h1>
+  <div class="live-hint"><slot name="body" accepts="blocks" arity="0..*"></slot></div>
+  <iframe class="circle-area-demo" data-deck-language title="Interactive circle area demonstration" sandbox="allow-scripts" srcdoc="&lt;!doctype html&gt;
+&lt;html lang=&quot;ja&quot;&gt;
+&lt;meta charset=&quot;utf-8&quot;&gt;
+&lt;meta name=&quot;viewport&quot; content=&quot;width=device-width, initial-scale=1&quot;&gt;
+&lt;title&gt;Circle area, one slice at a time&lt;/title&gt;
+&lt;style&gt;
+  * { box-sizing: border-box; }
+  :root { color-scheme: light; font-family: -apple-system, BlinkMacSystemFont, &quot;Hiragino Sans&quot;, &quot;Segoe UI&quot;, sans-serif; color: #292524; background: #f3f1ee; }
+  body { margin: 0; height: 100vh; display: grid; grid-template-rows: auto minmax(0, 1fr) auto; padding: 18px 24px 16px; gap: 8px; overflow: hidden; }
+  .controls { display: grid; grid-template-columns: 1fr 1fr; gap: 48px; }
+  label { display: grid; gap: 6px; font-size: 19px; }
+  .label { display: flex; justify-content: space-between; align-items: baseline; gap: 12px; }
+  output { font-variant-numeric: tabular-nums; font-weight: 650; }
+  input { width: 100%; margin: 3px 0; accent-color: #0f766e; cursor: pointer; }
+  input:focus-visible { outline: 2px solid #0f766e; outline-offset: 4px; }
+  svg { width: 100%; height: 100%; min-height: 0; overflow: visible; }
+  svg text { fill: #57534e; font-size: 20px; font-family: inherit; }
+  .diagram-heading { fill: #292524; font-size: 23px; font-weight: 650; }
+  .dimension { stroke: #78716c; stroke-width: 1.5; fill: none; }
+  .radius { stroke: #292524; stroke-width: 2; fill: none; }
+  .formula { display: flex; align-items: baseline; justify-content: center; gap: 12px; font-size: 26px; white-space: nowrap; }
+  .formula .circumference { color: #b45309; }
+  .formula .height { color: #0f766e; }
+  .note { text-align: center; margin: 5px 0 0; font-size: 16px; color: #78716c; }
+  @media (max-width: 700px) {
+    body { padding: 12px 16px; gap: 4px; }
+    .controls { gap: 24px; }
+    label { font-size: 15px; gap: 2px; }
+    .formula { font-size: 19px; gap: 7px; }
+    .note { font-size: 12px; }
+  }
+&lt;/style&gt;
+&lt;div class=&quot;controls&quot;&gt;
+  &lt;label for=&quot;pieces&quot;&gt;
+    &lt;span class=&quot;label&quot;&gt;&lt;span data-ja=&quot;ピザを何切れにする？&quot; data-en=&quot;How many slices?&quot;&gt;ピザを何切れにする？&lt;/span&gt;&lt;output id=&quot;piece-count&quot; for=&quot;pieces&quot;&gt;8&lt;/output&gt;&lt;/span&gt;
+    &lt;input id=&quot;pieces&quot; type=&quot;range&quot; min=&quot;4&quot; max=&quot;64&quot; step=&quot;2&quot; value=&quot;8&quot; aria-label=&quot;ピザの分割数&quot; data-aria-ja=&quot;ピザの分割数&quot; data-aria-en=&quot;Number of pizza slices&quot;&gt;
+  &lt;/label&gt;
+  &lt;label for=&quot;spread&quot;&gt;
+    &lt;span class=&quot;label&quot;&gt;&lt;span data-ja=&quot;切ったピザを並べる&quot; data-en=&quot;Unfold the slices&quot;&gt;切ったピザを並べる&lt;/span&gt;&lt;output id=&quot;spread-value&quot; for=&quot;spread&quot;&gt;100%&lt;/output&gt;&lt;/span&gt;
+    &lt;input id=&quot;spread&quot; type=&quot;range&quot; min=&quot;0&quot; max=&quot;100&quot; value=&quot;100&quot; aria-label=&quot;円から一列への並べ替え&quot; data-aria-ja=&quot;円から一列への並べ替え&quot; data-aria-en=&quot;Rearrange from a circle into a row&quot;&gt;
+  &lt;/label&gt;
+&lt;/div&gt;
+&lt;svg viewBox=&quot;0 0 1100 275&quot; role=&quot;img&quot; aria-label=&quot;円を扇形に切り、同じ面積のまま一列に並べる図&quot; data-aria-ja=&quot;円を扇形に切り、同じ面積のまま一列に並べる図&quot; data-aria-en=&quot;A circle cut into sectors and rearranged into a row with the same area&quot;&gt;
+  &lt;text class=&quot;diagram-heading&quot; x=&quot;190&quot; y=&quot;26&quot; text-anchor=&quot;middle&quot; data-ja=&quot;円を切る&quot; data-en=&quot;Slice the circle&quot;&gt;円を切る&lt;/text&gt;
+  &lt;text class=&quot;diagram-heading&quot; x=&quot;780&quot; y=&quot;26&quot; text-anchor=&quot;middle&quot; data-ja=&quot;同じピザを、一列に&quot; data-en=&quot;Same slices, in a row&quot;&gt;同じピザを、一列に&lt;/text&gt;
+  &lt;g id=&quot;circle&quot;&gt;&lt;/g&gt;
+  &lt;path class=&quot;radius&quot; d=&quot;M190 145 H280&quot;&gt;&lt;/path&gt;
+  &lt;text x=&quot;230&quot; y=&quot;137&quot; text-anchor=&quot;middle&quot; data-ja=&quot;半径 r&quot; data-en=&quot;radius r&quot;&gt;半径 r&lt;/text&gt;
+  &lt;text x=&quot;190&quot; y=&quot;260&quot; text-anchor=&quot;middle&quot; style=&quot;fill:#b45309&quot;&gt;2πr&lt;/text&gt;
+  &lt;text x=&quot;368&quot; y=&quot;153&quot; text-anchor=&quot;middle&quot; style=&quot;font-size:34px;fill:#a8a29e&quot;&gt;→&lt;/text&gt;
+  &lt;g id=&quot;row&quot;&gt;&lt;/g&gt;
+  &lt;g id=&quot;dimensions&quot;&gt;
+    &lt;path id=&quot;base-dimension&quot; class=&quot;dimension&quot;&gt;&lt;/path&gt;
+    &lt;path id=&quot;height-dimension&quot; class=&quot;dimension&quot;&gt;&lt;/path&gt;
+    &lt;text id=&quot;height-label&quot; style=&quot;fill:#0f766e&quot; data-ja=&quot;r&quot; data-en=&quot;r&quot;&gt;r&lt;/text&gt;
+    &lt;text x=&quot;780&quot; y=&quot;260&quot; text-anchor=&quot;middle&quot; style=&quot;fill:#b45309&quot; data-ja=&quot;底辺の合計 → 2πr&quot; data-en=&quot;Sum of bases → 2πr&quot;&gt;底辺の合計 → 2πr&lt;/text&gt;
+  &lt;/g&gt;
+&lt;/svg&gt;
+&lt;footer&gt;
+  &lt;div class=&quot;formula&quot; aria-live=&quot;off&quot;&gt;
+    &lt;span data-ja=&quot;円の面積&quot; data-en=&quot;Circle area&quot;&gt;円の面積&lt;/span&gt;&lt;span&gt;=&lt;/span&gt;
+    &lt;span class=&quot;circumference&quot;&gt;2πr&lt;/span&gt;&lt;span&gt;×&lt;/span&gt;
+    &lt;span class=&quot;height&quot; data-ja=&quot;半径&quot; data-en=&quot;radius&quot;&gt;半径&lt;/span&gt;&lt;span&gt;× ½ = πr²&lt;/span&gt;
+  &lt;/div&gt;
+  &lt;p class=&quot;note&quot; data-ja=&quot;弧の合計はいつも2πr。細かく切るほど、三角形の底辺は弧に、高さは半径に近づく。&quot; data-en=&quot;The arcs always add up to 2πr. With more slices, triangle bases approach the arcs, and heights approach r.&quot;&gt;弧の合計はいつも2πr。細かく切るほど、三角形の底辺は弧に、高さは半径に近づく。&lt;/p&gt;
+&lt;/footer&gt;
+&lt;script&gt;
+  const pieces = document.querySelector('#pieces');
+  const spread = document.querySelector('#spread');
+  const circle = document.querySelector('#circle');
+  const row = document.querySelector('#row');
+  const dimensions = document.querySelector('#dimensions');
+  const namespace = 'http://www.w3.org/2000/svg';
+  const radius = 90;
+  const colors = ['#e6a552', '#64aaa1'];
+
+  function sector(path, x, y, rotation, index) {
+    const shape = document.createElementNS(namespace, 'path');
+    shape.setAttribute('d', path);
+    shape.setAttribute('transform', `translate(${x} ${y}) rotate(${rotation})`);
+    shape.setAttribute('fill', colors[index % colors.length]);
+    shape.setAttribute('stroke', '#fbfaf8');
+    shape.setAttribute('stroke-width', '1');
+    return shape;
+  }
+
+  function draw() {
+    const count = Number(pieces.value);
+    const progress = Number(spread.value) / 100;
+    const angle = Math.PI / count;
+    const halfBase = radius * Math.sin(angle);
+    const height = radius * Math.cos(angle);
+    const width = count * 2 * halfBase;
+    const left = 780 - width / 2;
+    const path = `M0 0 L${-halfBase} ${height} A${radius} ${radius} 0 0 0 ${halfBase} ${height} Z`;
+    const circleSectors = [];
+    const rowSectors = [];
+    for (let index = 0; index &lt; count; index++) {
+      const rotation = (index + 0.5) * 360 / count - 90;
+      const targetX = left + (index + 0.5) * 2 * halfBase;
+      circleSectors.push(sector(path, 190, 145, rotation, index));
+      rowSectors.push(sector(path, 780 + (targetX - 780) * progress, 145 - 45 * progress, rotation * (1 - progress), index));
+    }
+    circle.replaceChildren(...circleSectors);
+    row.replaceChildren(...rowSectors);
+    document.querySelector('#piece-count').value = String(count);
+    document.querySelector('#spread-value').value = `${spread.value}%`;
+    dimensions.setAttribute('opacity', String(Math.max(0, (progress - 0.8) / 0.2)));
+    document.querySelector('#base-dimension').setAttribute('d', `M${left} 210 v10 H${left + width} v-10`);
+    document.querySelector('#height-dimension').setAttribute('d', `M${left + width + 8} 100 h10 v${radius} h-10`);
+    document.querySelector('#height-label').setAttribute('x', String(left + width + 24));
+    document.querySelector('#height-label').setAttribute('y', '152');
+  }
+
+  function setLanguage(language) {
+    document.documentElement.lang = language;
+    for (const element of document.querySelectorAll('[data-ja]')) element.textContent = element.dataset[language];
+    for (const element of document.querySelectorAll('[data-aria-ja]')) element.setAttribute('aria-label', element.getAttribute(`data-aria-${language}`));
+  }
+
+  pieces.addEventListener('input', draw);
+  spread.addEventListener('input', draw);
+  addEventListener('message', event =&gt; {
+    if (event.source !== parent || event.data?.type !== 'peitho-language') return;
+    setLanguage(event.data.language === 'en' ? 'en' : 'ja');
+  });
+  draw();
+&lt;/script&gt;
+&lt;/html&gt;
+"></iframe>
+  <!-- language:start --><script>
+(() => {
+  if (window.peithoDeckLanguage) return;
+  const translations = new Map([
+    ['PeithoでHTMLスライドをつくる', 'Write HTML slides with Peitho.'],
+    ['Peitho Studioとは', 'What is Peitho Studio?'],
+    ['さん作のスライドツール ', "'s presentation engine "],
+    [' をエンジンとしたアプリ', ' powers this desktop app'],
+    ['Markdownでコンテンツを整え、HTMLのスライドができる', 'Write content in Markdown. Present it as HTML slides.'],
+    ['CSSは見た目', 'CSS controls the appearance'],
+    ['JavaScriptはふるまい', 'JavaScript controls the behavior'],
+    ['HTMLスライドはいい', 'HTML slides are great'],
+    ['HTMLスライドは「触れる」', 'HTML slides are interactive'],
+    ['従来の読むだけの紙芝居スライドでなく、触って動かせる体験が作れる。', 'Go beyond a read-only slideshow. Build an experience people can interact with.'],
+    ['設計の系譜', 'Design lineage'],
+    ['万人向けスライドツール。表現力豊かで、楽に使える', 'An expressive, easy-to-use presentation tool for everyone'],
+    ['Google Slidesの表現力とMarkdownによるコンテンツ管理を両立させる', 'Combines Google Slides visuals with content managed in Markdown'],
+    ['k1LoW/deckの表現とコンテンツの分離設計は活かしつつ、表現手段をGoogle SlidesからHTMLに切り替え、よりAIフレンドリーに', 'Keeps deck\'s separation of content and presentation, replacing Google Slides with HTML to work better with AI'],
+    ['Peithoを楽に使えることを目指す', 'Makes Peitho easier to use'],
+    ['Peitho Studioで\nHTMLスライドを作ってみませんか？', 'Try creating HTML slides\nwith Peitho Studio!'],
+    ['Peitho Studioで HTMLスライドを作ってみませんか？', 'Try creating HTML slides with Peitho Studio!']
+  ]);
+  const roots = new Set();
+  const originals = new WeakMap();
+  let language = 'ja';
+  try { language = localStorage.getItem('peitho-deck-language') === 'en' ? 'en' : 'ja'; } catch {}
+  const requestedLanguage = new URLSearchParams(window.location.search).get('lang');
+  if (requestedLanguage === 'ja' || requestedLanguage === 'en') language = requestedLanguage;
+  function apply(root) {
+    root.lang = language;
+    const walker = document.createTreeWalker(root, NodeFilter.SHOW_TEXT);
+    for (let node = walker.nextNode(); node; node = walker.nextNode()) {
+      if (node.parentElement.closest('script, style, .language-switch, pre')) continue;
+      if (!originals.has(node)) originals.set(node, node.textContent);
+      const original = originals.get(node);
+      const text = original.trim();
+      const translated = translations.get(original) ?? translations.get(text);
+      node.textContent = language === 'en' && translated ? original.replace(text, translated.trim()) : original;
+    }
+    for (const button of root.querySelectorAll('[data-language]')) {
+      button.setAttribute('aria-pressed', String(button.dataset.language === language));
+    }
+    for (const frame of root.querySelectorAll('iframe[data-deck-language], .particle-demo')) {
+      const update = () => frame.contentWindow?.postMessage({ type: 'peitho-language', language }, '*');
+      if (!frame.dataset.languageBound) {
+        frame.dataset.languageBound = 'true';
+        frame.addEventListener('load', update);
+      }
+      update();
+    }
+  }
+  function register(root) {
+    const slide = root.matches?.('.peitho-slide') ? root : root.querySelector('.peitho-slide');
+    if (!slide) return;
+    roots.add(slide);
+    apply(slide);
+  }
+  window.peithoDeckLanguage = {
+    set(next) {
+      language = next === 'en' ? 'en' : 'ja';
+      const url = new URL(window.location.href);
+      url.searchParams.set('lang', language);
+      window.history.replaceState(window.history.state, '', url);
+      try { localStorage.setItem('peitho-deck-language', language); } catch {}
+      for (const root of roots) {
+        if (root.isConnected) apply(root);
+        else roots.delete(root);
+      }
+    }
+  };
+  window.addEventListener('peitho:shadow-mounted', event => register(event.detail.root));
+  for (const detail of window.__peithoShadowRoots ?? []) register(detail.root);
+  for (const slide of document.querySelectorAll('.peitho-slide')) register(slide);
+})();
+</script><!-- language:end -->
+</section>

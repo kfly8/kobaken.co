@@ -2,7 +2,7 @@
   "version": 1,
   "peithoVersion": "1.48.0",
   "title": "Peitho Studio",
-  "slideCount": 6,
+  "slideCount": 7,
   "plannedDurationMs": null,
   "aspectRatio": "16:9",
   "canvasWidth": 1280,
@@ -18,7 +18,7 @@
       "revealSteps": 0,
       "text": {
         "title": "Peitho Studio",
-        "body": "Write HTML slides with Peitho.",
+        "body": "PeithoでHTMLスライドをつくる",
         "code": ""
       }
     },
@@ -50,8 +50,21 @@
     },
     {
       "index": 3,
+      "key": "circle-area",
+      "src": "slides/003-circle-area.html",
+      "hasNotes": false,
+      "skip": false,
+      "revealSteps": 0,
+      "text": {
+        "title": "HTMLスライドは「触れる」",
+        "body": "従来の読むだけの紙芝居スライドでなく、触って動かせる体験が作れる。",
+        "code": ""
+      }
+    },
+    {
+      "index": 4,
       "key": "peitho-html",
-      "src": "slides/003-peitho-html.html",
+      "src": "slides/004-peitho-html.html",
       "hasNotes": false,
       "skip": false,
       "revealSteps": 0,
@@ -62,9 +75,9 @@
       }
     },
     {
-      "index": 4,
+      "index": 5,
       "key": "studio-files",
-      "src": "slides/004-studio-files.html",
+      "src": "slides/005-studio-files.html",
       "hasNotes": false,
       "skip": false,
       "revealSteps": 0,
@@ -75,9 +88,9 @@
       }
     },
     {
-      "index": 5,
+      "index": 6,
       "key": "install",
-      "src": "slides/005-install.html",
+      "src": "slides/006-install.html",
       "hasNotes": false,
       "skip": false,
       "revealSteps": 0,

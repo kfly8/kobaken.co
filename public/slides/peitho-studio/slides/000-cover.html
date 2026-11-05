@@ -6,13 +6,14 @@
   <div class="cover-icon"><div class="slot-icon"><img src="assets/288410d0c053339b-app-icon.png" alt="Peitho Studio"></div></div>
   <h1><span class="slot-title">Peitho Studio</span></h1>
   <div class="cover-body">
-    <div class="slot-body"><p>Write HTML slides with <em>Peitho</em>.</p>
+    <div class="slot-body"><p>PeithoでHTMLスライドをつくる</p>
 </div>
   </div>
   <!-- language:start --><script>
 (() => {
   if (window.peithoDeckLanguage) return;
   const translations = new Map([
+    ['PeithoでHTMLスライドをつくる', 'Write HTML slides with Peitho.'],
     ['Peitho Studioとは', 'What is Peitho Studio?'],
     ['さん作のスライドツール ', "'s presentation engine "],
     [' をエンジンとしたアプリ', ' powers this desktop app'],
@@ -34,6 +35,8 @@
   const originals = new WeakMap();
   let language = 'ja';
   try { language = localStorage.getItem('peitho-deck-language') === 'en' ? 'en' : 'ja'; } catch {}
+  const requestedLanguage = new URLSearchParams(window.location.search).get('lang');
+  if (requestedLanguage === 'ja' || requestedLanguage === 'en') language = requestedLanguage;
   function apply(root) {
     root.lang = language;
     const walker = document.createTreeWalker(root, NodeFilter.SHOW_TEXT);
@@ -48,7 +51,7 @@
     for (const button of root.querySelectorAll('[data-language]')) {
       button.setAttribute('aria-pressed', String(button.dataset.language === language));
     }
-    for (const frame of root.querySelectorAll('.particle-demo')) {
+    for (const frame of root.querySelectorAll('iframe[data-deck-language], .particle-demo')) {
       const update = () => frame.contentWindow?.postMessage({ type: 'peitho-language', language }, '*');
       if (!frame.dataset.languageBound) {
         frame.dataset.languageBound = 'true';
@@ -66,6 +69,9 @@
   window.peithoDeckLanguage = {
     set(next) {
       language = next === 'en' ? 'en' : 'ja';
+      const url = new URL(window.location.href);
+      url.searchParams.set('lang', language);
+      window.history.replaceState(window.history.state, '', url);
       try { localStorage.setItem('peitho-deck-language', language); } catch {}
       for (const root of roots) {
         if (root.isConnected) apply(root);
