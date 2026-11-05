@@ -11,7 +11,7 @@ published: true
 
 こちらが紹介スライド。HTMLスライドを使って「デモ用意したいな〜」「多言語対応したいな〜」という気持ちになってもらえたら嬉しいです！
 
-<iframe src="/diary/2026-11-04-peitho-studio/slides/" loading="lazy" style="width:100%;aspect-ratio:16/9;border:0;"></iframe>
+<iframe src="/slides/peitho-studio/" loading="lazy" style="width:100%;aspect-ratio:16/9;border:0;"></iframe>
 
 ---
 

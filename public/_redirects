@@ -1,0 +1,2 @@
+# The Peitho Studio deck moved from the diary post to /slides.
+/diary/2026-11-04-peitho-studio/slides/* /slides/peitho-studio/:splat 301

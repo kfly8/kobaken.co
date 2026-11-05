@@ -9,18 +9,25 @@ import { diary } from './diary/server'
 import { collection as blogPosts } from './blog/content'
 import { collection as diaryPosts } from './diary/content'
 import { renderSitemap } from './content/sitemap'
+import { renderSlideOgpImage } from './slides/ogp'
 import { COOKIE, DEFAULT_LANG, LANGS, type Lang, isLang, localized, messages, otherLang } from './i18n'
 
 import { Root } from '@/components/Root'
 import { ProfilePage } from '@/components/ProfilePage'
 import { SlidesIndex } from '@/components/SlidesIndex'
 
-const app = new Hono()
+const app = new Hono<{ Bindings: { ASSETS: Fetcher } }>()
 
 app.use('/api/*', cors())
 
 app.get('/sitemap.xml', (c) =>
   c.body(renderSitemap(blogPosts, diaryPosts), 200, { 'Content-Type': 'application/xml; charset=utf-8' }),
+)
+
+// A slide deck itself is served by Workers Assets (public/slides/<slug>/),
+// but not its share card image — see slides/ogp.ts.
+app.get('/slides/:slug/og.png', (c) =>
+  renderSlideOgpImage(c.req.param('slug'), c.req.header('If-None-Match'), c.env.ASSETS, c.req.url),
 )
 
 app.use('*', renderer)
