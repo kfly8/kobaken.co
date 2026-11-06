@@ -9,14 +9,14 @@ import { diary } from './diary/server'
 import { collection as blogPosts } from './blog/content'
 import { collection as diaryPosts } from './diary/content'
 import { renderSitemap } from './content/sitemap'
-import { renderSlideOgpImage } from './slides/ogp'
+import { renderSlideOgpImage, renderSlidePage } from './slides/ogp'
 import { COOKIE, DEFAULT_LANG, LANGS, type Lang, isLang, localized, messages, otherLang } from './i18n'
 
 import { Root } from '@/components/Root'
 import { ProfilePage } from '@/components/ProfilePage'
 import { SlidesIndex } from '@/components/SlidesIndex'
 
-const app = new Hono<{ Bindings: { ASSETS: Fetcher } }>()
+const app = new Hono<{ Bindings: CloudflareBindings }>()
 
 app.use('/api/*', cors())
 
@@ -24,11 +24,27 @@ app.get('/sitemap.xml', (c) =>
   c.body(renderSitemap(blogPosts, diaryPosts), 200, { 'Content-Type': 'application/xml; charset=utf-8' }),
 )
 
-// A slide deck itself is served by Workers Assets (public/slides/<slug>/),
-// but not its share card image — see slides/ogp.ts.
 app.get('/slides/:slug/og.png', (c) =>
-  renderSlideOgpImage(c.req.param('slug'), c.req.header('If-None-Match'), c.env.ASSETS, c.req.url),
+  renderSlideOgpImage({ slug: c.req.param('slug'), request: c.req.raw, env: c.env }),
 )
+app.get('/slides/:slug/', (c) =>
+  renderSlidePage({ slug: c.req.param('slug'), request: c.req.raw, assets: c.env.ASSETS }),
+)
+app.get('/slides/:slug/index.html', (c) =>
+  renderSlidePage({ slug: c.req.param('slug'), request: c.req.raw, assets: c.env.ASSETS }),
+)
+app.get('/slides/:slug/:page{[0-9]+}', (c) =>
+  renderSlidePage({ slug: c.req.param('slug'), request: c.req.raw, assets: c.env.ASSETS }),
+)
+app.get('/slides/:slug/:page{[0-9]+}/', (c) =>
+  renderSlidePage({ slug: c.req.param('slug'), request: c.req.raw, assets: c.env.ASSETS }),
+)
+app.get('/slides/:slug/:page{[0-9]+}/:image', (c) => {
+  const version = c.req.param('image').match(/^og-([a-f0-9]+-[0-9]+)\.png$/)?.[1]
+  if (!version) return c.text('Not Found', 404, { 'Cache-Control': 'no-store' })
+  return renderSlideOgpImage({ slug: c.req.param('slug'), request: c.req.raw, env: c.env, version })
+})
+app.get('/slides/:slug/:page', (c) => c.text('Not Found', 404, { 'Cache-Control': 'no-store' }))
 
 app.use('*', renderer)
 

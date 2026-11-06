@@ -1,29 +1,11 @@
 <!doctype html>
 <html lang="en">
 <head>
+  <base href="/slides/sample-talk/">
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <link rel="stylesheet" href="peitho.css">
-  <!-- ogp:start -->
-  <title>Starter Deck — kobaken</title>
-  <meta name="description" content="A Peitho deck starts as Markdown. Edit deck.md, keep layouts in layouts/, and style the deck in css/base.css.">
-  <link rel="canonical" href="https://kobaken.co/slides/sample-talk/">
-  <meta property="og:title" content="Starter Deck">
-  <meta property="og:description" content="A Peitho deck starts as Markdown. Edit deck.md, keep layouts in layouts/, and style the deck in css/base.css.">
-  <meta property="og:site_name" content="kobaken.co">
-  <meta property="og:locale" content="ja_JP">
-  <meta property="og:url" content="https://kobaken.co/slides/sample-talk/">
-  <meta property="og:image" content="https://kobaken.co/slides/sample-talk/og.png">
-  <meta property="og:image:width" content="1280">
-  <meta property="og:image:height" content="720">
-  <meta property="og:type" content="website">
-  <meta name="twitter:card" content="summary_large_image">
-  <meta name="twitter:title" content="Starter Deck">
-  <meta name="twitter:description" content="A Peitho deck starts as Markdown. Edit deck.md, keep layouts in layouts/, and style the deck in css/base.css.">
-  <meta name="twitter:image" content="https://kobaken.co/slides/sample-talk/og.png">
-  <meta name="twitter:site" content="@kfly8">
-  <meta name="twitter:creator" content="@kfly8">
-  <!-- ogp:end -->
+  <title>Peitho Deck</title>
   <style>
     :root { --peitho-canvas-width: 1280px; --peitho-canvas-height: 720px; --peitho-canvas-aspect: 16 / 9; }
     html, body { margin: 0; width: 100%; height: 100%; background: #000; overflow: hidden; touch-action: pan-y; }
@@ -70,6 +52,8 @@
     }
 
     function readSlideIndexFromUrl() {
+      const pathSlide = location.pathname.match(/\/(\d+)\/?$/);
+      if (pathSlide) return Number(pathSlide[1]);
       const searchSlide = new URLSearchParams(location.search).get('slide');
       if (searchSlide !== null) return parsePositiveInt(searchSlide);
       const hash = location.hash;
@@ -96,8 +80,8 @@
 
     function writeSlideIndexToUrl(oneBased) {
       const params = new URLSearchParams(location.search);
-      params.set('slide', String(oneBased));
-      history.replaceState(null, '', location.pathname + '?' + params.toString() + location.hash);
+      params.delete('slide');
+      history.replaceState(null, '', "/slides/sample-talk/" + oneBased + (params.size ? '?' + params.toString() : '') + location.hash);
     }
 
     function navigate(to) {
@@ -204,7 +188,7 @@
       navigate(dx < 0 ? 'next' : 'prev');
     }, { passive: false });
     document.addEventListener('touchcancel', () => { __swipeState = null; });
-    // `#slide=N` / `#N` are load-time fallbacks only; after load, query is canonical.
+    // `#slide=N` / `#N` are load-time fallbacks only; after load, the numbered path is canonical.
     window.addEventListener('popstate', () => {
       showSlide(readSlideIndexFromUrl() - 1);
     });

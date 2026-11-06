@@ -4,21 +4,20 @@
   // Not a secret — account IDs are visible in the dashboard URL. Pinning
   // it here means CI only needs CLOUDFLARE_API_TOKEN, not a second secret.
   "account_id": "e680616185a3b617a32987a6571991b7",
-  // Bumped from 2024-04-01 to pick up Workers Cache (see "cache" below),
-  // which requires a recent compatibility_date. Checked the Workers
-  // changelog for breaking changes in between — nothing applies to this
-  // app (no Node.js compat, no cross-origin fetch with auth headers) —
-  // and re-verified every route with `wrangler dev` after bumping.
+  // Workers Cache requires a recent compatibility date.
   "compatibility_date": "2026-08-28",
+  "compatibility_flags": ["nodejs_compat"],
+  "browser": { "binding": "BROWSER" },
   "main": "server.tsx",
   // Static assets (CSS, generated client JS, manifest) are served
   // directly by Workers Assets. The Worker script handles everything
   // else — SSR, API routes, etc.
   "assets": {
     "directory": "./public",
-    // Lets the Worker read a static file itself — slides/ogp.ts serves a
-    // deck's cover PNG with its own cache headers.
-    "binding": "ASSETS"
+    "binding": "ASSETS",
+    // Deck HTML needs request-specific metadata; CSS, fonts and slide
+    // fragments still go straight to Workers Assets.
+    "run_worker_first": ["/slides/*/", "/slides/*/index.html"]
   },
   // Blog post source files are imported as raw text (frontmatter parsed
   // and Markdown rendered at request time in blog/content.ts).

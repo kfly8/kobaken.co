@@ -5,8 +5,9 @@
     "dev": "node scripts/generate-posts.mjs --dev && node scripts/generate-slides.mjs && vite build && unocss && node scripts/stamp-asset-version.mjs && concurrently -k -n vite,uno,wrangler -c blue,magenta,green \"vite dev\" \"unocss --watch\" \"wrangler dev --live-reload\"",
     "build": "node scripts/generate-posts.mjs && node scripts/generate-slides.mjs && vite build && unocss && node scripts/stamp-asset-version.mjs",
     "watch": "vite build --watch",
+    "check:slides": "node scripts/check-slide-ogp.mjs",
     "deploy": "node scripts/generate-posts.mjs && node scripts/generate-slides.mjs && vite build && unocss && node scripts/stamp-asset-version.mjs && wrangler deploy",
-    "cf-typegen": "wrangler types --env-interface CloudflareBindings"
+    "cf-typegen": "wrangler types --env-interface CloudflareBindings --include-runtime=false"
   },
   "dependencies": {
     "@barefootjs/client": "^0.31.9",
@@ -15,6 +16,7 @@
     "@barefootjs/router": "^0.31.9",
     "@barefootjs/shared": "^0.31.9",
     "@cf-wasm/og": "^0.5.0",
+    "@cloudflare/puppeteer": "^1.4.0",
     "hono": "^4.7.10",
     "marked": "^18.0.10"
   },

@@ -1,6 +1,6 @@
 # Slides (`/slides`)
 
-登壇スライドは [peitho](https://github.com/mizzy/peitho) で作成し、ビルド成果物を `public/slides/<slug>/` に静的配信する。Hono/BarefootJSのルーティングは介在しない（Workers Assetsがそのまま配信する）。
+Slides are authored with [peitho](https://github.com/mizzy/peitho) and built into `public/slides/<slug>/`. Workers Assets serves the slide fragments, CSS, fonts, and images. The Worker serves the deck HTML with metadata for the requested slide.
 
 ## 新しいトークを作る
 
@@ -32,12 +32,16 @@ echo '{ "date": "YYYY-MM-DD" }' > talks/<slug>/talk.json
 
 `talk.json` を忘れたまま `manifest.json` だけビルド済みの状態にすると、`npm run build`/`dev` は静かに一覧から漏らすのではなく**エラーで止まる**（何を作ればいいかのコマンド付き）。`talk.json` も通常どおり `git add` してコミットする。
 
-## OGP画像
+## Open Graph images
 
-共有カードの中身はスライド1枚目。`public/slides/<slug>/index.html`（Workers Assetsが静的配信するページ本体）のOGP/Twitterカードのタグは、`scripts/generate-slides.mjs` がビルドの度に自動で埋め込む（タイトルと説明は `manifest.json` の1枚目の見出しと本文から）。`?slide=2` 以降のURLも、同じ1枚目のカードになる。
+Share `/slides/<slug>/N` to show that slide's title, text, and image. Slide numbers start at 1. The deck root selects the first slide. Invalid or out-of-range numbers return 404. Legacy `?slide=N` URLs and `index.html` redirect to numbered paths. The Worker writes Open Graph and Twitter metadata into the HTML response, so crawlers do not need JavaScript. Viewer navigation also updates the numbered path.
 
-カード画像は `/slides/<slug>/og.png`。Workers Assetsではなく Worker（`slides/ogp.ts`）が返し、ブログ・日記のカード画像と同じ `Cache-Control` で Cloudflare のキャッシュに載る。中身は、ビルドが1枚目を描いた `public/slides/<slug>/og-cover-<hash>.png`（`<hash>` は1枚目のHTMLとCSSから計算し、ETagにも使う）。
+`scripts/generate-slides.mjs` reads the published manifests into `dist/slides.ts`. It records the canvas dimensions and each slide's title, description, source, and image version. The version covers all files in the built deck, including its viewer, CSS, fonts, and assets. Rebuilding the registry after a deck change gives its images new URLs.
 
-- 1枚目が変わると、`npm run build`/`dev` が描き直す（peitho export pdf → sips、数秒）。1枚目が変わらなければ何もしない
-- 描き直した `og-cover-<hash>.png` は通常どおり `git add` してコミットする（古いものはビルドが消す）
-- peitho か sips が無い環境（CI など）では描き直さず、警告を出して前回の画像を使い続ける
+`/slides/<slug>/N/og-<version>.png` renders the existing Peitho viewer with Cloudflare Browser Run and captures the selected slide at the deck's canvas dimensions. `/slides/<slug>/og.png` continues to serve the first slide. Local static files come from the `ASSETS` binding. The renderer waits for the selected slide, fonts, and images before taking the screenshot. Images are generated only when requested; builds no longer run `peitho export pdf` or `sips`, and no generated PNG needs to be committed.
+
+The `BROWSER` binding and `nodejs_compat` flag in `wrangler.jsonc` support screenshot generation. Run `npm run cf-typegen` after changing bindings. `wrangler dev` uses a local browser; production uses Browser Run.
+
+Workers Cache is enabled in `wrangler.jsonc`. PNG responses are public for one week with stale-while-revalidate for 30 days. Cache hits return the stored response without executing the Worker or launching a browser. ETags allow unchanged images to return 304 without rendering. HTML responses have a five-minute shared-cache lifetime. Invalid requests and rendering failures carry `Cache-Control: no-store`.
+
+With `wrangler dev` running, run `npm run check:slides -- http://localhost:8787` to check metadata, redirects, validation, and cache headers. Add `--images` to generate PNGs for the cover, page 2, the last page, embedded demos, and older decks. The image check verifies PNG signatures, canvas dimensions, and distinct output, and saves previews in the system temporary directory. Workers Cache hits must be checked after deployment using the `Cf-Cache-Status` header.
