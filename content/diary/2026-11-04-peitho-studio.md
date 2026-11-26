@@ -10,27 +10,27 @@ published: true
 [YAPC::Tokyo 2026](https://yapcjapan.org/)に向けてスライド準備している人もいると思うので、スライドツールの紹介です。
 「デモを用意したい」「多言語対応したい」といった気持ちを作れたら嬉しいです😀
 
-<iframe class="article-media" src="https://slide.community/embed/@kfly8/peitho-studio?lang=ja" title="Peitho Studio" loading="lazy" width="960" height="540" style="width:100%;height:auto;aspect-ratio:16/9;border:0" allowfullscreen></iframe>
+<div class="article-media" style="position:relative;width:100%;padding-top:calc(56.25% + 45px)"><iframe src="https://slide.community/embed/@kfly8/peitho-studio?lang=ja" title="Peitho Studio" loading="lazy" width="960" height="585" style="position:absolute;top:0;left:0;width:100%;height:100%;border:0" allowfullscreen></iframe></div>
 
 スライドの1ページ目から早速おねがいになってしまいますが、右上のボタンを押して「英語」「日本語」が切り替わることを確かめてほしいです。スライドがHTMLでできているので、普通のWebアプリと同じ多言語対応をしています。ゲストのLarry Wallにスライドを読んでもらうなら、絶対対応していきたいですね!!
 
 いや、冗談っぽい言い方をしましたが、[tagomorisさんが2015年に「ソフトウェア技術についてのスライドは英語で書こう」とブログに書かれていた](https://tagomoris.hatenablog.com/entry/2015/06/01/210425)ように潜在読者は増えますし、AIがある今なら対応の敷居は低くなっているので、ぜひ選択肢にいれていきたいですね。
 
-<iframe class="article-media" src="https://slide.community/embed/@kfly8/peitho-studio/2?lang=ja" title="Peitho Studio · 2" loading="lazy" width="960" height="540" style="width:100%;height:auto;aspect-ratio:16/9;border:0" allowfullscreen></iframe>
+<div class="article-media" style="position:relative;width:100%;padding-top:calc(56.25% + 45px)"><iframe src="https://slide.community/embed/@kfly8/peitho-studio/2?lang=ja" title="Peitho Studio · 2" loading="lazy" width="960" height="585" style="position:absolute;top:0;left:0;width:100%;height:100%;border:0" allowfullscreen></iframe></div>
 
 このスライドは、[mizzy](https://x.com/gosukenator)さんのスライドツール [Peitho](https://peitho.gosu.ke/) をエンジンとした [Peitho Studio](https://peitho-studio.piconic.ai/) という拙作アプリで作っています。
 
 せっかくならPeitho Studioを使ってほしい気持ちもありますが、そもそも **HTMLスライドはいいぞ！** ということを訴えたいです。
 
-<iframe class="article-media" src="https://slide.community/embed/@kfly8/peitho-studio/3?lang=ja" title="Peitho Studio · 3" loading="lazy" width="960" height="540" style="width:100%;height:auto;aspect-ratio:16/9;border:0" allowfullscreen></iframe>
+<div class="article-media" style="position:relative;width:100%;padding-top:calc(56.25% + 45px)"><iframe src="https://slide.community/embed/@kfly8/peitho-studio/3?lang=ja" title="Peitho Studio · 3" loading="lazy" width="960" height="585" style="position:absolute;top:0;left:0;width:100%;height:100%;border:0" allowfullscreen></iframe></div>
 
 従来のスライドと違って、**HTMLのスライドは触って動かせる** のが決定的に違うところだと思っています。前述の多言語対応もそうですし、このスライドなら、左のスライドバーを触って粒子のアニメーションを動かせます。PDFのスライドだとデモは割愛されがちで、参加者だけのお楽しみ要素になりがちですね😀
 
-<iframe class="article-media" src="https://slide.community/embed/@kfly8/peitho-studio/4?lang=ja" title="Peitho Studio · 4" loading="lazy" width="960" height="540" style="width:100%;height:auto;aspect-ratio:16/9;border:0" allowfullscreen></iframe>
+<div class="article-media" style="position:relative;width:100%;padding-top:calc(56.25% + 45px)"><iframe src="https://slide.community/embed/@kfly8/peitho-studio/4?lang=ja" title="Peitho Studio · 4" loading="lazy" width="960" height="585" style="position:absolute;top:0;left:0;width:100%;height:100%;border:0" allowfullscreen></iframe></div>
 
 触れるHTMLスライドの例をもう一つ。小学生の娘に算数を教えるとき、偶にこういった動くデモを用意します。すると、娘の納得感が俄然上がるんですよね。**簡潔にまとめられた要点をめくりながら伝える** スライドという媒体が元々もつ特性に、プラスαの価値を足せているなーと。
 
-<iframe class="article-media" src="https://slide.community/embed/@kfly8/peitho-studio/5?lang=ja" title="Peitho Studio · 5" loading="lazy" width="960" height="540" style="width:100%;height:auto;aspect-ratio:16/9;border:0" allowfullscreen></iframe>
+<div class="article-media" style="position:relative;width:100%;padding-top:calc(56.25% + 45px)"><iframe src="https://slide.community/embed/@kfly8/peitho-studio/5?lang=ja" title="Peitho Studio · 5" loading="lazy" width="960" height="585" style="position:absolute;top:0;left:0;width:100%;height:100%;border:0" allowfullscreen></iframe></div>
 
 HTMLスライド自体は以前からあるもので、今このタイミングで言及する理由は、AIですね。AIは殊更、HTMLが得意でお願いした通り作ってくれますね。
 
@@ -42,7 +42,7 @@ Peitho Studioの設計系譜は、👆️のスライドの通りで、k1Low/dec
 
 実際にPeitho Studioでスライド編集している様子です。Markdownでコンテンツを書いて、スライドのスタイルをいい感じにしてほしい！とコメントをすると、後ろで動いているCoding Agentが調整してくれている様子です。どのページのどの要素を調整したいかAIに指示するのは面倒ですが、Peitho Studioはそういった面倒をみます。
 
-<iframe class="article-media" src="https://slide.community/embed/@kfly8/peitho-studio/7?lang=ja" title="Peitho Studio · 7" loading="lazy" width="960" height="540" style="width:100%;height:auto;aspect-ratio:16/9;border:0" allowfullscreen></iframe>
+<div class="article-media" style="position:relative;width:100%;padding-top:calc(56.25% + 45px)"><iframe src="https://slide.community/embed/@kfly8/peitho-studio/7?lang=ja" title="Peitho Studio · 7" loading="lazy" width="960" height="585" style="position:absolute;top:0;left:0;width:100%;height:100%;border:0" allowfullscreen></iframe></div>
 
 よかったら、Peitho Studioで HTMLスライドを作ってみてほしいです！
 

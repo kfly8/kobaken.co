@@ -124,18 +124,10 @@
   border-radius: 4px;
 }
 
-.blog-article .body iframe {
+.blog-article .body > iframe,
+.blog-article .body > div:has(> iframe) {
   display: block;
   margin: 1.5em 0;
-}
-
-.blog-article .body:has(iframe[src^="https://slide.community/embed/"]) {
-  container-type: inline-size;
-}
-
-/* Keep the slide itself at 16:9 above the 44px footer and its 1px border. */
-.blog-article .body iframe[src^="https://slide.community/embed/"] {
-  min-height: calc(56.25cqw + 45px);
 }
 
 .blog-article .body .article-media {
