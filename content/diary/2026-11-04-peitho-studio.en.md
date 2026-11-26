@@ -10,27 +10,27 @@ published: true
 Some of you may be preparing slides for [YAPC::Tokyo 2026](https://yapcjapan.org/), so I'd like to introduce a slide tool.
 I hope it makes you think, "I'd like to add an interactive demo" or "Maybe I should make my slides multilingual." 😀
 
-<iframe class="article-media" src="/slides/peitho-studio/" loading="lazy" style="width:100%;aspect-ratio:16/9;border:0;"></iframe>
+<iframe class="article-media" src="https://slide.community/embed/@kfly8/peitho-studio?lang=en" title="Peitho Studio" loading="lazy" width="960" height="540" style="width:100%;height:auto;aspect-ratio:16/9;border:0" allowfullscreen></iframe>
 
 I'm asking you to do something right from the first slide, but try the buttons in the upper right to switch between English and Japanese. The slides are HTML, so they can support multiple languages just like any web app. If you want our guest Larry Wall to be able to read your slides, that's a pretty good reason to add English!!
 
 That sounds like a joke, but it does expand your potential audience. [Back in 2015, tagomoris wrote a post encouraging people to write slides about software technology in English](https://tagomoris.hatenablog.com/entry/2015/06/01/210425). With AI making translation easier, I think it's worth considering.
 
-<iframe class="article-media" src="/slides/peitho-studio/?slide=2" loading="lazy" style="width:100%;aspect-ratio:16/9;border:0;"></iframe>
+<iframe class="article-media" src="https://slide.community/embed/@kfly8/peitho-studio/2?lang=en" title="Peitho Studio · 2" loading="lazy" width="960" height="540" style="width:100%;height:auto;aspect-ratio:16/9;border:0" allowfullscreen></iframe>
 
 I made these slides with [Peitho Studio](https://peitho-studio.piconic.ai/), an app I built around [Peitho](https://peitho.gosu.ke/), the slide tool created by [mizzy](https://x.com/gosukenator).
 
 I'd love for you to try Peitho Studio, but the broader point I want to make is that **HTML slides are great!**
 
-<iframe class="article-media" src="/slides/peitho-studio/?slide=3" loading="lazy" style="width:100%;aspect-ratio:16/9;border:0;"></iframe>
+<iframe class="article-media" src="https://slide.community/embed/@kfly8/peitho-studio/3?lang=en" title="Peitho Studio · 3" loading="lazy" width="960" height="540" style="width:100%;height:auto;aspect-ratio:16/9;border:0" allowfullscreen></iframe>
 
 The big difference from conventional slides is that **you can interact with HTML slides**. Switching languages is one example. On this slide, you can move the sliders on the left to change the particle animation. Demos often get left out of PDF slides, making them a treat only the people who attended get to enjoy. 😀
 
-<iframe class="article-media" src="/slides/peitho-studio/?slide=4" loading="lazy" style="width:100%;aspect-ratio:16/9;border:0;"></iframe>
+<iframe class="article-media" src="https://slide.community/embed/@kfly8/peitho-studio/4?lang=en" title="Peitho Studio · 4" loading="lazy" width="960" height="540" style="width:100%;height:auto;aspect-ratio:16/9;border:0" allowfullscreen></iframe>
 
 Here's another example of an interactive HTML slide. When I teach math to my elementary-school-aged daughter, I sometimes make demos like this. They make a huge difference in how well things click for her. Slides already let us **communicate concise points one page at a time**, and this adds something more to that format.
 
-<iframe class="article-media" src="/slides/peitho-studio/?slide=5" loading="lazy" style="width:100%;aspect-ratio:16/9;border:0;"></iframe>
+<iframe class="article-media" src="https://slide.community/embed/@kfly8/peitho-studio/5?lang=en" title="Peitho Studio · 5" loading="lazy" width="960" height="540" style="width:100%;height:auto;aspect-ratio:16/9;border:0" allowfullscreen></iframe>
 
 HTML slides have been around for a long time. The reason I'm bringing them up now is AI. AI is particularly good at HTML and tends to produce what I ask for.
 
@@ -42,7 +42,7 @@ The design lineage of Peitho Studio is shown in the slide above. k1LoW/deck esta
 
 This video shows me editing slides in Peitho Studio. I write the content in Markdown, leave a comment asking for the slides to look better, and a coding agent running in the background makes the changes. Explaining to AI exactly which element on which slide you want to change is tedious. Peitho Studio takes care of that part.
 
-<iframe class="article-media" src="/slides/peitho-studio/?slide=7" loading="lazy" style="width:100%;aspect-ratio:16/9;border:0;"></iframe>
+<iframe class="article-media" src="https://slide.community/embed/@kfly8/peitho-studio/7?lang=en" title="Peitho Studio · 7" loading="lazy" width="960" height="540" style="width:100%;height:auto;aspect-ratio:16/9;border:0" allowfullscreen></iframe>
 
 I'd love for you to give Peitho Studio a try and make some HTML slides!
 
