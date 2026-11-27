@@ -43,7 +43,6 @@ export function renderSitemap(blogPosts: PostCollection, diaryPosts: PostCollect
   const pages: Page[] = [
     { path: '/', langs: LANGS },
     { path: '/profile', langs: LANGS },
-    { path: '/slides', langs: LANGS },
     ...sectionPages('/blog', blogPosts),
     ...sectionPages('/diary', diaryPosts),
   ]

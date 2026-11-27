@@ -10,7 +10,7 @@ The renderer supports text nodes with a `# Heading`, plain text, and labeled edg
 
 ## Prerequisites
 
-スライド（`/slides`）を作成・更新するには [peitho](https://github.com/mizzy/peitho)（Markdownを起点にHTMLネイティブなプレゼンテーションを生成するツール）が必要です。
+[peitho](https://github.com/mizzy/peitho) is needed to rebuild the slide decks embedded in diary posts. Published talks live on [slide.community](https://slide.community/@kfly8).
 
 ```bash
 brew install mizzy/tap/peitho

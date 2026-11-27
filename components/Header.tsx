@@ -6,7 +6,7 @@ import type { LanguageMenu } from '../i18n'
 interface HeaderProps {
   lang: string
   showLogo?: boolean
-  active?: 'profile' | 'blog' | 'diary' | 'slides'
+  active?: 'profile' | 'blog' | 'diary'
   menu: LanguageMenu
 }
 
@@ -27,7 +27,7 @@ export function Header(props: HeaderProps) {
         <a href={`/${props.lang}/profile`} aria-current={props.active === 'profile' ? 'page' : undefined}>Profile</a>
         <a href={`/${props.lang}/blog`} aria-current={props.active === 'blog' ? 'page' : undefined}>Blog</a>
         <a href={`/${props.lang}/diary`} aria-current={props.active === 'diary' ? 'page' : undefined}>Diary</a>
-        <a href={`/${props.lang}/slides`} aria-current={props.active === 'slides' ? 'page' : undefined}>Slides</a>
+        <a href="https://slide.community/@kfly8">Slides</a>
         {/* The language menu: a globe that opens the list of languages,
             each in its own name, the current one marked. A page with no version in the other language
             lists it without a link. The link loads the page in full

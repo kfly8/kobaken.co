@@ -7,17 +7,13 @@
   // Workers Cache requires a recent compatibility date.
   "compatibility_date": "2026-08-28",
   "compatibility_flags": ["nodejs_compat"],
-  "browser": { "binding": "BROWSER" },
   "main": "server.tsx",
   // Static assets (CSS, generated client JS, manifest) are served
   // directly by Workers Assets. The Worker script handles everything
   // else — SSR, API routes, etc.
   "assets": {
     "directory": "./public",
-    "binding": "ASSETS",
-    // Deck HTML needs request-specific metadata; CSS, fonts and slide
-    // fragments still go straight to Workers Assets.
-    "run_worker_first": ["/slides/*/", "/slides/*/index.html"]
+    "binding": "ASSETS"
   },
   // Blog post source files are imported as raw text (frontmatter parsed
   // and Markdown rendered at request time in blog/content.ts).
