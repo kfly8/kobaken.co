@@ -27,7 +27,14 @@ export function Header(props: HeaderProps) {
         <a href={`/${props.lang}/profile`} aria-current={props.active === 'profile' ? 'page' : undefined}>Profile</a>
         <a href={`/${props.lang}/blog`} aria-current={props.active === 'blog' ? 'page' : undefined}>Blog</a>
         <a href={`/${props.lang}/diary`} aria-current={props.active === 'diary' ? 'page' : undefined}>Diary</a>
-        <a href="https://slide.community/@kfly8">Slides</a>
+        <a href="https://slide.community/@kfly8" className="external-link">
+          Slides
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
+            <path d="M7 17 17 7" />
+            <path d="M8 7h9v9" />
+          </svg>
+          <span className="sr-only">(external site)</span>
+        </a>
         {/* The language menu: a globe that opens the list of languages,
             each in its own name, the current one marked. A page with no version in the other language
             lists it without a link. The link loads the page in full
