@@ -121,6 +121,15 @@
   text-decoration-color: var(--color-text-main);
 }
 
+/* Link that leaves the site: a small north-east arrow after the label. */
+.site-nav a.external-link svg {
+  display: inline-block;
+  width: 0.85em;
+  height: 0.85em;
+  margin-left: 0.15em;
+  vertical-align: -0.05em;
+}
+
 /* Current page: solid underline instead of the dotted affordance used
    for links you'd click — same color vocabulary, different meaning.
    A solid line reads as touching a descender (the "y" in "Diary") at
