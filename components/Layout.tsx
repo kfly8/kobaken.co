@@ -9,7 +9,7 @@ interface LayoutProps {
   className?: string
   lang: string
   showLogo?: boolean
-  active?: 'profile' | 'blog' | 'diary' | 'slides'
+  active?: 'profile' | 'blog' | 'diary'
   menu: LanguageMenu
 }
 

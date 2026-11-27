@@ -82,7 +82,6 @@ export const renderer = jsxRenderer(
           <link href={`/static/reset.css?v=${assetVersion}`} rel="stylesheet" />
           <link href={`/static/style.css?v=${assetVersion}`} rel="stylesheet" />
           <link href={`/static/header.css?v=${assetVersion}`} rel="stylesheet" />
-          <link href={`/static/slides.css?v=${assetVersion}`} rel="stylesheet" />
           <link href={`/static/blog.css?v=${assetVersion}`} rel="stylesheet" />
           <link href={`/static/uno.css?v=${assetVersion}`} rel="stylesheet" />
           <script src={`/static/script.js?v=${assetVersion}`} defer />

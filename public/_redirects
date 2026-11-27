@@ -1,2 +1,10 @@
-# The Peitho Studio deck moved from the diary post to /slides.
-/diary/2026-11-04-peitho-studio/slides/* /slides/peitho-studio/:splat 301
+# Slides now live on slide.community.
+/slides https://slide.community/@kfly8 301
+/slides/ https://slide.community/@kfly8 301
+/en/slides https://slide.community/@kfly8 301
+/ja/slides https://slide.community/@kfly8 301
+/slides/barefootjs-testing https://slide.community/@kfly8/barefootjs-testing 301
+/slides/barefootjs-testing/* https://slide.community/@kfly8/barefootjs-testing 301
+/slides/peitho-studio https://slide.community/@kfly8/peitho-studio 301
+/slides/peitho-studio/* https://slide.community/@kfly8/peitho-studio 301
+/diary/2026-11-04-peitho-studio/slides/* https://slide.community/@kfly8/peitho-studio 301

@@ -43,7 +43,6 @@ export const messages = {
     homeDescription:
       "I'm a software engineer and preparing to start my own business. Event organizer for YAPC::Tokyo 2019, YAPC::Japan::Online 2022, and YAPC::Hiroshima 2024.",
     profileDescription: 'Career, talks and writing',
-    slidesDescription: 'Slides from my talks',
     tagDescription: (tag: string) => `Posts tagged "${tag}"`,
     noPosts: 'No posts yet.',
     related: 'Related posts',
@@ -57,7 +56,6 @@ export const messages = {
     homeDescription:
       'ソフトウェアエンジニア。自分の事業を立ち上げる準備をしている。YAPC::Tokyo 2019、YAPC::Japan::Online 2022、YAPC::Hiroshima 2024 のオーガナイザー。',
     profileDescription: '経歴・登壇・寄稿など',
-    slidesDescription: '登壇スライド一覧',
     tagDescription: (tag: string) => `タグ「${tag}」の記事一覧`,
     noPosts: 'まだ記事がありません。',
     related: '関連記事',
